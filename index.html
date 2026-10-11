@@ -5,22 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cloudy 公會專屬 - 點數商品折溢價計算表</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; padding: 20px; max-width: 1000px; margin: auto; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            /* 載入神木村背景，設定填滿並固定不動 */
+            background-image: url('神木村.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333; 
+            padding: 20px; 
+            max-width: 1000px; 
+            margin: auto; 
+        }
         
-        /* 標題與圖片排版區塊 */
-        .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        /* 標題與圖片排版區塊 - 改為 90% 透明白色 */
+        .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .header-container img { height: 60px; object-fit: contain; border-radius: 8px; }
-        /* 特別將公會勳章放大兩倍 (120px) */
         .header-container img.badge { height: 120px; } 
         .header-container h2 { margin: 0; color: #2c3e50; font-size: 24px; text-align: center; }
         
-        .controls { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        /* 控制區塊 - 改為 90% 透明白色 */
+        .controls { background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; }
-        input[type="number"] { padding: 5px; width: 80px; border: 1px solid #ccc; border-radius: 4px; }
-        table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
-        th, td { padding: 12px; text-align: center; border-bottom: 1px solid #ddd; }
-        th { background-color: #34495e; color: #fff; }
-        tr:hover { background-color: #f1f1f1; }
+        input[type="number"] { padding: 5px; width: 80px; border: 1px solid #ccc; border-radius: 4px; background: rgba(255, 255, 255, 0.8); }
+        
+        /* 表格區塊 - 改為 90% 透明白色 */
+        table { width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.9); box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.1); }
+        th { background-color: rgba(52, 73, 94, 0.95); color: #fff; }
+        tr:hover { background-color: rgba(241, 241, 241, 0.95); }
         .buy-ah { color: #27ae60; font-weight: bold; }
         .buy-wc { color: #2980b9; font-weight: bold; }
         .profit-good { color: #c0392b; font-weight: bold; }
@@ -31,10 +44,10 @@
 
     <!-- 圖片與標題區塊 -->
     <div class="header-container">
-        <!-- 讀取公會勳章圖片，套用放大兩倍的 class -->
+        <!-- 讀取公會勳章圖片 -->
         <img src="公會勳章截圖.png" alt="Cloudy公會勳章" class="badge">
         <h2>Cloudy 公會專屬 - 點數商品折溢價計算表</h2>
-        <!-- 讀取公會名牌圖片，維持原大小 (60px) -->
+        <!-- 讀取公會名牌圖片 -->
         <img src="公會名牌截圖.png" alt="公會名牌">
     </div>
 
@@ -66,7 +79,6 @@
     </table>
 
     <script>
-        // 已依照要求的順序重新排列道具清單
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -80,12 +92,10 @@
         ];
 
         function calculate() {
-            // 動態讀取目前的儲值匯率
             const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
             const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
             const wcCostTWD = twdCost / wcAmount; 
 
-            // 動態讀取楓幣匯率與手續費
             const twdRate = parseFloat(document.getElementById('twdRate').value) || 1;
             const isVip = document.getElementById('vipCheck').checked;
             const tax = isVip ? 0.03 : 0.05;
@@ -94,12 +104,10 @@
             tbody.innerHTML = '';
 
             items.forEach((item, index) => {
-                // 重新計算理論楓幣成本
                 const theoryMeso = (item.wc * wcCostTWD) * (10000 / twdRate);
                 
                 const tr = document.createElement('tr');
                 
-                // 買方建議判斷
                 let buyAdvice = '';
                 if (item.ah < theoryMeso) {
                     buyAdvice = `<span class="buy-ah">✅ 用楓幣拉拍賣</span>`;
@@ -107,7 +115,6 @@
                     buyAdvice = `<span class="buy-wc">💎 直接扣 WC 買</span>`;
                 }
 
-                // 套現利潤判斷
                 const sellNet = item.ah * (1 - tax);
                 const profit = sellNet - theoryMeso;
                 let profitHtml = '';
@@ -117,7 +124,6 @@
                     profitHtml = `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`;
                 }
 
-                // 填入表格
                 tr.innerHTML = `
                     <td>${item.name}</td>
                     <td>${item.wc.toFixed(1)}</td>
@@ -130,13 +136,6 @@
             });
         }
 
-        // 當拍賣場價格被修改時，更新陣列數值並重新計算
-        function updateAH(index, newValue) {
-            items[index].ah = parseFloat(newValue) || 0;
-            calculate();
-        }
-
-        // 網頁載入時執行第一次計算
         calculate();
     </script>
 </body>

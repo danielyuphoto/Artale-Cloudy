@@ -36,10 +36,15 @@
         <img src="公會名牌截圖.png" alt="公會名牌">
     </div>
 
+    <!-- 參數控制區塊 -->
     <div class="controls">
-        <label>今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
-        <label><input type="checkbox" id="vipCheck" onchange="calculate()"> 擁有 90 天 VIP (拍賣手續費 3%)</label>
-        <span style="font-size: 0.9em; color: #666;">※ 大額儲值基準：1830台幣 = 13200 WC</span>
+        <label style="width: 100%; border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 5px;">
+            💰 儲值基準： 
+            <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
+            <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
+        </label>
+        <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+        <label><input type="checkbox" id="vipCheck" onchange="calculate()"> 👑 擁有 90 天 VIP (拍賣手續費 3%)</label>
     </div>
 
     <table>
@@ -71,20 +76,27 @@
             { name: "寵物", wc: 1600, ah: 3500 }
         ];
 
-        const wcCostTWD = 1830 / 13200; 
-
         function calculate() {
+            // 動態讀取目前的儲值匯率
+            const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
+            const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
+            const wcCostTWD = twdCost / wcAmount; 
+
+            // 動態讀取楓幣匯率與手續費
             const twdRate = parseFloat(document.getElementById('twdRate').value) || 1;
             const isVip = document.getElementById('vipCheck').checked;
             const tax = isVip ? 0.03 : 0.05;
+            
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
             items.forEach((item, index) => {
+                // 重新計算理論楓幣成本
                 const theoryMeso = (item.wc * wcCostTWD) * (10000 / twdRate);
                 
                 const tr = document.createElement('tr');
                 
+                // 買方建議判斷
                 let buyAdvice = '';
                 if (item.ah < theoryMeso) {
                     buyAdvice = `<span class="buy-ah">✅ 用楓幣拉拍賣</span>`;
@@ -92,6 +104,7 @@
                     buyAdvice = `<span class="buy-wc">💎 直接扣 WC 買</span>`;
                 }
 
+                // 套現利潤判斷
                 const sellNet = item.ah * (1 - tax);
                 const profit = sellNet - theoryMeso;
                 let profitHtml = '';
@@ -101,6 +114,7 @@
                     profitHtml = `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`;
                 }
 
+                // 填入表格
                 tr.innerHTML = `
                     <td>${item.name}</td>
                     <td>${item.wc.toFixed(1)}</td>
@@ -113,11 +127,13 @@
             });
         }
 
+        // 當拍賣場價格被修改時，更新陣列數值並重新計算
         function updateAH(index, newValue) {
             items[index].ah = parseFloat(newValue) || 0;
             calculate();
         }
 
+        // 網頁載入時執行第一次計算
         calculate();
     </script>
 </body>

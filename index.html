@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楓之谷 Artale 每日折溢價與套現總覽</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; padding: 20px; max-width: 1000px; margin: auto; }
+        h2 { text-align: center; color: #2c3e50; }
+        .controls { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .controls label { font-weight: bold; }
+        input[type="number"] { padding: 5px; width: 80px; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; text-align: center; border-bottom: 1px solid #ddd; }
+        th { background-color: #34495e; color: #fff; }
+        tr:hover { background-color: #f1f1f1; }
+        .buy-ah { color: #27ae60; font-weight: bold; }
+        .buy-wc { color: #2980b9; font-weight: bold; }
+        .profit-good { color: #c0392b; font-weight: bold; }
+        .profit-bad { color: #7f8c8d; }
+    </style>
+</head>
+<body>
+
+    <h2>楓之谷 Artale 每日折溢價與套現總覽</h2>
+
+    <div class="controls">
+        <label>今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+        <label><input type="checkbox" id="vipCheck" onchange="calculate()"> 擁有 90 天 VIP (拍賣手續費 3%)</label>
+        <span style="font-size: 0.9em; color: #666;">※ 大額儲值基準：1830台幣 = 13200 WC</span>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>商城道具</th>
+                <th>WC 單價</th>
+                <th>理論點數成本<br>(萬楓幣)</th>
+                <th>目前拍賣行情<br>(萬楓幣)</th>
+                <th>買來自用建議</th>
+                <th>套現淨利潤<br>(萬楓幣)</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <!-- 內容由 JavaScript 動態生成 -->
+        </tbody>
+    </table>
+
+    <script>
+        const items = [
+            { name: "AP初始化卷軸", wc: 400, ah: 920 },
+            { name: "SP初始化卷軸", wc: 300, ah: 679 },
+            { name: "凍結加持器", wc: 450/11, ah: 97 },
+            { name: "神秘符咒", wc: 450/11, ah: 92 },
+            { name: "高級瞬移之石", wc: 400/11, ah: 81 },
+            { name: "神秘背包", wc: 250, ah: 520 },
+            { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
+            { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
+            { name: "寵物", wc: 1600, ah: 3500 }
+        ];
+
+        const wcCostTWD = 1830 / 13200; 
+
+        function calculate() {
+            const twdRate = parseFloat(document.getElementById('twdRate').value) || 1;
+            const isVip = document.getElementById('vipCheck').checked;
+            const tax = isVip ? 0.03 : 0.05;
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const theoryMeso = (item.wc * wcCostTWD) * (10000 / twdRate);
+                
+                const tr = document.createElement('tr');
+                
+                let buyAdvice = '';
+                if (item.ah < theoryMeso) {
+                    buyAdvice = `<span class="buy-ah">✅ 用楓幣拉拍賣</span>`;
+                } else {
+                    buyAdvice = `<span class="buy-wc">💎 直接扣 WC 買</span>`;
+                }
+
+                const sellNet = item.ah * (1 - tax);
+                const profit = sellNet - theoryMeso;
+                let profitHtml = '';
+                if (profit > 0) {
+                    profitHtml = `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>`;
+                } else {
+                    profitHtml = `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.wc.toFixed(1)}</td>
+                    <td>${theoryMeso.toFixed(1)}</td>
+                    <td><input type="number" value="${item.ah}" style="width: 70px;" onchange="updateAH(${index}, this.value)"></td>
+                    <td>${buyAdvice}</td>
+                    <td>${profitHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateAH(index, newValue) {
+            items[index].ah = parseFloat(newValue) || 0;
+            calculate();
+        }
+
+        calculate();
+    </script>
+</body>
+</html>

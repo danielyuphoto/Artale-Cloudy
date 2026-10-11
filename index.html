@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>楓之谷 Artale 每日折溢價與套現總覽</title>
+    <title>楓之谷 Artale 每日折溢價與套現總覽 - Cloudy 公會專用</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; color: #333; padding: 20px; max-width: 1000px; margin: auto; }
-        h2 { text-align: center; color: #2c3e50; }
+        
+        /* 標題與圖片排版區塊 */
+        .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; background: #fff; padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .header-container img { height: 60px; object-fit: contain; border-radius: 8px; }
+        .header-container h2 { margin: 0; color: #2c3e50; font-size: 24px; }
+        
         .controls { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; }
         input[type="number"] { padding: 5px; width: 80px; border: 1px solid #ccc; border-radius: 4px; }
@@ -22,7 +27,14 @@
 </head>
 <body>
 
-    <h2>楓之谷 Artale 每日折溢價與套現總覽</h2>
+    <!-- 圖片與標題區塊 -->
+    <div class="header-container">
+        <!-- 讀取公會勳章圖片 -->
+        <img src="公會勳章截圖.png" alt="Cloudy公會勳章">
+        <h2>Cloudy 公會專屬 - 每日折溢價與套現總覽</h2>
+        <!-- 讀取公會名牌圖片 -->
+        <img src="公會名牌截圖.png" alt="公會名牌">
+    </div>
 
     <div class="controls">
         <label>今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>

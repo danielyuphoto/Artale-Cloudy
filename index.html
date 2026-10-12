@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
-    <!-- 載入 Zen Maru Gothic 字體 -->
-    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <!-- 同時載入英文手寫書法體(Dancing Script) 與 圓潤中文(Zen Maru Gothic) -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
         /* 全局字體：華康手札體 */
         body { 
@@ -16,8 +16,8 @@
             background-position: center;
             background-attachment: fixed;
             color: #333; 
-            padding: 20px 10px 40px 10px; 
-            max-width: 1450px; 
+            padding: 20px 5px 40px 5px; /* 縮小左右內邊距，讓兩側能更靠邊 */
+            max-width: 1600px; /* 放寬最大寬度，大幅增加右側顯示空間 */
             margin: auto; 
         }
         
@@ -40,7 +40,7 @@
             margin-bottom: 40px; 
             padding: 10px; 
             margin-top: 20px;
-            position: relative; /* 固定層級避免特效干擾下方 */
+            position: relative; 
             z-index: 10;
         }
         .header-container img.badge { 
@@ -72,7 +72,7 @@
             border-radius: 50%;
             z-index: -1;
             box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8);
-            pointer-events: none; /* 讓隱形的雲朵特效不會阻擋滑鼠點擊 */
+            pointer-events: none; 
         }
         .cloud-title-wrapper::before {
             width: 100px;
@@ -93,14 +93,14 @@
             position: relative;
             z-index: 2;
         }
-        /* 標題英文字母草書設定 */
+        /* 標題英文字母：優美手寫書法體 (Dancing Script) */
         .title-cursive {
-            font-family: 'Brush Script MT', 'STXingkai', cursive;
-            font-size: 42px;
+            font-family: 'Dancing Script', 'Brush Script MT', cursive;
+            font-size: 46px; /* 稍微放大以展現書法氣勢 */
             color: #2c3e50;
-            margin-right: 8px;
+            margin-right: 10px;
         }
-        /* 標題中文 Zen Maru Gothic 設定 */
+        /* 標題中文：Zen Maru Gothic 設定 */
         .title-zen {
             font-family: 'Zen Maru Gothic', sans-serif;
             font-size: 38px;
@@ -112,7 +112,7 @@
         /* 左右排版容器 */
         .layout-container {
             display: flex;
-            gap: 30px;
+            gap: 25px; /* 縮小一點點間距讓出空間給右側 */
             align-items: flex-start;
             position: relative;
             z-index: 20;
@@ -124,11 +124,11 @@
             flex-direction: column;
             gap: 12px;
             padding: 20px;
-            width: 220px; 
+            width: 210px; /* 稍微再收窄一點，把空間給右邊 */
             flex-shrink: 0;
             position: sticky;
             top: 20px; 
-            z-index: 9999; /* 超高層級，絕對不會被其他區塊覆蓋或擋住點擊 */
+            z-index: 9999; 
         }
         .sidebar button {
             background: rgba(255, 255, 255, 0.6);
@@ -252,7 +252,7 @@
         .profit-good { color: #c0392b; font-weight: bold; }
         .profit-bad { color: #7f8c8d; }
 
-        /* 王團名單專屬上方小切換按鈕 */
+        /* 王團名單專屬上方小切換按鈕 (移除 Emoji，純文字) */
         .sub-tabs {
             display: flex;
             gap: 10px;
@@ -261,7 +261,7 @@
         .sub-tabs button {
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 8px 18px;
+            padding: 8px 20px; /* 左右稍微加寬增加質感 */
             border-radius: 6px;
             font-size: 18px;
             font-weight: bold;
@@ -294,7 +294,7 @@
 
         /* 手機版 RWD */
         @media (max-width: 768px) {
-            body { padding: 10px 10px 30px 10px; }
+            body { padding: 10px 5px 30px 5px; }
             .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
             .header-container img.badge { height: 50px; } 
             
@@ -304,7 +304,7 @@
             }
             .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
             .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
-            .title-cursive { font-size: 26px; }
+            .title-cursive { font-size: 28px; }
             .title-zen { font-size: 22px; }
             
             .layout-container { flex-direction: column; gap: 15px; }
@@ -351,7 +351,7 @@
     <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 (全新 EventListener 按鈕) -->
+        <!-- 左側導覽列 -->
         <div class="sidebar glass-panel">
             <button class="active" data-tab="homeTab">🏡 公會首頁</button>
             <button data-tab="recruitTab">⭐ 公會招生</button>
@@ -390,12 +390,12 @@
                 </div>
             </div>
 
-            <!-- 頁籤：每週王團名單 -->
+            <!-- 頁籤：每週王團名單 (純文字按鈕) -->
             <div id="rosterTab" class="tab-content">
                 <div class="sub-tabs">
-                    <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">🌲 樹王團</button>
-                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">🐉 龍王團</button>
-                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">👑 困拉團</button>
+                    <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">樹王團</button>
+                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">龍王團</button>
+                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
                 </div>
                 <div class="glass-panel" style="padding: 10px;">
                     <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單">載入中...</iframe>
@@ -450,21 +450,17 @@
 
     <!-- JavaScript 邏輯區 -->
     <script>
-        // === 全新升級：更穩定、抗干擾的頁籤切換腳本 ===
         function setupTabs() {
             const sidebarBtns = document.querySelectorAll(".sidebar button");
             const tabContents = document.querySelectorAll(".tab-content");
 
             sidebarBtns.forEach(btn => {
                 btn.addEventListener("click", function() {
-                    // 清除所有左側按鈕的 active
                     sidebarBtns.forEach(b => b.classList.remove("active"));
                     this.classList.add("active");
 
-                    // 隱藏所有右側內容
                     tabContents.forEach(tab => tab.classList.remove("active"));
                     
-                    // 顯示指定的內容區塊
                     const targetId = this.getAttribute("data-tab");
                     if (document.getElementById(targetId)) {
                         document.getElementById(targetId).classList.add("active");
@@ -479,16 +475,13 @@
 
             subBtns.forEach(btn => {
                 btn.addEventListener("click", function() {
-                    // 清除上方小按鈕的 active
                     subBtns.forEach(b => b.classList.remove("active"));
                     this.classList.add("active");
-                    // 切換 iframe 網址
                     iframe.src = this.getAttribute("data-url");
                 });
             });
         }
 
-        // === 計算器邏輯 ===
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -557,7 +550,6 @@
             calculate();
         }
 
-        // 當網頁全部載入完成後，啟動所有功能
         window.onload = function() {
             setupTabs();
             setupSubTabs();

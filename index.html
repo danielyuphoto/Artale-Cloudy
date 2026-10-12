@@ -4,161 +4,152 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
+    <!-- 預連線 Google Fonts 加速字體載入 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* 全局字體：華康手札體 */
+        /* ================= 1. 全局與共用樣式 ================= */
         body { 
-            font-family: '華康手札體 Std W7 OpenType', 'DFHandwriting-W7', 'DFPHandwriting-W7', 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
-            background-image: url('神木村.webp');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #333; 
-            padding: 20px 5px 40px 5px; 
-            max-width: 1600px; 
-            margin: auto; 
+            font-family: '華康手札體 Std W7 OpenType', 'DFHandwriting-W7', 'DFPHandwriting-W7', 'Segoe UI', sans-serif; 
+            background: url('神木村.webp') center/cover fixed;
+            color: #333; padding: 20px 5px 40px; max-width: 1600px; margin: auto; 
         }
+        /* 合併毛玻璃樣式 */
+        .glass-panel, .history-card, #countdownDisplay, .photo-caption { 
+            background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
+            border: 1px solid rgba(255,255,255,0.4); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
+        }
+        /* 合併 Flex 置中樣式 */
+        .flex-center { display: flex; align-items: center; justify-content: center; }
+
+        /* ================= 2. 標題與勳章 ================= */
+        .header-container { gap: 20px; margin: 20px 0 40px; position: relative; z-index: 10; }
+        .badge { height: 90px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); transition: transform 0.3s; cursor: pointer; z-index: 5; } 
+        .badge:hover { transform: scale(1.1); }
         
-        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.4); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
-        
-        .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 40px; padding: 10px; margin-top: 20px; position: relative; z-index: 10; }
-        .header-container img.badge { height: 90px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; z-index: 5; } 
-        .header-container img.badge:hover { transform: scale(1.1); }
-        
-        .cloud-title-wrapper { position: relative; background: rgba(255, 255, 255, 0.95); border-radius: 80px; padding: 25px 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85); z-index: 1; }
-        .cloud-title-wrapper::before, .cloud-title-wrapper::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50%; z-index: -1; box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8); pointer-events: none; }
+        .cloud-title-wrapper { 
+            position: relative; background: rgba(255, 255, 255, 0.95); border-radius: 80px; 
+            padding: 25px 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85); z-index: 1; 
+        }
+        .cloud-title-wrapper::before, .cloud-title-wrapper::after { 
+            content: ''; position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50%; z-index: -1; 
+            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8); pointer-events: none; 
+        }
         .cloud-title-wrapper::before { width: 110px; height: 110px; top: -45px; left: 15%; }
         .cloud-title-wrapper::after { width: 140px; height: 140px; top: -60px; right: 15%; }
-        .cloud-title-wrapper h2 { margin: 0; text-align: center; text-shadow: 2px 2px 4px rgba(255,255,255,0.9); position: relative; z-index: 2; }
-        .title-cursive { font-family: 'Dancing Script', 'Brush Script MT', cursive; font-size: 56px; color: #2c3e50; margin-right: 12px; }
+        .cloud-title-wrapper h2 { margin: 0; text-align: center; text-shadow: 2px 2px 4px rgba(255,255,255,0.9); z-index: 2; }
+        .title-cursive { font-family: 'Dancing Script', cursive; font-size: 56px; color: #2c3e50; margin-right: 12px; }
         .title-zen { font-family: 'Zen Maru Gothic', sans-serif; font-size: 46px; font-weight: 700; color: #2c3e50; letter-spacing: 2px; }
 
+        /* ================= 3. 版面佈局 ================= */
         .layout-container { display: flex; gap: 25px; align-items: flex-start; position: relative; z-index: 20; }
-
+        
+        /* 左側導覽列 */
         .sidebar { display: flex; flex-direction: column; gap: 12px; padding: 20px; width: 210px; flex-shrink: 0; position: sticky; top: 20px; z-index: 900; }
-        .sidebar button { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); padding: 14px 18px; border-radius: 8px; font-size: 18px; font-weight: bold; color: #2c3e50; text-align: left; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: inherit; }
-        .sidebar button:hover { background: rgba(255, 255, 255, 0.95); transform: translateX(5px); }
-        .sidebar button.active { background: #3498db; color: white; border-color: #2980b9; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); transform: translateX(5px); }
+        .sidebar button, .sub-tabs button { 
+            background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); padding: 14px 18px; 
+            border-radius: 8px; font-size: 18px; font-weight: bold; color: #2c3e50; text-align: left; cursor: pointer; 
+            transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: inherit; 
+        }
+        .sidebar button:hover, .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); transform: translateX(5px); }
+        .sidebar button.active, .sub-tabs button.active { background: #3498db; color: white; border-color: #2980b9; transform: translateX(5px); }
+        .sub-tabs button.active { background: #e67e22; border-color: #d35400; transform: none; }
+        .sub-tabs button:hover { transform: none; }
 
+        /* 內容區 */
         .main-content { flex: 1; min-width: 0; }
         .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* 首頁與招生區 */
+        .recruit-image-container img, .hero-image-container img { 
+            width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+            border: 3px solid rgba(255, 255, 255, 0.9); transition: 0.5s; 
+        }
+        .recruit-image-container img { cursor: pointer; transform-origin: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .recruit-image-container img:hover { transform: scale(1.3); z-index: 999; position: relative; }
         @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
-        .recruit-image-container { width: 100%; display: flex; justify-content: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; padding: 20px 0; }
-        .recruit-image-container img { width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 3px solid rgba(255, 255, 255, 0.9); transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease; cursor: pointer; transform-origin: center center; z-index: 10; position: relative; }
-        .recruit-image-container img:hover { transform: scale(1.3); box-shadow: 0 25px 50px rgba(0,0,0,0.5); z-index: 999; }
-
-        .hero-image-container { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
-        .hero-image-container img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 3px solid rgba(255, 255, 255, 0.8); }
-        .intro-box { padding: 25px; line-height: 1.8; font-size: 20px; color: #2c3e50; }
+        
+        .intro-box { padding: 25px; line-height: 1.8; font-size: 20px; }
         .intro-box h3 { margin-top: 0; border-bottom: 2px solid rgba(52, 152, 219, 0.3); padding-bottom: 10px; color: #2980b9; font-size: 24px; }
 
-        /* 歷史活動紀錄樣式 */
+        /* ================= 4. 歷史活動畫廊 ================= */
         .history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; padding: 10px; }
-        .history-card { background: rgba(255, 255, 255, 0.75); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 16px; padding: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; display: flex; flex-direction: column; gap: 10px; }
-        .history-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); background: rgba(255, 255, 255, 0.95); }
-        .history-date { align-self: flex-start; font-size: 15px; color: #d35400; font-weight: bold; background: rgba(243, 156, 18, 0.2); padding: 4px 12px; border-radius: 20px; font-family: 'Segoe UI', Tahoma, sans-serif; letter-spacing: 1px; }
-        .history-title { font-size: 22px; color: #2c3e50; font-weight: bold; line-height: 1.4; margin: 0 0 5px 0; font-family: inherit; }
-        .photo-count { font-size: 15px; color: #7f8c8d; font-family: 'Segoe UI', sans-serif; font-weight: bold; margin-bottom: 5px; }
+        .history-card { padding: 15px; display: flex; flex-direction: column; gap: 10px; transition: 0.3s; background: rgba(255, 255, 255, 0.75); }
+        .history-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.95); }
+        .history-date { align-self: flex-start; font-size: 15px; color: #d35400; font-weight: bold; background: rgba(243, 156, 18, 0.2); padding: 4px 12px; border-radius: 20px; font-family: Tahoma, sans-serif; letter-spacing: 1px; }
+        .history-title { font-size: 22px; color: #2c3e50; font-weight: bold; line-height: 1.4; margin: 0 0 5px; }
+        .photo-count { font-size: 15px; color: #7f8c8d; font-family: sans-serif; font-weight: bold; }
         
-        .gallery-container { display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 15px; align-items: flex-start; }
+        .gallery-container { display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 15px; }
         .gallery-container::-webkit-scrollbar { height: 8px; }
         .gallery-container::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 4px; }
         .gallery-container::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.5); border-radius: 4px; }
-        .gallery-container::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.8); }
         
         .photo-wrapper { flex: 0 0 100%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 10px; }
-        .photo-wrapper img { 
-            width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
-            cursor: zoom-in; transition: opacity 0.2s;
-        }
+        .photo-wrapper img { width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); cursor: zoom-in; transition: 0.2s; }
         .photo-wrapper img:hover { opacity: 0.85; }
-        .photo-caption { font-size: 17px; color: #d35400; text-align: center; font-weight: bold; background: rgba(255, 243, 205, 0.8); padding: 8px 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-family: inherit; }
+        .photo-caption { font-size: 17px; color: #d35400; text-align: center; font-weight: bold; background: rgba(255, 243, 205, 0.8); padding: 8px 10px; }
 
-        /* === 全螢幕燈箱 (Lightbox) 樣式 === */
-        #lightbox {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
+        /* ================= 5. 全螢幕燈箱 ================= */
+        #lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 10000; opacity: 0; pointer-events: none; transition: 0.3s; flex-direction: column; }
         #lightbox.active { opacity: 1; pointer-events: auto; }
-        #lightbox-img { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 25px rgba(0,0,0,0.5); border: 3px solid white; transition: transform 0.3s ease; }
-        #lightbox-caption { color: white; font-size: 22px; margin-top: 15px; font-family: '華康手札體 Std W7 OpenType', 'Segoe UI', sans-serif; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
-        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 40px; color: white; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        #lightbox-img { max-width: 90%; max-height: 80vh; border-radius: 8px; border: 3px solid white; }
+        #lightbox-caption { color: white; font-size: 22px; margin-top: 15px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .lightbox-nav, #lightbox-close { position: absolute; color: white; border: none; cursor: pointer; }
+        .lightbox-nav { top: 50%; transform: translateY(-50%); font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 60px; height: 60px; transition: 0.3s; }
         .lightbox-nav:hover { background: rgba(0,0,0,0.8); }
-        #lightbox-prev { left: 30px; }
-        #lightbox-next { right: 30px; }
-        #lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 35px; color: white; background: none; border: none; cursor: pointer; }
+        #lightbox-prev { left: 30px; } #lightbox-next { right: 30px; }
+        #lightbox-close { top: 20px; right: 30px; font-size: 35px; background: none; }
 
+        /* ================= 6. 其他 UI 元件 (iframe / 表格 / 計算器) ================= */
+        .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
+        .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; color: #d35400; font-size: 20px; text-align: center; padding: 12px; margin-bottom: 15px; font-family: Tahoma, sans-serif; }
+        #timerText { color: #c0392b; font-size: 24px; display: inline-block; min-width: 220px; }
+        
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
-        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: sans-serif; }
-        input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
-        .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
+        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; font-size: 15px; font-family: sans-serif; }
+        .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; }
         
-        .table-responsive { width: 100%; overflow-x: auto; border-radius: 12px; }
-        table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
         th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
-        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 18px; letter-spacing: 1px; }
-        tr:hover { background-color: rgba(255, 255, 255, 0.6); }
-        .buy-ah { color: #27ae60; font-weight: bold; }
-        .buy-wc { color: #2980b9; font-weight: bold; }
-        .profit-good { color: #c0392b; font-weight: bold; }
-        .profit-bad { color: #7f8c8d; }
+        th { background: rgba(44, 62, 80, 0.95); color: #fff; }
+        tr:hover { background: rgba(255, 255, 255, 0.6); }
 
-        .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
-        .sub-tabs button { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.8); padding: 8px 20px; border-radius: 6px; font-size: 18px; font-weight: bold; color: #2c3e50; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-family: inherit; }
-        .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
-        .sub-tabs button.active { background: #e67e22; color: white; border-color: #d35400; }
+        .footer-container { margin-top: 40px; }
+        .nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: 0.3s; cursor: pointer; }
+        .nameplate:hover { transform: scale(1.05); }
 
-        #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; border-radius: 8px; padding: 12px; margin-bottom: 15px; color: #d35400; font-weight: bold; font-size: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); font-family: 'Segoe UI', Tahoma, sans-serif; }
-        #timerText { color: #c0392b; font-size: 24px; display: inline-block; min-width: 220px; }
-        .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
-
-        .footer-container { display: flex; justify-content: center; margin-top: 40px; }
-        .footer-container img.nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; }
-        .footer-container img.nameplate:hover { transform: scale(1.05); }
-
-        /* 手機版 RWD */
+        /* ================= 7. 手機版 RWD ================= */
         @media (max-width: 768px) {
-            body { padding: 10px 5px 30px 5px; }
-            .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-            .header-container img.badge { height: 50px; } 
+            body { padding: 10px 5px 30px; }
+            .header-container { flex-wrap: wrap; }
+            .badge { height: 50px; } 
             .cloud-title-wrapper { padding: 15px 30px; border-radius: 40px; }
-            .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
-            .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
-            .title-cursive { font-size: 32px; }
-            .title-zen { font-size: 26px; }
-            .layout-container { flex-direction: column; gap: 15px; }
-            .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; position: relative; top: 0; z-index: 900; }
-            .sidebar::-webkit-scrollbar { display: none; } 
-            .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
-            .recruit-image-container img { width: 100%; max-width: 100%; }
-            .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+            .title-cursive { font-size: 32px; } .title-zen { font-size: 26px; }
+            .layout-container { flex-direction: column; }
+            .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; }
+            .sidebar button { padding: 10px 15px; font-size: 16px; }
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
-            .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            th, td { padding: 10px 8px; font-size: 16px; }
-            th { font-size: 16px; }
-            input[type="number"] { width: 70px; padding: 4px 8px; }
             .embed-container { height: 550px; }
-            .footer-container img.nameplate { height: 75px; }
-            #countdownDisplay { font-size: 16px; padding: 10px; }
-            #timerText { font-size: 18px; }
+            .nameplate { height: 75px; }
+            #countdownDisplay { font-size: 16px; } #timerText { font-size: 18px; }
             .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
-            #lightbox-prev { left: 10px; }
-            #lightbox-next { right: 10px; }
+            #lightbox-prev { left: 10px; } #lightbox-next { right: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 全螢幕燈箱 (預設隱藏) -->
-    <div id="lightbox">
+    <!-- 全螢幕燈箱 -->
+    <div id="lightbox" class="flex-center">
         <button id="lightbox-close">✖</button>
         <button id="lightbox-prev" class="lightbox-nav">◀</button>
         <img id="lightbox-img" src="" alt="放大照片">
@@ -166,19 +157,16 @@
         <button id="lightbox-next" class="lightbox-nav">▶</button>
     </div>
 
-    <!-- 標題區塊 -->
-    <div class="header-container">
-        <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
+    <div class="header-container flex-center">
+        <img src="公會勳章截圖(去背).png" alt="勳章左" class="badge">
         <div class="cloud-title-wrapper">
             <h2><span class="title-cursive">Artale Cloudy</span> <span class="title-zen">公會小窩</span></h2>
         </div>
-        <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
+        <img src="公會勳章截圖(去背).png" alt="勳章右" class="badge">
     </div>
 
-    <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 -->
         <div class="sidebar glass-panel">
             <button class="active" data-tab="homeTab">🏡 公會首頁</button>
             <button data-tab="recruitTab">⭐ 公會招生</button>
@@ -188,12 +176,11 @@
             <button data-tab="calcTab">💰 點商行情計算表</button>
         </div>
 
-        <!-- 右側動態內容區 -->
         <div class="main-content">
             
             <div id="homeTab" class="tab-content active">
-                <div class="hero-image-container">
-                    <img src="公會合照.png" alt="Cloudy公會大合照" loading="lazy">
+                <div class="hero-image-container flex-center">
+                    <img src="公會合照.png" alt="合照" loading="lazy">
                 </div>
                 <div class="glass-panel intro-box">
                     <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
@@ -204,116 +191,73 @@
 
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
-                    <img src="公會招生圖.png" alt="Cloudy公會招生資訊" loading="lazy">
+                    <img src="公會招生圖.png" alt="招生資訊" loading="lazy">
                 </div>
             </div>
 
-            <!-- 頁籤：公會活動紀錄 (已反轉時間排序：最舊在上，且副檔名完美校對) -->
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
 
-                    <!-- 2025.11.17 第一張合照 -->
+                    <!-- 第一張合照 -->
                     <div class="history-card">
                         <span class="history-date">2025.11.17</span>
                         <h4 class="history-title">【Cloudy公會第一張合照】</h4>
                         <div class="photo-count">📸 共 1 張照片 (點擊放大)</div>
                         <div class="gallery-container" style="overflow-x: hidden;">
                             <div class="photo-wrapper">
-                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" data-index="0" data-group="group1" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" data-index="0" data-group="g1">
                                 <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2025.12.27 第一次線下聚會 (注意 _3 _4 _5 是 .jpg) -->
+                    <!-- 第一次線下聚會 -->
                     <div class="history-card">
                         <span class="history-date">2025.12.27</span>
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
-                        <div class="photo-count">📸 共 5 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="photo-count">📸 共 5 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" data-index="0" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" data-index="1" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">「消滅和牛燒肉」活動海報</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">這是給有出席活動的夥伴的一點心意</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">「消滅和牛燒肉」活動成功！</div>
-                            </div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" data-index="0" data-group="g2"><div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" data-index="1" data-group="g2"><div class="photo-caption">「消滅和牛燒肉」活動海報</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="g2"><div class="photo-caption">這是給有出席活動的夥伴的一點心意</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="g2"><div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="g2"><div class="photo-caption">「消滅和牛燒肉」活動成功！</div></div>
                         </div>
                     </div>
                     
-                    <!-- 2026.02.16 新春財源廣進活動 (注意 _1 是 .jpg) -->
+                    <!-- 新春活動 -->
                     <div class="history-card">
                         <span class="history-date">2026.02.16</span>
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
-                        <div class="photo-count">📸 共 4 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="photo-count">📸 共 4 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動公告</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_2.png" loading="lazy" data-index="1" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動成果</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_3.png" loading="lazy" data-index="2" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動大合照～</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_4.png" loading="lazy" data-index="3" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動大合照～</div>
-                            </div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="g3"><div class="photo-caption">新春財源廣進活動公告</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_2.png" loading="lazy" data-index="1" data-group="g3"><div class="photo-caption">新春財源廣進活動成果</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_3.png" loading="lazy" data-index="2" data-group="g3"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_4.png" loading="lazy" data-index="3" data-group="g3"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
                         </div>
                     </div>
 
-                    <!-- 2026.03.09 台中線下副本 (注意 _3 是 .jpg) -->
+                    <!-- 台中線下副本 -->
                     <div class="history-card">
                         <span class="history-date">2026.03.09</span>
                         <h4 class="history-title">【台中線下副本】</h4>
-                        <div class="photo-count">📸 共 3 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="photo-count">📸 共 3 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_1.png" loading="lazy" data-index="0" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_2.png" loading="lazy" data-index="1" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div>
-                            </div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_1.png" loading="lazy" data-index="0" data-group="g4"><div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_2.png" loading="lazy" data-index="1" data-group="g4"><div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="g4"><div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div></div>
                         </div>
                     </div>
 
-                    <!-- 2026.09.07 肝帝爭霸戰 -->
+                    <!-- 肝帝爭霸戰 -->
                     <div class="history-card">
                         <span class="history-date">2026.09.07</span>
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
-                        <div class="photo-count">📸 共 2 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="photo-count">📸 共 2 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="0" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">肝帝爭霸戰即將開肝！</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="1" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div>
-                            </div>
+                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="0" data-group="g5"><div class="photo-caption">肝帝爭霸戰即將開肝！</div></div>
+                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="1" data-group="g5"><div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div></div>
                         </div>
                     </div>
 
@@ -323,11 +267,9 @@
             <!-- 頁籤：突襲王團報名 -->
             <div id="signupTab" class="tab-content">
                 <div class="glass-panel" style="padding: 10px; text-align: center;">
-                    <div id="countdownDisplay">
-                        ⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span>
-                    </div>
+                    <div id="countdownDisplay">⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span></div>
                     <div id="formContainer">
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單" loading="lazy">載入中...</iframe>
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單" loading="lazy"></iframe>
                     </div>
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
                         <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於下周一至周三開放~敬請期待</h3>
@@ -338,50 +280,40 @@
 
             <!-- 頁籤：每週王團名單 -->
             <div id="rosterTab" class="tab-content">
-                <div class="sub-tabs">
-                    <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">樹王團</button>
-                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">龍王團</button>
-                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
+                <div id="rosterContainerWrapper">
+                    <div class="sub-tabs">
+                        <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">樹王團</button>
+                        <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">龍王團</button>
+                        <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
+                    </div>
+                    <div class="glass-panel" style="padding: 10px;">
+                        <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單" loading="lazy"></iframe>
+                    </div>
                 </div>
-                <div class="glass-panel" style="padding: 10px;">
-                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單" loading="lazy">載入中...</iframe>
+                <div id="rosterClosedMessage" class="glass-panel" style="display: none; padding: 120px 20px; text-align: center; margin-top: 15px;">
+                    <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">公會幹部們努力安排隊伍中，敬請期待>&lt;</h3>
+                    <p style="font-size: 22px; color: #7f8c8d;">每週三 18:00 將公佈最新排定名單！</p>
                 </div>
             </div>
 
-            <!-- 頁籤：點商行情計算表 -->
+            <!-- 頁籤：計算表 -->
             <div id="calcTab" class="tab-content">
                 <div class="controls glass-panel">
                     <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
-                        <label>💰 儲值基準： 
-                            <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
-                            <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
-                        </label>
-                        <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+                        <label>💰 基準： <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC</label>
+                        <label>📈 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
                     </div>
                     <div class="controls-row">
-                        <label>
-                            <input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 
-                            👑 擁有拍賣場VIP (手續費降至3%)
-                        </label>
+                        <label><input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 👑 擁有拍賣場VIP (手續費 3%)</label>
                         <span id="vipText" class="vip-note"></span>
                     </div>
                 </div>
-
                 <div class="glass-panel table-responsive">
                     <table>
                         <thead>
-                            <tr>
-                                <th>商城道具</th>
-                                <th>WC 單價</th>
-                                <th>理論點數成本<br>(萬楓幣)</th>
-                                <th>目前拍賣行情<br>(萬楓幣)</th>
-                                <th>買來自用建議</th>
-                                <th>用WC購買後賣出<br>(萬楓幣)</th>
-                            </tr>
+                            <tr><th>商城道具</th><th>WC 單價</th><th>點數成本(萬楓)</th><th>拍賣行情(萬楓)</th><th>買來自用建議</th><th>買後賣出(萬楓)</th></tr>
                         </thead>
-                        <tbody id="tableBody">
-                            <!-- 內容由 JavaScript 動態生成 -->
-                        </tbody>
+                        <tbody id="tableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -389,216 +321,152 @@
         </div> 
     </div> 
 
-    <!-- 底部名牌區塊 -->
-    <div class="footer-container">
-        <img src="公會名牌截圖(去背).png" alt="公會名牌(去背)" class="nameplate" loading="lazy">
+    <div class="footer-container flex-center">
+        <img src="公會名牌截圖(去背).png" alt="公會名牌" class="nameplate" loading="lazy">
     </div>
 
-    <!-- JavaScript 邏輯區 -->
+    <!-- JavaScript 優化版 -->
     <script>
-        // === 頁籤切換 ===
-        function setupTabs() {
-            const sidebarBtns = document.querySelectorAll(".sidebar button");
-            const tabContents = document.querySelectorAll(".tab-content");
-
-            sidebarBtns.forEach(btn => {
+        // 1. UI 頁籤切換處理
+        function initTabs() {
+            document.querySelectorAll(".sidebar button").forEach(btn => {
                 btn.addEventListener("click", function() {
-                    sidebarBtns.forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".sidebar button, .tab-content").forEach(el => el.classList.remove("active"));
                     this.classList.add("active");
-
-                    tabContents.forEach(tab => tab.classList.remove("active"));
-                    
-                    const targetId = this.getAttribute("data-tab");
-                    if (document.getElementById(targetId)) {
-                        document.getElementById(targetId).classList.add("active");
-                    }
+                    document.getElementById(this.getAttribute("data-tab")).classList.add("active");
                 });
             });
-        }
 
-        // === iframe 表單切換 ===
-        function setupSubTabs() {
-            const subBtns = document.querySelectorAll(".sub-tabs button");
             const iframe = document.getElementById("rosterIframe");
-
-            subBtns.forEach(btn => {
+            document.querySelectorAll(".sub-tabs button").forEach(btn => {
                 btn.addEventListener("click", function() {
-                    subBtns.forEach(b => b.classList.remove("active"));
+                    document.querySelectorAll(".sub-tabs button").forEach(b => b.classList.remove("active"));
                     this.classList.add("active");
                     iframe.src = this.getAttribute("data-url");
                 });
             });
         }
 
-        // === 王團報名倒數計時 ===
-        function startFormCountdown() {
-            function updateTimer() {
-                const now = new Date();
-                const twTimeStr = now.toLocaleString("en-US", {timeZone: "Asia/Taipei"});
-                const twDate = new Date(twTimeStr);
+        // 2. 全局時間管理器 (快取 DOM，極大節省效能)
+        function initTimers() {
+            // 在 Interval 外部事先尋找 DOM，避免每秒重複搜尋
+            const els = {
+                formContainer: document.getElementById("formContainer"),
+                formMsg: document.getElementById("closedMessage"),
+                countDisp: document.getElementById("countdownDisplay"),
+                timerText: document.getElementById("timerText"),
+                rosterWrap: document.getElementById("rosterContainerWrapper"),
+                rosterMsg: document.getElementById("rosterClosedMessage")
+            };
+
+            function update() {
+                const twDate = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Taipei"}));
                 const today = twDate.getDay(); 
+                const hour = twDate.getHours();
 
-                const formContainer = document.getElementById("formContainer");
-                const closedMessage = document.getElementById("closedMessage");
-                const countdownDisplay = document.getElementById("countdownDisplay");
-                const timerText = document.getElementById("timerText");
-
+                // 報名表 (週一~週三開放)
                 if (today >= 1 && today <= 3) {
-                    formContainer.style.display = "block";
-                    closedMessage.style.display = "none";
-                    countdownDisplay.style.display = "block";
+                    els.formContainer.style.display = "block";
+                    els.formMsg.style.display = "none";
+                    els.countDisp.style.display = "block";
                     
-                    const targetDate = new Date(twDate);
-                    targetDate.setDate(twDate.getDate() + (3 - today));
-                    targetDate.setHours(23, 59, 59, 999);
-
-                    const diff = targetDate - twDate;
-
+                    const target = new Date(twDate);
+                    target.setDate(twDate.getDate() + (3 - today));
+                    target.setHours(23, 59, 59, 999);
+                    
+                    const diff = target - twDate;
                     if (diff > 0) {
-                        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                        const h = Math.floor((diff / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
-                        const m = Math.floor((diff / 1000 / 60) % 60).toString().padStart(2, '0');
-                        const s = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
-
-                        timerText.innerText = `${d} 天 ${h} 小時 ${m} 分 ${s} 秒`;
+                        const d = Math.floor(diff / 86400000);
+                        const h = String(Math.floor((diff / 3600000) % 24)).padStart(2, '0');
+                        const m = String(Math.floor((diff / 60000) % 60)).padStart(2, '0');
+                        const s = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+                        els.timerText.textContent = `${d} 天 ${h} 小時 ${m} 分 ${s} 秒`;
                     }
                 } else {
-                    formContainer.style.display = "none";
-                    countdownDisplay.style.display = "none";
-                    closedMessage.style.display = "block";
+                    els.formContainer.style.display = "none";
+                    els.countDisp.style.display = "none";
+                    els.formMsg.style.display = "block";
                 }
+
+                // 王團名單 (週二 08:00 ~ 週三 17:59 隱藏排表)
+                const isClosed = (today === 2 && hour >= 8) || (today === 3 && hour < 18);
+                els.rosterWrap.style.display = isClosed ? "none" : "block";
+                els.rosterMsg.style.display = isClosed ? "block" : "none";
             }
-            
-            updateTimer(); 
-            setInterval(updateTimer, 1000); 
+            update(); setInterval(update, 1000);
         }
 
-        // === 點商行情計算器 ===
+        // 3. 點商計算機 (一次性渲染 HTML 減少 Reflow)
         const items = [
-            { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
-            { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
-            { name: "高級瞬移之石", wc: 400/11, ah: 81 },
-            { name: "凍結加持器", wc: 450/11, ah: 97 },
-            { name: "神秘符咒", wc: 450/11, ah: 92 },
-            { name: "神秘背包", wc: 250, ah: 520 },
-            { name: "AP初始化卷軸", wc: 400, ah: 920 },
-            { name: "SP初始化卷軸", wc: 300, ah: 679 },
-            { name: "寵物", wc: 1600, ah: 3500 }
+            { name: "飄雪結晶", wc: 300/11, ah: 40 }, { name: "突襲額外票券", wc: 1200/7, ah: 370 },
+            { name: "高級瞬移之石", wc: 400/11, ah: 81 }, { name: "凍結加持器", wc: 450/11, ah: 97 },
+            { name: "神秘符咒", wc: 450/11, ah: 92 }, { name: "神秘背包", wc: 250, ah: 520 },
+            { name: "AP初始化", wc: 400, ah: 920 }, { name: "SP初始化", wc: 300, ah: 679 }, { name: "寵物", wc: 1600, ah: 3500 }
         ];
 
         function calculate() {
-            const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
-            const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
-            const wcCostTWD = twdCost / wcAmount; 
-            const twdRate = parseFloat(document.getElementById('twdRate').value) || 1;
-            const isVip = document.getElementById('vipCheck').checked;
-            const tax = isVip ? 0.03 : 0.05;
+            const cost = parseFloat(document.getElementById('twdCost').value) || 1830;
+            const wc = parseFloat(document.getElementById('wcAmount').value) || 13200;
+            const rate = parseFloat(document.getElementById('twdRate').value) || 1;
+            const tax = document.getElementById('vipCheck').checked ? 0.03 : 0.05;
+            const wcTWD = cost / wc;
             
-            const vipCostTWD = 6400 * wcCostTWD;
-            const vipCostMeso = vipCostTWD * (10000 / twdRate); 
-            const breakEvenMeso = (vipCostMeso / 0.02) / 10000; 
+            document.getElementById('vipText').textContent = `※ VIP成本 6400 WC，約需賣出 ${((6400*wcTWD*(10000/rate))/0.02/10000).toFixed(2)} 億楓幣回本`;
             
-            document.getElementById('vipText').innerText = `※ 90天VIP成本為6400 WC，以目前匯率需賣出約 ${breakEvenMeso.toFixed(2)} 億楓幣方可回本`;
-            const tbody = document.getElementById('tableBody');
-            tbody.innerHTML = '';
-
-            items.forEach((item, index) => {
-                const theoryMeso = (item.wc * wcCostTWD) * (10000 / twdRate);
-                const tr = document.createElement('tr');
-                let buyAdvice = item.ah < theoryMeso ? `<span class="buy-ah">✅ 用楓幣拉拍賣</span>` : `<span class="buy-wc">💎 直接扣 WC 買</span>`;
-                const sellNet = item.ah * (1 - tax);
-                const realProfit = sellNet - theoryMeso;
-                let profitHtml = realProfit > 0 ? `<span class="profit-good">賺 ${realProfit.toFixed(1)} 萬</span>` : `<span class="profit-bad">虧 ${Math.abs(realProfit).toFixed(1)} 萬</span>`;
-
-                tr.innerHTML = `
-                    <td>${item.name}</td>
-                    <td>${item.wc.toFixed(1)}</td>
-                    <td>${theoryMeso.toFixed(1)}</td>
-                    <td><input type="number" value="${item.ah}" style="width: 75px;" onchange="updateAH(${index}, this.value)"></td>
-                    <td>${buyAdvice}</td>
-                    <td>${profitHtml}</td>
-                `;
-                tbody.appendChild(tr);
+            let html = ''; // 在記憶體中組裝，再一次性寫入表格
+            items.forEach((item, i) => {
+                const thMeso = (item.wc * wcTWD) * (10000 / rate);
+                const profit = (item.ah * (1 - tax)) - thMeso;
+                html += `<tr>
+                    <td>${item.name}</td><td>${item.wc.toFixed(1)}</td><td>${thMeso.toFixed(1)}</td>
+                    <td><input type="number" value="${item.ah}" style="width:75px;" onchange="updateAH(${i}, this.value)"></td>
+                    <td>${item.ah < thMeso ? '<span class="buy-ah">✅ 用楓幣拉拍賣</span>' : '<span class="buy-wc">💎 直接扣 WC 買</span>'}</td>
+                    <td>${profit > 0 ? `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>` : `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`}</td>
+                </tr>`;
             });
+            document.getElementById('tableBody').innerHTML = html;
         }
-        function updateAH(index, newValue) { items[index].ah = parseFloat(newValue) || 0; calculate(); }
+        function updateAH(i, val) { items[i].ah = parseFloat(val) || 0; calculate(); }
 
-        // === 全螢幕照片燈箱 (Lightbox) 邏輯 ===
-        function setupLightbox() {
-            const lightbox = document.getElementById("lightbox");
-            const lightboxImg = document.getElementById("lightbox-img");
-            const lightboxCaption = document.getElementById("lightbox-caption");
-            const closeBtn = document.getElementById("lightbox-close");
-            const prevBtn = document.getElementById("lightbox-prev");
-            const nextBtn = document.getElementById("lightbox-next");
-
-            let currentGroup = [];
-            let currentIndex = 0;
+        // 4. 燈箱相簿邏輯
+        function initLightbox() {
+            const box = document.getElementById("lightbox"), imgEl = document.getElementById("lightbox-img");
+            const cap = document.getElementById("lightbox-caption"), prev = document.getElementById("lightbox-prev"), next = document.getElementById("lightbox-next");
+            let group = [], idx = 0;
 
             document.querySelectorAll(".photo-wrapper img").forEach(img => {
-                img.addEventListener("click", function(e) {
-                    const groupName = this.getAttribute("data-group");
-                    currentGroup = Array.from(document.querySelectorAll(`img[data-group="${groupName}"]`));
-                    currentIndex = parseInt(this.getAttribute("data-index"));
-
-                    updateLightboxImage();
-                    lightbox.classList.add("active");
-                    e.stopPropagation(); 
+                img.addEventListener("click", e => {
+                    group = Array.from(document.querySelectorAll(`img[data-group="${e.target.dataset.group}"]`));
+                    idx = parseInt(e.target.dataset.index);
+                    updateBox(); box.classList.add("active"); e.stopPropagation(); 
                 });
             });
 
-            function updateLightboxImage() {
-                const targetImg = currentGroup[currentIndex];
-                lightboxImg.src = targetImg.src;
-                lightboxCaption.innerText = targetImg.nextElementSibling.innerText;
-                
-                prevBtn.style.display = currentGroup.length > 1 ? "flex" : "none";
-                nextBtn.style.display = currentGroup.length > 1 ? "flex" : "none";
+            function updateBox() {
+                imgEl.src = group[idx].src; 
+                cap.textContent = group[idx].nextElementSibling.textContent;
+                const showNav = group.length > 1 ? "flex" : "none";
+                prev.style.display = showNav; next.style.display = showNav;
             }
 
-            function showNext(e) {
+            function move(step, e) {
                 if(e) e.stopPropagation();
-                if (currentGroup.length <= 1) return;
-                currentIndex = (currentIndex + 1) % currentGroup.length;
-                updateLightboxImage();
+                if(group.length > 1) { idx = (idx + step + group.length) % group.length; updateBox(); }
             }
 
-            function showPrev(e) {
-                if(e) e.stopPropagation();
-                if (currentGroup.length <= 1) return;
-                currentIndex = (currentIndex - 1 + currentGroup.length) % currentGroup.length;
-                updateLightboxImage();
-            }
-
-            function closeLightbox() {
-                lightbox.classList.remove("active");
-            }
-
-            nextBtn.addEventListener("click", showNext);
-            prevBtn.addEventListener("click", showPrev);
-            closeBtn.addEventListener("click", closeLightbox);
-            
-            lightbox.addEventListener("click", function(e) {
-                if (e.target !== lightboxImg && e.target !== prevBtn && e.target !== nextBtn) {
-                    closeLightbox();
+            next.onclick = (e) => move(1, e);
+            prev.onclick = (e) => move(-1, e);
+            document.getElementById("lightbox-close").onclick = () => box.classList.remove("active");
+            box.onclick = (e) => { if(![imgEl, prev, next].includes(e.target)) box.classList.remove("active"); };
+            document.addEventListener("keydown", e => {
+                if(box.classList.contains("active")) {
+                    if(e.key==="ArrowRight") move(1); if(e.key==="ArrowLeft") move(-1); if(e.key==="Escape") box.classList.remove("active");
                 }
-            });
-
-            document.addEventListener("keydown", function(e) {
-                if (!lightbox.classList.contains("active")) return;
-                if (e.key === "ArrowRight") showNext();
-                if (e.key === "ArrowLeft") showPrev();
-                if (e.key === "Escape") closeLightbox();
             });
         }
 
-        window.onload = function() {
-            setupTabs();
-            setupSubTabs();
-            calculate();
-            startFormCountdown(); 
-            setupLightbox(); 
-        };
+        // 啟動所有功能
+        window.onload = () => { initTabs(); calculate(); initTimers(); initLightbox(); };
     </script>
 </body>
 </html>

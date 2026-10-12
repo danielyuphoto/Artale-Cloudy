@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</title>
     <style>
+        /* 全局字體改用草書/手寫風格 (行楷、標楷體、草書英文) */
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-family: 'Brush Script MT', 'STXingkai', 'Xingkai SC', 'KaiTi', 'DFKai-SB', cursive, sans-serif; 
             /* 神木村背景 */
             background-image: url('神木村.webp');
             background-size: cover;
@@ -28,18 +29,14 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
-        /* 現代白底雲朵柔邊標題框 */
+        /* 標題與對稱勳章區塊 - 取消舊邊框，改為雲朵圖片包覆 */
         .header-container { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 25px; 
+            gap: 15px; 
             margin-bottom: 30px; 
-            padding: 20px 30px; 
-            background: #ffffff;
-            border-radius: 50px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 0 6px rgba(255, 255, 255, 0.6);
-            border: 2px solid rgba(230, 240, 255, 0.8);
+            padding: 10px; 
         }
         .header-container img.badge { 
             height: 90px; 
@@ -48,14 +45,30 @@
             cursor: pointer;
         } 
         .header-container img.badge:hover { transform: scale(1.1); }
-        .header-container h2 { 
+        
+        /* 雲朵邊框專屬容器 */
+        .cloud-title-wrapper {
+            background-image: url('雲朵邊框.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            /* 調整內距讓文字剛好落在雲朵白底中間，避開上方的掛鍊 */
+            padding: 70px 90px 50px 90px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 350px;
+            min-height: 150px;
+            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)); /* 讓雲朵有微微浮起感 */
+        }
+        .cloud-title-wrapper h2 { 
             margin: 0; 
             color: #2c3e50; 
-            font-size: 32px; 
-            font-weight: 700;
+            font-size: 38px; 
+            font-weight: bold;
             text-align: center; 
-            letter-spacing: 0.5px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            letter-spacing: 2px;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
 
         /* 左右排版容器 */
@@ -81,14 +94,14 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 14px 18px;
             border-radius: 8px;
-            font-size: 15px;
+            font-size: 18px; /* 放大草書字體使其更易讀 */
             font-weight: bold;
             color: #2c3e50;
             text-align: left;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: inherit; /* 繼承全局草書字體 */
         }
         .sidebar button:hover {
             background: rgba(255, 255, 255, 0.95);
@@ -121,7 +134,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 公會招生圖修正：限制在右側範圍內，且呈現清晰大圖 */
+        /* 公會招生圖 (進場浮現 + 滑鼠懸停微放大) */
         @keyframes zoomInEffect {
             from { opacity: 0; transform: scale(0.92); }
             to { opacity: 1; transform: scale(1); }
@@ -133,12 +146,19 @@
             animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .recruit-image-container img {
-            width: 100%; /* 確保圖片乖乖填滿右側區塊，絕不溢出左側 */
-            max-width: 1000px; /* 限制最大寬度，讓它比原本更大更清晰，但又不會大到破版 */
+            width: 100%; 
+            max-width: 1000px; 
             height: auto;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border: 3px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* 懸停特效過渡 */
+            cursor: pointer;
+        }
+        /* 新增：滑鼠懸停微放大特效 */
+        .recruit-image-container img:hover {
+            transform: scale(1.03); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.45);
         }
 
         /* 首頁大合照與介紹區塊 */
@@ -158,7 +178,7 @@
         .intro-box {
             padding: 25px;
             line-height: 1.8;
-            font-size: 17px;
+            font-size: 20px; /* 稍微放大草書內文 */
             color: #2c3e50;
         }
         .intro-box h3 {
@@ -166,20 +186,21 @@
             border-bottom: 2px solid rgba(52, 152, 219, 0.3);
             padding-bottom: 10px;
             color: #2980b9;
+            font-size: 24px;
         }
         
         /* === 計算器專用樣式 === */
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap;}
-        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; }
+        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
+        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: sans-serif; /* 數字保持清晰字體 */ }
         input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
-        th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); }
-        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 16px; letter-spacing: 1px; }
+        th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
+        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 18px; letter-spacing: 1px; }
         tr:hover { background-color: rgba(255, 255, 255, 0.6); }
         .buy-ah { color: #27ae60; font-weight: bold; }
         .buy-wc { color: #2980b9; font-weight: bold; }
@@ -197,13 +218,13 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 8px 18px;
             border-radius: 6px;
-            font-size: 15px;
+            font-size: 17px;
             font-weight: bold;
             color: #2c3e50;
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: inherit;
         }
         .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
         .sub-tabs button.active {
@@ -229,9 +250,16 @@
         /* 手機版 RWD */
         @media (max-width: 768px) {
             body { padding: 10px 10px 30px 10px; }
-            .header-container { gap: 10px; padding: 12px 15px; margin-bottom: 15px; border-radius: 30px; }
-            .header-container img.badge { height: 45px; } 
-            .header-container h2 { font-size: 18px; }
+            .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+            .header-container img.badge { height: 50px; } 
+            
+            /* 手機版雲朵邊框縮小 */
+            .cloud-title-wrapper {
+                padding: 40px 50px 30px 50px; 
+                min-width: 250px;
+                min-height: 100px;
+            }
+            .cloud-title-wrapper h2 { font-size: 22px; }
             
             .layout-container { flex-direction: column; gap: 15px; }
             .sidebar { 
@@ -244,13 +272,15 @@
                 top: 0;
             }
             .sidebar::-webkit-scrollbar { display: none; } 
-            .sidebar button { text-align: center; padding: 10px 15px; font-size: 14px; }
+            .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
             .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
             
+            .recruit-image-container img { width: 100%; max-width: 100%; }
+
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            th, td { padding: 10px 8px; font-size: 14px; }
-            th { font-size: 14px; }
+            th, td { padding: 10px 8px; font-size: 15px; }
+            th { font-size: 15px; }
             input[type="number"] { width: 70px; padding: 4px 8px; }
             .embed-container { height: 550px; }
             .footer-container img.nameplate { height: 75px; }
@@ -260,17 +290,21 @@
 </head>
 <body>
 
-    <!-- 標題區塊 -->
+    <!-- 標題區塊 (改用雲朵邊框背景) -->
     <div class="header-container">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
-        <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</h2>
+        
+        <div class="cloud-title-wrapper">
+            <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</h2>
+        </div>
+        
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 
     <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 -->
+        <!-- 左側導覽列 (順序：首頁 -> 招生 -> 報名 -> 名單 -> 計算) -->
         <div class="sidebar glass-panel">
             <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
             <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>

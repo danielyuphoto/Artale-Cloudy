@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cloudy 公會專屬 - 點數商品折溢價計算表</title>
+    <title>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬 - 點數商品折溢價計算表</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -40,7 +40,12 @@
         .header-container img.badge { 
             height: 100px; 
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); /* 讓去背圖有立體感 */
+            transition: transform 0.3s ease; /* 加入動畫過渡效果 */
+            cursor: pointer;
         } 
+        .header-container img.badge:hover {
+            transform: scale(1.1); /* 滑鼠游標移上時微放大 */
+        }
         .header-container h2 { 
             margin: 0; 
             color: #2c3e50; 
@@ -97,7 +102,7 @@
     <!-- 圖片與標題區塊 (左右對稱勳章) -->
     <div class="header-container glass-panel">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
-        <h2>Cloudy 公會專屬<br>點數商品折溢價計算表</h2>
+        <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬<br>點數商品折溢價計算表</h2>
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 

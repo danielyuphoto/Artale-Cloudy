@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</title>
+    <title>Artale 𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬網頁</title>
     <style>
-        /* 全局字體改用草書/手寫風格 (行楷、標楷體、草書英文) */
+        /* 全局字體改用草書/手寫風格 */
         body { 
             font-family: 'Brush Script MT', 'STXingkai', 'Xingkai SC', 'KaiTi', 'DFKai-SB', cursive, sans-serif; 
             /* 神木村背景 */
@@ -29,37 +29,59 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
-        /* 標題與對稱勳章區塊 - 取消舊邊框，改為雲朵圖片包覆 */
+        /* 標題與對稱勳章區塊 */
         .header-container { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
-            gap: 15px; 
-            margin-bottom: 30px; 
+            gap: 20px; 
+            margin-bottom: 40px; 
             padding: 10px; 
+            margin-top: 20px;
         }
         .header-container img.badge { 
             height: 90px; 
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); 
             transition: transform 0.3s ease; 
             cursor: pointer;
+            z-index: 5;
         } 
         .header-container img.badge:hover { transform: scale(1.1); }
         
-        /* 雲朵邊框專屬容器 */
+        /* === 純 CSS 繪製：柔邊雲朵特效外框 === */
         .cloud-title-wrapper {
-            background-image: url('雲朵邊框.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            /* 調整內距讓文字剛好落在雲朵白底中間，避開上方的掛鍊 */
-            padding: 70px 90px 50px 90px; 
+            position: relative;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 80px; /* 主體為大圓角橢圓 */
+            padding: 25px 50px; 
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 350px;
-            min-height: 150px;
-            filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15)); /* 讓雲朵有微微浮起感 */
+            /* 雲朵周邊的高強度柔邊發光特效 */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85);
+            z-index: 1;
+        }
+        /* 利用 ::before 和 ::after 畫出雲朵上方的凸起圓弧 */
+        .cloud-title-wrapper::before,
+        .cloud-title-wrapper::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 50%;
+            z-index: -1;
+            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8);
+        }
+        .cloud-title-wrapper::before {
+            width: 100px;
+            height: 100px;
+            top: -40px;
+            left: 15%;
+        }
+        .cloud-title-wrapper::after {
+            width: 130px;
+            height: 130px;
+            top: -55px;
+            right: 15%;
         }
         .cloud-title-wrapper h2 { 
             margin: 0; 
@@ -68,7 +90,9 @@
             font-weight: bold;
             text-align: center; 
             letter-spacing: 2px;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.9);
+            position: relative;
+            z-index: 2;
         }
 
         /* 左右排版容器 */
@@ -88,20 +112,21 @@
             flex-shrink: 0;
             position: sticky;
             top: 20px; 
+            z-index: 20; /* 確保選單不會被放大後的圖片蓋住 */
         }
         .sidebar button {
             background: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 14px 18px;
             border-radius: 8px;
-            font-size: 18px; /* 放大草書字體使其更易讀 */
+            font-size: 18px; 
             font-weight: bold;
             color: #2c3e50;
             text-align: left;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: inherit; /* 繼承全局草書字體 */
+            font-family: inherit; 
         }
         .sidebar button:hover {
             background: rgba(255, 255, 255, 0.95);
@@ -134,7 +159,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 公會招生圖 (進場浮現 + 滑鼠懸停微放大) */
+        /* 公會招生圖 (進場浮現 + 1.3倍放大特效) */
         @keyframes zoomInEffect {
             from { opacity: 0; transform: scale(0.92); }
             to { opacity: 1; transform: scale(1); }
@@ -144,6 +169,7 @@
             display: flex;
             justify-content: center;
             animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            padding: 20px 0; /* 預留放大空間避免裁切 */
         }
         .recruit-image-container img {
             width: 100%; 
@@ -152,13 +178,17 @@
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             border: 3px solid rgba(255, 255, 255, 0.9);
-            transition: transform 0.4s ease, box-shadow 0.4s ease; /* 懸停特效過渡 */
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
             cursor: pointer;
+            transform-origin: center center;
+            z-index: 10;
+            position: relative;
         }
-        /* 新增：滑鼠懸停微放大特效 */
+        /* 滑鼠懸停放大 1.3 倍 */
         .recruit-image-container img:hover {
-            transform: scale(1.03); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.45);
+            transform: scale(1.3); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            z-index: 999; /* 放大時確保圖層在最上方 */
         }
 
         /* 首頁大合照與介紹區塊 */
@@ -178,7 +208,7 @@
         .intro-box {
             padding: 25px;
             line-height: 1.8;
-            font-size: 20px; /* 稍微放大草書內文 */
+            font-size: 20px; 
             color: #2c3e50;
         }
         .intro-box h3 {
@@ -193,7 +223,7 @@
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
-        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: sans-serif; /* 數字保持清晰字體 */ }
+        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: sans-serif; }
         input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
@@ -253,12 +283,13 @@
             .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
             .header-container img.badge { height: 50px; } 
             
-            /* 手機版雲朵邊框縮小 */
+            /* 手機版雲朵邊框微調 */
             .cloud-title-wrapper {
-                padding: 40px 50px 30px 50px; 
-                min-width: 250px;
-                min-height: 100px;
+                padding: 15px 30px; 
+                border-radius: 40px;
             }
+            .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
+            .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
             .cloud-title-wrapper h2 { font-size: 22px; }
             
             .layout-container { flex-direction: column; gap: 15px; }
@@ -276,6 +307,8 @@
             .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
             
             .recruit-image-container img { width: 100%; max-width: 100%; }
+            /* 手機板取消懸停放大，避免滑動時體驗不佳 */
+            .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
 
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -290,12 +323,12 @@
 </head>
 <body>
 
-    <!-- 標題區塊 (改用雲朵邊框背景) -->
+    <!-- 標題區塊 (CSS純手工繪製雲朵柔邊框) -->
     <div class="header-container">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
         
         <div class="cloud-title-wrapper">
-            <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</h2>
+            <h2>Artale 𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬網頁</h2>
         </div>
         
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
@@ -304,7 +337,7 @@
     <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 (順序：首頁 -> 招生 -> 報名 -> 名單 -> 計算) -->
+        <!-- 左側導覽列 -->
         <div class="sidebar glass-panel">
             <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
             <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>

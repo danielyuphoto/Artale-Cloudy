@@ -164,3 +164,405 @@
 
         /* 頁籤內容切換設定 */
         .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 公會招生圖 (進場浮現 + 1.3倍放大特效) */
+        @keyframes zoomInEffect {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .recruit-image-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            padding: 20px 0; 
+        }
+        .recruit-image-container img {
+            width: 100%; 
+            max-width: 1000px; 
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
+            cursor: pointer;
+            transform-origin: center center;
+            z-index: 10;
+            position: relative;
+        }
+        .recruit-image-container img:hover {
+            transform: scale(1.3); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            z-index: 999; 
+        }
+
+        /* 首頁大合照與介紹區塊 */
+        .hero-image-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .hero-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+        .intro-box {
+            padding: 25px;
+            line-height: 1.8;
+            font-size: 20px; 
+            color: #2c3e50;
+        }
+        .intro-box h3 {
+            margin-top: 0;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+            padding-bottom: 10px;
+            color: #2980b9;
+            font-size: 24px;
+        }
+        
+        /* === 計算器專用樣式 === */
+        .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
+        .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
+        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: sans-serif; }
+        input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
+        .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
+        
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
+        th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
+        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 18px; letter-spacing: 1px; }
+        tr:hover { background-color: rgba(255, 255, 255, 0.6); }
+        .buy-ah { color: #27ae60; font-weight: bold; }
+        .buy-wc { color: #2980b9; font-weight: bold; }
+        .profit-good { color: #c0392b; font-weight: bold; }
+        .profit-bad { color: #7f8c8d; }
+
+        /* 王團名單專屬上方小切換按鈕 */
+        .sub-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .sub-tabs button {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-family: inherit;
+        }
+        .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
+        .sub-tabs button.active {
+            background: #e67e22; 
+            color: white;
+            border-color: #d35400;
+        }
+
+        /* iframe 嵌入樣式 */
+        .embed-container {
+            width: 100%;
+            height: 750px; 
+            border: none;
+            border-radius: 12px;
+            background: #fff; 
+        }
+
+        /* 底部公會名牌區塊 */
+        .footer-container { display: flex; justify-content: center; margin-top: 40px; }
+        .footer-container img.nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; }
+        .footer-container img.nameplate:hover { transform: scale(1.05); }
+
+        /* 手機版 RWD */
+        @media (max-width: 768px) {
+            body { padding: 10px 10px 30px 10px; }
+            .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+            .header-container img.badge { height: 50px; } 
+            
+            .cloud-title-wrapper {
+                padding: 15px 30px; 
+                border-radius: 40px;
+            }
+            .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
+            .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
+            .title-cursive { font-size: 26px; }
+            .title-zen { font-size: 22px; }
+            
+            .layout-container { flex-direction: column; gap: 15px; }
+            .sidebar { 
+                flex-direction: row; 
+                width: 100%; 
+                overflow-x: auto; 
+                padding: 10px; 
+                white-space: nowrap; 
+                position: relative; 
+                top: 0;
+            }
+            .sidebar::-webkit-scrollbar { display: none; } 
+            .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
+            .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
+            
+            .recruit-image-container img { width: 100%; max-width: 100%; }
+            .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+
+            .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
+            .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+            th, td { padding: 10px 8px; font-size: 16px; }
+            th { font-size: 16px; }
+            input[type="number"] { width: 70px; padding: 4px 8px; }
+            .embed-container { height: 550px; }
+            .footer-container img.nameplate { height: 75px; }
+            .vip-note { margin-left: 0; display: block; margin-top: 5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 標題區塊 -->
+    <div class="header-container">
+        <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
+        
+        <div class="cloud-title-wrapper">
+            <h2><span class="title-cursive">Artale Cloudy</span> <span class="title-zen">公會小窩</span></h2>
+        </div>
+        
+        <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
+    </div>
+
+    <!-- 主容器 -->
+    <div class="layout-container">
+        
+        <!-- 左側導覽列 (全新 EventListener 按鈕) -->
+        <div class="sidebar glass-panel">
+            <button class="active" data-tab="homeTab">🏡 公會首頁</button>
+            <button data-tab="recruitTab">⭐ 公會招生</button>
+            <button data-tab="signupTab">⚔️ 突襲王團報名</button>
+            <button data-tab="rosterTab">📜 每週王團名單</button>
+            <button data-tab="calcTab">💰 點商行情分析計算</button>
+        </div>
+
+        <!-- 右側動態內容區 -->
+        <div class="main-content">
+            
+            <!-- 頁籤：公會首頁 -->
+            <div id="homeTab" class="tab-content active">
+                <div class="hero-image-container">
+                    <img src="公會合照.png" alt="Cloudy公會大合照">
+                </div>
+                
+                <div class="glass-panel intro-box">
+                    <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
+                    <p>歡迎來到 Cloudy 專屬入口網站！這裡是我們的公會佈告欄與實用工具區。</p>
+                    <p>這裡目前預留了介紹空間，未來你可以隨時在原始碼中修改這段文字，放入公會招募條件、出團規定、或是想對小夥伴們說的話唷！</p>
+                </div>
+            </div>
+
+            <!-- 頁籤：公會招生 -->
+            <div id="recruitTab" class="tab-content">
+                <div class="recruit-image-container">
+                    <img src="公會招生圖.png" alt="Cloudy公會招生資訊">
+                </div>
+            </div>
+
+            <!-- 頁籤：突襲王團報名 -->
+            <div id="signupTab" class="tab-content">
+                <div class="glass-panel" style="padding: 10px;">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+                </div>
+            </div>
+
+            <!-- 頁籤：每週王團名單 -->
+            <div id="rosterTab" class="tab-content">
+                <div class="sub-tabs">
+                    <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">🌲 樹王團</button>
+                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">🐉 龍王團</button>
+                    <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">👑 困拉團</button>
+                </div>
+                <div class="glass-panel" style="padding: 10px;">
+                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單">載入中...</iframe>
+                </div>
+            </div>
+
+            <!-- 頁籤：點商行情分析計算 -->
+            <div id="calcTab" class="tab-content">
+                <div class="controls glass-panel">
+                    <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
+                        <label>💰 儲值基準： 
+                            <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
+                            <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
+                        </label>
+                        <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+                    </div>
+                    <div class="controls-row">
+                        <label>
+                            <input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 
+                            👑 擁有拍賣場VIP (手續費降至3%)
+                        </label>
+                        <span id="vipText" class="vip-note"></span>
+                    </div>
+                </div>
+
+                <div class="glass-panel table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>商城道具</th>
+                                <th>WC 單價</th>
+                                <th>理論點數成本<br>(萬楓幣)</th>
+                                <th>目前拍賣行情<br>(萬楓幣)</th>
+                                <th>買來自用建議</th>
+                                <th>用WC購買後賣出<br>(萬楓幣)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- 內容由 JavaScript 動態生成 -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div> 
+    </div> 
+
+    <!-- 底部名牌區塊 -->
+    <div class="footer-container">
+        <img src="公會名牌截圖(去背).png" alt="公會名牌(去背)" class="nameplate">
+    </div>
+
+    <!-- JavaScript 邏輯區 -->
+    <script>
+        // === 全新升級：更穩定、抗干擾的頁籤切換腳本 ===
+        function setupTabs() {
+            const sidebarBtns = document.querySelectorAll(".sidebar button");
+            const tabContents = document.querySelectorAll(".tab-content");
+
+            sidebarBtns.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    // 清除所有左側按鈕的 active
+                    sidebarBtns.forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+
+                    // 隱藏所有右側內容
+                    tabContents.forEach(tab => tab.classList.remove("active"));
+                    
+                    // 顯示指定的內容區塊
+                    const targetId = this.getAttribute("data-tab");
+                    if (document.getElementById(targetId)) {
+                        document.getElementById(targetId).classList.add("active");
+                    }
+                });
+            });
+        }
+
+        function setupSubTabs() {
+            const subBtns = document.querySelectorAll(".sub-tabs button");
+            const iframe = document.getElementById("rosterIframe");
+
+            subBtns.forEach(btn => {
+                btn.addEventListener("click", function() {
+                    // 清除上方小按鈕的 active
+                    subBtns.forEach(b => b.classList.remove("active"));
+                    this.classList.add("active");
+                    // 切換 iframe 網址
+                    iframe.src = this.getAttribute("data-url");
+                });
+            });
+        }
+
+        // === 計算器邏輯 ===
+        const items = [
+            { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
+            { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
+            { name: "高級瞬移之石", wc: 400/11, ah: 81 },
+            { name: "凍結加持器", wc: 450/11, ah: 97 },
+            { name: "神秘符咒", wc: 450/11, ah: 92 },
+            { name: "神秘背包", wc: 250, ah: 520 },
+            { name: "AP初始化卷軸", wc: 400, ah: 920 },
+            { name: "SP初始化卷軸", wc: 300, ah: 679 },
+            { name: "寵物", wc: 1600, ah: 3500 }
+        ];
+
+        function calculate() {
+            const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
+            const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
+            const wcCostTWD = twdCost / wcAmount; 
+
+            const twdRate = parseFloat(document.getElementById('twdRate').value) || 1;
+            const isVip = document.getElementById('vipCheck').checked;
+            const tax = isVip ? 0.03 : 0.05;
+            
+            const vipCostTWD = 6400 * wcCostTWD;
+            const vipCostMeso = vipCostTWD * (10000 / twdRate); 
+            const breakEvenMeso = (vipCostMeso / 0.02) / 10000; 
+            
+            document.getElementById('vipText').innerText = 
+                `※ 90天VIP成本為6400 WC，以目前匯率需賣出約 ${breakEvenMeso.toFixed(2)} 億楓幣方可回本`;
+
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            items.forEach((item, index) => {
+                const theoryMeso = (item.wc * wcCostTWD) * (10000 / twdRate);
+                const tr = document.createElement('tr');
+                
+                let buyAdvice = '';
+                if (item.ah < theoryMeso) {
+                    buyAdvice = `<span class="buy-ah">✅ 用楓幣拉拍賣</span>`;
+                } else {
+                    buyAdvice = `<span class="buy-wc">💎 直接扣 WC 買</span>`;
+                }
+
+                const sellNet = item.ah * (1 - tax);
+                const realProfit = sellNet - theoryMeso;
+                let profitHtml = '';
+                if (realProfit > 0) {
+                    profitHtml = `<span class="profit-good">賺 ${realProfit.toFixed(1)} 萬</span>`;
+                } else {
+                    profitHtml = `<span class="profit-bad">虧 ${Math.abs(realProfit).toFixed(1)} 萬</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.wc.toFixed(1)}</td>
+                    <td>${theoryMeso.toFixed(1)}</td>
+                    <td><input type="number" value="${item.ah}" style="width: 75px;" onchange="updateAH(${index}, this.value)"></td>
+                    <td>${buyAdvice}</td>
+                    <td>${profitHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateAH(index, newValue) {
+            items[index].ah = parseFloat(newValue) || 0;
+            calculate();
+        }
+
+        // 當網頁全部載入完成後，啟動所有功能
+        window.onload = function() {
+            setupTabs();
+            setupSubTabs();
+            calculate();
+        };
+    </script>
+</body>
+</html>

@@ -7,7 +7,7 @@
     <!-- 載入 Zen Maru Gothic 字體 -->
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
-        /* 全局字體改為華康手札體 (包含安全備用字體) */
+        /* 全局字體：華康手札體 */
         body { 
             font-family: '華康手札體 Std W7 OpenType', 'DFHandwriting-W7', 'DFPHandwriting-W7', 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
             /* 神木村背景 */
@@ -40,6 +40,8 @@
             margin-bottom: 40px; 
             padding: 10px; 
             margin-top: 20px;
+            position: relative; /* 固定層級避免特效干擾下方 */
+            z-index: 10;
         }
         .header-container img.badge { 
             height: 90px; 
@@ -70,6 +72,7 @@
             border-radius: 50%;
             z-index: -1;
             box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8);
+            pointer-events: none; /* 讓隱形的雲朵特效不會阻擋滑鼠點擊 */
         }
         .cloud-title-wrapper::before {
             width: 100px;
@@ -90,14 +93,14 @@
             position: relative;
             z-index: 2;
         }
-        /* 針對標題英文字母的草書設定 */
+        /* 標題英文字母草書設定 */
         .title-cursive {
             font-family: 'Brush Script MT', 'STXingkai', cursive;
             font-size: 42px;
             color: #2c3e50;
             margin-right: 8px;
         }
-        /* 針對標題中文的 Zen Maru Gothic 設定 */
+        /* 標題中文 Zen Maru Gothic 設定 */
         .title-zen {
             font-family: 'Zen Maru Gothic', sans-serif;
             font-size: 38px;
@@ -111,6 +114,8 @@
             display: flex;
             gap: 30px;
             align-items: flex-start;
+            position: relative;
+            z-index: 20;
         }
 
         /* 左側導覽列 */
@@ -123,7 +128,7 @@
             flex-shrink: 0;
             position: sticky;
             top: 20px; 
-            z-index: 20; 
+            z-index: 9999; /* 超高層級，絕對不會被其他區塊覆蓋或擋住點擊 */
         }
         .sidebar button {
             background: rgba(255, 255, 255, 0.6);
@@ -137,7 +142,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: inherit; /* 繼承華康手札體 */
+            font-family: inherit; 
         }
         .sidebar button:hover {
             background: rgba(255, 255, 255, 0.95);
@@ -159,249 +164,3 @@
 
         /* 頁籤內容切換設定 */
         .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 公會招生圖 (進場浮現 + 1.3倍放大特效) */
-        @keyframes zoomInEffect {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .recruit-image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            padding: 20px 0; 
-        }
-        .recruit-image-container img {
-            width: 100%; 
-            max-width: 1000px; 
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
-            cursor: pointer;
-            transform-origin: center center;
-            z-index: 10;
-            position: relative;
-        }
-        .recruit-image-container img:hover {
-            transform: scale(1.3); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            z-index: 999; 
-        }
-
-        /* 首頁大合照與介紹區塊 */
-        .hero-image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-        .hero-image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255, 255, 255, 0.8);
-        }
-        .intro-box {
-            padding: 25px;
-            line-height: 1.8;
-            font-size: 20px; 
-            color: #2c3e50;
-        }
-        .intro-box h3 {
-            margin-top: 0;
-            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
-            padding-bottom: 10px;
-            color: #2980b9;
-            font-size: 24px;
-        }
-        
-        /* === 計算器專用樣式 === */
-        .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
-        .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
-        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: inherit; }
-        input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
-        .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
-        
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
-        table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
-        th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
-        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 18px; letter-spacing: 1px; }
-        tr:hover { background-color: rgba(255, 255, 255, 0.6); }
-        .buy-ah { color: #27ae60; font-weight: bold; }
-        .buy-wc { color: #2980b9; font-weight: bold; }
-        .profit-good { color: #c0392b; font-weight: bold; }
-        .profit-bad { color: #7f8c8d; }
-
-        /* 王團名單專屬上方小切換按鈕 */
-        .sub-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .sub-tabs button {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 18px; /* 配合手札體稍微放大 */
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-family: inherit;
-        }
-        .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
-        .sub-tabs button.active {
-            background: #e67e22; 
-            color: white;
-            border-color: #d35400;
-        }
-
-        /* iframe 嵌入樣式 */
-        .embed-container {
-            width: 100%;
-            height: 750px; 
-            border: none;
-            border-radius: 12px;
-            background: #fff; 
-        }
-
-        /* 底部公會名牌區塊 */
-        .footer-container { display: flex; justify-content: center; margin-top: 40px; }
-        .footer-container img.nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; }
-        .footer-container img.nameplate:hover { transform: scale(1.05); }
-
-        /* 手機版 RWD */
-        @media (max-width: 768px) {
-            body { padding: 10px 10px 30px 10px; }
-            .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-            .header-container img.badge { height: 50px; } 
-            
-            .cloud-title-wrapper {
-                padding: 15px 30px; 
-                border-radius: 40px;
-            }
-            .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
-            .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
-            
-            /* 手機版標題字體縮小 */
-            .title-cursive { font-size: 26px; }
-            .title-zen { font-size: 22px; }
-            
-            .layout-container { flex-direction: column; gap: 15px; }
-            .sidebar { 
-                flex-direction: row; 
-                width: 100%; 
-                overflow-x: auto; 
-                padding: 10px; 
-                white-space: nowrap; 
-                position: relative; 
-                top: 0;
-            }
-            .sidebar::-webkit-scrollbar { display: none; } 
-            .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
-            .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
-            
-            .recruit-image-container img { width: 100%; max-width: 100%; }
-            .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-
-            .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
-            .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            th, td { padding: 10px 8px; font-size: 16px; }
-            th { font-size: 16px; }
-            input[type="number"] { width: 70px; padding: 4px 8px; }
-            .embed-container { height: 550px; }
-            .footer-container img.nameplate { height: 75px; }
-            .vip-note { margin-left: 0; display: block; margin-top: 5px; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 標題區塊 (CSS柔邊雲朵 + 混搭字體) -->
-    <div class="header-container">
-        <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
-        
-        <div class="cloud-title-wrapper">
-            <h2><span class="title-cursive">Artale Cloudy</span> <span class="title-zen">公會小窩</span></h2>
-        </div>
-        
-        <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
-    </div>
-
-    <!-- 主容器 -->
-    <div class="layout-container">
-        
-        <!-- 左側導覽列 -->
-        <div class="sidebar glass-panel">
-            <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
-            <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>
-            <button onclick="openTab(event, 'signupTab')">⚔️ 突襲王團報名</button>
-            <button onclick="openTab(event, 'rosterTab')">📜 每週王團名單</button>
-            <button onclick="openTab(event, 'calcTab')">💰 點商行情分析計算</button>
-        </div>
-
-        <!-- 右側動態內容區 -->
-        <div class="main-content">
-            
-            <!-- 頁籤：公會首頁 -->
-            <div id="homeTab" class="tab-content active">
-                <div class="hero-image-container">
-                    <img src="公會合照.png" alt="Cloudy公會大合照">
-                </div>
-                
-                <div class="glass-panel intro-box">
-                    <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
-                    <p>歡迎來到 Cloudy 專屬入口網站！這裡是我們的公會佈告欄與實用工具區。</p>
-                    <p>這裡目前預留了介紹空間，未來你可以隨時在原始碼中修改這段文字，放入公會招募條件、出團規定、或是想對小夥伴們說的話唷！</p>
-                </div>
-            </div>
-
-            <!-- 頁籤：公會招生 -->
-            <div id="recruitTab" class="tab-content">
-                <div class="recruit-image-container">
-                    <img src="公會招生圖.png" alt="Cloudy公會招生資訊">
-                </div>
-            </div>
-
-            <!-- 頁籤：突襲王團報名 -->
-            <div id="signupTab" class="tab-content">
-                <div class="glass-panel" style="padding: 10px;">
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
-                </div>
-            </div>
-
-            <!-- 頁籤：每週王團名單 -->
-            <div id="rosterTab" class="tab-content">
-                <div class="sub-tabs">
-                    <button class="active" onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129')">🌲 樹王團</button>
-                    <button onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0')">🐉 龍王團</button>
-                    <button onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249')">👑 困拉團</button>
-                </div>
-                <div class="glass-panel" style="padding: 10px;">
-                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單">載入中...</iframe>
-                </div>
-            </div>
-
-            <!-- 頁籤：點商行情分析計算 -->
-            <div id="calcTab" class="tab-content">
-                <div class="controls glass-panel">
-                    <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
-                        <label>💰 儲值基準： 
-                            <input type="number" id="twdCost" value="1

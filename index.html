@@ -54,6 +54,21 @@
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
 
+        /* 公會大合照展示區 */
+        .hero-image-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+        .hero-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+
         /* 導覽列 (頁籤切換) */
         .nav-tabs {
             display: flex;
@@ -123,7 +138,7 @@
             height: 700px;
             border: none;
             border-radius: 12px;
-            background: #fff; /* 避免透明背景影響試算表閱讀 */
+            background: #fff; 
         }
 
         /* 底部公會名牌區塊 */
@@ -137,6 +152,7 @@
             .header-container { gap: 10px; padding: 15px; margin-bottom: 15px; }
             .header-container img.badge { height: 50px; } 
             .header-container h2 { font-size: 20px; }
+            .hero-image-container { margin-bottom: 15px; }
             .nav-tabs button { padding: 8px 16px; font-size: 14px; }
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -156,6 +172,11 @@
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
         <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會首頁</h2>
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
+    </div>
+
+    <!-- 首頁大合照 -->
+    <div class="hero-image-container">
+        <img src="公會合照.jpg" alt="Cloudy公會大合照">
     </div>
 
     <!-- 導覽列按鈕 -->
@@ -206,16 +227,16 @@
     <!-- 頁籤二：突襲王團報名表單 -->
     <div id="signupTab" class="tab-content">
         <div class="glass-panel" style="padding: 10px;">
-            <!-- 請將下方 src="" 裡面的網址換成你建立的 Google 表單連結 -->
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-xxxxxx/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+            <!-- 已更新為專屬表單，並設定為嵌入模式 -->
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
         </div>
     </div>
 
     <!-- 頁籤三：每週王團名單公告 -->
     <div id="rosterTab" class="tab-content">
         <div class="glass-panel" style="padding: 10px;">
-            <!-- 已經為你連上你們公會專用的「Cloudy突襲王團安排」試算表 -->
-            <iframe src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=true&headers=false" class="embed-container" title="每週王團名單">載入中...</iframe>
+            <!-- 已加上 widget=false&chrome=false 來隱藏下方的工作表切換列 -->
+            <iframe src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false" class="embed-container" title="每週王團名單">載入中...</iframe>
         </div>
     </div>
 
@@ -227,17 +248,14 @@
     <script>
         // === 頁籤切換邏輯 ===
         function openTab(evt, tabId) {
-            // 隱藏所有頁籤內容
             let tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove("active");
             }
-            // 移除所有按鈕的 active 狀態
             let tabLinks = document.getElementsByClassName("nav-tabs")[0].getElementsByTagName("button");
             for (let i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].classList.remove("active");
             }
-            // 顯示被點擊的頁籤，並將按鈕設為 active
             document.getElementById(tabId).classList.add("active");
             evt.currentTarget.classList.add("active");
         }

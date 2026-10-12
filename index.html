@@ -7,32 +7,34 @@
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            /* 載入神木村背景，設定填滿並固定不動 */
+            /* 神木村背景 */
             background-image: url('神木村.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #333; 
             padding: 20px; 
-            max-width: 1000px; 
+            max-width: 1100px; 
             margin: auto; 
         }
         
-        /* 標題與圖片排版區塊 - 改為 90% 透明白色 */
+        /* 標題與圖片排版區塊 (90%透明白色) */
         .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 25px; background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .header-container img { height: 60px; object-fit: contain; border-radius: 8px; }
-        .header-container img.badge { height: 120px; } 
-        .header-container h2 { margin: 0; color: #2c3e50; font-size: 24px; text-align: center; }
+        .header-container img.badge { height: 120px; } /* 公會勳章放大兩倍 */
+        .header-container h2 { margin: 0; color: #2c3e50; font-size: 26px; text-align: center; }
         
-        /* 控制區塊 - 改為 90% 透明白色 */
-        .controls { background: rgba(255, 255, 255, 0.9); padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .controls label { font-weight: bold; }
-        input[type="number"] { padding: 5px; width: 80px; border: 1px solid #ccc; border-radius: 4px; background: rgba(255, 255, 255, 0.8); }
+        /* 參數控制區塊 (90%透明白色) */
+        .controls { background: rgba(255, 255, 255, 0.9); padding: 15px 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        input[type="number"] { padding: 6px; width: 85px; border: 1px solid #ccc; border-radius: 4px; background: rgba(255, 255, 255, 0.8); font-size: 15px; }
+        .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
-        /* 表格區塊 - 改為 90% 透明白色 */
+        /* 表格區塊 (90%透明白色) */
         table { width: 100%; border-collapse: collapse; background: rgba(255, 255, 255, 0.9); box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden; }
         th, td { padding: 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.1); }
-        th { background-color: rgba(52, 73, 94, 0.95); color: #fff; }
+        th { background-color: rgba(52, 73, 94, 0.95); color: #fff; font-size: 15px; }
         tr:hover { background-color: rgba(241, 241, 241, 0.95); }
         .buy-ah { color: #27ae60; font-weight: bold; }
         .buy-wc { color: #2980b9; font-weight: bold; }
@@ -44,22 +46,27 @@
 
     <!-- 圖片與標題區塊 -->
     <div class="header-container">
-        <!-- 讀取公會勳章圖片 -->
         <img src="公會勳章截圖.png" alt="Cloudy公會勳章" class="badge">
         <h2>Cloudy 公會專屬 - 點數商品折溢價計算表</h2>
-        <!-- 讀取公會名牌圖片 -->
         <img src="公會名牌截圖.png" alt="公會名牌">
     </div>
 
     <!-- 參數控制區塊 -->
     <div class="controls">
-        <label style="width: 100%; border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 5px;">
-            💰 儲值基準： 
-            <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
-            <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
-        </label>
-        <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
-        <label><input type="checkbox" id="vipCheck" onchange="calculate()"> 👑 擁有 90 天 VIP (拍賣手續費 3%)</label>
+        <div class="controls-row" style="border-bottom: 1px dashed #ccc; padding-bottom: 15px;">
+            <label>💰 儲值基準： 
+                <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
+                <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
+            </label>
+            <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+        </div>
+        <div class="controls-row">
+            <label>
+                <input type="checkbox" id="vipCheck" style="width:18px; height:18px;" onchange="calculate()"> 
+                👑 擁有拍賣場VIP (手續費降至3%)
+            </label>
+            <span id="vipText" class="vip-note"></span>
+        </div>
     </div>
 
     <table>
@@ -79,6 +86,7 @@
     </table>
 
     <script>
+        // 依照指定順序排列的道具清單
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -92,6 +100,7 @@
         ];
 
         function calculate() {
+            // 讀取儲值基準與匯率
             const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
             const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
             const wcCostTWD = twdCost / wcAmount; 
@@ -100,6 +109,19 @@
             const isVip = document.getElementById('vipCheck').checked;
             const tax = isVip ? 0.03 : 0.05;
             
+            // 計算 VIP 回本門檻 (6400 WC 換算)
+            // 1. VIP 台幣成本 = 6400 * 每 WC 的台幣
+            // 2. VIP 楓幣成本 = 台幣成本 / (每億楓幣的台幣 / 10000) = 萬楓幣
+            // 3. 回本銷售額 = 楓幣成本 / 0.02 (省下的 2% 手續費)
+            const vipCostTWD = 6400 * wcCostTWD;
+            const vipCostMeso = vipCostTWD * (10000 / twdRate); 
+            const breakEvenMeso = (vipCostMeso / 0.02) / 10000; // 轉換為「億」為單位
+            
+            // 更新介面上的 VIP 提示文字
+            document.getElementById('vipText').innerText = 
+                `※ 90天VIP成本為6400 WC，以目前匯率需賣出約 ${breakEvenMeso.toFixed(2)} 億楓幣方可回本`;
+
+            // 產出表格內容
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
@@ -128,7 +150,7 @@
                     <td>${item.name}</td>
                     <td>${item.wc.toFixed(1)}</td>
                     <td>${theoryMeso.toFixed(1)}</td>
-                    <td><input type="number" value="${item.ah}" style="width: 70px;" onchange="updateAH(${index}, this.value)"></td>
+                    <td><input type="number" value="${item.ah}" style="width: 75px;" onchange="updateAH(${index}, this.value)"></td>
                     <td>${buyAdvice}</td>
                     <td>${profitHtml}</td>
                 `;
@@ -136,6 +158,13 @@
             });
         }
 
+        // 當拍賣場價格被修改時更新資料
+        function updateAH(index, newValue) {
+            items[index].ah = parseFloat(newValue) || 0;
+            calculate();
+        }
+
+        // 網頁載入時立刻執行計算
         calculate();
     </script>
 </body>

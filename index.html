@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
-    <!-- 同時載入英文手寫書法體(Dancing Script) 與 圓潤中文(Zen Maru Gothic) -->
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
         /* 全局字體：華康手札體 */
@@ -74,18 +73,8 @@
             box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8);
             pointer-events: none; 
         }
-        .cloud-title-wrapper::before {
-            width: 110px; 
-            height: 110px;
-            top: -45px;
-            left: 15%;
-        }
-        .cloud-title-wrapper::after {
-            width: 140px; 
-            height: 140px;
-            top: -60px;
-            right: 15%;
-        }
+        .cloud-title-wrapper::before { width: 110px; height: 110px; top: -45px; left: 15%; }
+        .cloud-title-wrapper::after { width: 140px; height: 140px; top: -60px; right: 15%; }
         .cloud-title-wrapper h2 { 
             margin: 0; 
             text-align: center; 
@@ -93,14 +82,12 @@
             position: relative;
             z-index: 2;
         }
-        /* 標題英文字母：優美手寫書法體 (Dancing Script) */
         .title-cursive {
             font-family: 'Dancing Script', 'Brush Script MT', cursive;
             font-size: 56px; 
             color: #2c3e50;
             margin-right: 12px;
         }
-        /* 標題中文：Zen Maru Gothic 設定 */
         .title-zen {
             font-family: 'Zen Maru Gothic', sans-serif;
             font-size: 46px; 
@@ -144,94 +131,101 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             font-family: inherit; 
         }
-        .sidebar button:hover {
-            background: rgba(255, 255, 255, 0.95);
-            transform: translateX(5px); 
-        }
+        .sidebar button:hover { background: rgba(255, 255, 255, 0.95); transform: translateX(5px); }
         .sidebar button.active {
-            background: #3498db;
-            color: white;
-            border-color: #2980b9;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
-            transform: translateX(5px);
+            background: #3498db; color: white; border-color: #2980b9;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); transform: translateX(5px);
         }
 
         /* 右側主要內容區 */
-        .main-content {
-            flex: 1;
-            min-width: 0; 
-        }
+        .main-content { flex: 1; min-width: 0; }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 頁籤內容切換設定 */
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-        .tab-content.active {
-            display: block;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* 公會招生圖 (進場浮現 + 1.3倍放大特效) */
-        @keyframes zoomInEffect {
-            from { opacity: 0; transform: scale(0.92); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        .recruit-image-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            padding: 20px 0; 
-        }
-        .recruit-image-container img {
-            width: 100%; 
-            max-width: 1000px; 
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255, 255, 255, 0.9);
-            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease;
-            cursor: pointer;
-            transform-origin: center center;
-            z-index: 10;
-            position: relative;
-        }
-        .recruit-image-container img:hover {
-            transform: scale(1.3); 
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            z-index: 999; 
-        }
+        /* 公會招生圖 */
+        @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
+        .recruit-image-container { width: 100%; display: flex; justify-content: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; padding: 20px 0; }
+        .recruit-image-container img { width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 3px solid rgba(255, 255, 255, 0.9); transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease; cursor: pointer; transform-origin: center center; z-index: 10; position: relative; }
+        .recruit-image-container img:hover { transform: scale(1.3); box-shadow: 0 25px 50px rgba(0,0,0,0.5); z-index: 999; }
 
         /* 首頁大合照與介紹區塊 */
-        .hero-image-container {
-            width: 100%;
+        .hero-image-container { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
+        .hero-image-container img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 3px solid rgba(255, 255, 255, 0.8); }
+        .intro-box { padding: 25px; line-height: 1.8; font-size: 20px; color: #2c3e50; }
+        .intro-box h3 { margin-top: 0; border-bottom: 2px solid rgba(52, 152, 219, 0.3); padding-bottom: 10px; color: #2980b9; font-size: 24px; }
+
+        /* === 歷史活動紀錄網格與相簿樣式 === */
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            padding: 10px;
+        }
+        .history-card {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
             display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
+            flex-direction: column;
+            gap: 10px;
         }
-        .hero-image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255, 255, 255, 0.8);
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: rgba(255, 255, 255, 0.95);
         }
-        .intro-box {
-            padding: 25px;
-            line-height: 1.8;
-            font-size: 20px; 
+        .history-date {
+            align-self: flex-start;
+            font-size: 15px;
+            color: #d35400;
+            font-weight: bold;
+            background: rgba(243, 156, 18, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            letter-spacing: 1px;
+        }
+        .history-title {
+            font-size: 22px;
             color: #2c3e50;
+            font-weight: bold;
+            line-height: 1.4;
+            margin: 0 0 5px 0;
+            font-family: inherit;
         }
-        .intro-box h3 {
-            margin-top: 0;
-            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
-            padding-bottom: 10px;
-            color: #2980b9;
-            font-size: 24px;
+        .photo-count {
+            font-size: 15px;
+            color: #7f8c8d;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        /* 橫向滾動的小相簿容器 */
+        .gallery-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 10px; /* 給滾動條預留空間 */
+        }
+        /* 美化相簿的橫向滾動條 */
+        .gallery-container::-webkit-scrollbar { height: 8px; }
+        .gallery-container::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 4px; }
+        .gallery-container::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.5); border-radius: 4px; }
+        .gallery-container::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.8); }
+        
+        .gallery-container img {
+            flex: 0 0 100%; /* 讓每一張圖片佔滿卡片寬度 */
+            scroll-snap-align: center; /* 滾動時自動對齊中央 */
+            height: 240px; 
+            object-fit: cover; 
+            border-radius: 10px;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
         
         /* === 計算器專用樣式 === */
@@ -242,7 +236,7 @@
         input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
-        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
+        .table-responsive { width: 100%; overflow-x: auto; border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
         th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
         th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 18px; letter-spacing: 1px; }
@@ -252,63 +246,17 @@
         .profit-good { color: #c0392b; font-weight: bold; }
         .profit-bad { color: #7f8c8d; }
 
-        /* 王團名單專屬上方小切換按鈕 */
-        .sub-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .sub-tabs button {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 8px 20px; 
-            border-radius: 6px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-family: inherit;
-        }
+        /* 王團名單切換按鈕 */
+        .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .sub-tabs button { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.8); padding: 8px 20px; border-radius: 6px; font-size: 18px; font-weight: bold; color: #2c3e50; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-family: inherit; }
         .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
-        .sub-tabs button.active {
-            background: #e67e22; 
-            color: white;
-            border-color: #d35400;
-        }
+        .sub-tabs button.active { background: #e67e22; color: white; border-color: #d35400; }
 
-        /* 倒數計時器外觀設計 */
-        #countdownDisplay {
-            background: rgba(255, 243, 205, 0.8); 
-            border: 2px dashed #f39c12; 
-            border-radius: 8px; 
-            padding: 12px; 
-            margin-bottom: 15px; 
-            color: #d35400; 
-            font-weight: bold; 
-            font-size: 20px; 
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            font-family: 'Segoe UI', Tahoma, sans-serif; /* 倒數數字保持清晰 */
-        }
-        #timerText {
-            color: #c0392b; 
-            font-size: 24px;
-            display: inline-block;
-            min-width: 220px; /* 避免數字跳動時長度變化太大 */
-        }
+        /* 倒數計時器 */
+        #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; border-radius: 8px; padding: 12px; margin-bottom: 15px; color: #d35400; font-weight: bold; font-size: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); font-family: 'Segoe UI', Tahoma, sans-serif; }
+        #timerText { color: #c0392b; font-size: 24px; display: inline-block; min-width: 220px; }
+        .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
 
-        /* iframe 嵌入樣式 */
-        .embed-container {
-            width: 100%;
-            height: 750px; 
-            border: none;
-            border-radius: 12px;
-            background: #fff; 
-        }
-
-        /* 底部公會名牌區塊 */
         .footer-container { display: flex; justify-content: center; margin-top: 40px; }
         .footer-container img.nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; }
         .footer-container img.nameplate:hover { transform: scale(1.05); }
@@ -319,31 +267,22 @@
             .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
             .header-container img.badge { height: 50px; } 
             
-            .cloud-title-wrapper {
-                padding: 15px 30px; 
-                border-radius: 40px;
-            }
+            .cloud-title-wrapper { padding: 15px 30px; border-radius: 40px; }
             .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
             .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
             .title-cursive { font-size: 32px; }
             .title-zen { font-size: 26px; }
             
             .layout-container { flex-direction: column; gap: 15px; }
-            .sidebar { 
-                flex-direction: row; 
-                width: 100%; 
-                overflow-x: auto; 
-                padding: 10px; 
-                white-space: nowrap; 
-                position: relative; 
-                top: 0;
-            }
+            .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; position: relative; top: 0; }
             .sidebar::-webkit-scrollbar { display: none; } 
             .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
-            .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
             
             .recruit-image-container img { width: 100%; max-width: 100%; }
             .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+            
+            .history-grid { grid-template-columns: 1fr; }
+            .gallery-container img { height: 200px; }
 
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -352,8 +291,6 @@
             input[type="number"] { width: 70px; padding: 4px 8px; }
             .embed-container { height: 550px; }
             .footer-container img.nameplate { height: 75px; }
-            .vip-note { margin-left: 0; display: block; margin-top: 5px; }
-            
             #countdownDisplay { font-size: 16px; padding: 10px; }
             #timerText { font-size: 18px; }
         }
@@ -364,11 +301,9 @@
     <!-- 標題區塊 -->
     <div class="header-container">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
-        
         <div class="cloud-title-wrapper">
             <h2><span class="title-cursive">Artale Cloudy</span> <span class="title-zen">公會小窩</span></h2>
         </div>
-        
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 
@@ -379,6 +314,7 @@
         <div class="sidebar glass-panel">
             <button class="active" data-tab="homeTab">🏡 公會首頁</button>
             <button data-tab="recruitTab">⭐ 公會招生</button>
+            <button data-tab="historyTab">📸 公會活動紀錄</button>
             <button data-tab="signupTab">⚔️ 突襲王團報名</button>
             <button data-tab="rosterTab">📜 每週王團名單</button>
             <button data-tab="calcTab">💰 點商行情計算表</button>
@@ -392,7 +328,6 @@
                 <div class="hero-image-container">
                     <img src="公會合照.png" alt="Cloudy公會大合照">
                 </div>
-                
                 <div class="glass-panel intro-box">
                     <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
                     <p>歡迎來到 Cloudy 專屬入口網站！這裡是我們的公會佈告欄與實用工具區。</p>
@@ -407,21 +342,82 @@
                 </div>
             </div>
 
-            <!-- 頁籤：突襲王團報名 (加入倒數計時區塊) -->
+            <!-- 頁籤：公會活動紀錄 (多張照片橫向滾動設計) -->
+            <div id="historyTab" class="tab-content">
+                <div class="history-grid">
+                    
+                    <!-- 2026.09.07 肝帝爭霸戰 (2張) -->
+                    <div class="history-card">
+                        <span class="history-date">2026.09.07</span>
+                        <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
+                        <div class="photo-count">📸 共 2 張照片 (可左右滑動)</div>
+                        <div class="gallery-container">
+                            <img src="2026.09.07_肝帝爭霸戰_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
+                            <img src="2026.09.07_肝帝爭霸戰_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
+                        </div>
+                    </div>
+
+                    <!-- 2026.03.09 台中線下副本 (3張) -->
+                    <div class="history-card">
+                        <span class="history-date">2026.03.09</span>
+                        <h4 class="history-title">【台中線下副本】</h4>
+                        <div class="photo-count">📸 共 3 張照片 (可左右滑動)</div>
+                        <div class="gallery-container">
+                            <img src="2026.03.09_台中線下副本_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
+                            <img src="2026.03.09_台中線下副本_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
+                            <img src="2026.03.09_台中線下副本_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片3'">
+                        </div>
+                    </div>
+
+                    <!-- 2026.02.16 新春財源廣進活動 (4張) -->
+                    <div class="history-card">
+                        <span class="history-date">2026.02.16</span>
+                        <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
+                        <div class="photo-count">📸 共 4 張照片 (可左右滑動)</div>
+                        <div class="gallery-container">
+                            <img src="2026.02.16_新春財源廣進_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
+                            <img src="2026.02.16_新春財源廣進_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
+                            <img src="2026.02.16_新春財源廣進_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片3'">
+                            <img src="2026.02.16_新春財源廣進_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片4'">
+                        </div>
+                    </div>
+
+                    <!-- 2025.12.27 第一次線下聚會 (5張) -->
+                    <div class="history-card">
+                        <span class="history-date">2025.12.27</span>
+                        <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
+                        <div class="photo-count">📸 共 5 張照片 (可左右滑動)</div>
+                        <div class="gallery-container">
+                            <img src="2025.12.27_第一次線下聚會_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
+                            <img src="2025.12.27_第一次線下聚會_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
+                            <img src="2025.12.27_第一次線下聚會_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片3'">
+                            <img src="2025.12.27_第一次線下聚會_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片4'">
+                            <img src="2025.12.27_第一次線下聚會_5.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片5'">
+                        </div>
+                    </div>
+                    
+                    <!-- 2025.11.17 第一張合照 (1張) -->
+                    <div class="history-card">
+                        <span class="history-date">2025.11.17</span>
+                        <h4 class="history-title">【Cloudy公會第一張合照】</h4>
+                        <div class="photo-count">📸 共 1 張照片</div>
+                        <div class="gallery-container" style="overflow-x: hidden;"> <!-- 只有1張圖不需要橫向捲軸 -->
+                            <img src="2025.11.17_第一張合照_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 頁籤：突襲王團報名 -->
             <div id="signupTab" class="tab-content">
                 <div class="glass-panel" style="padding: 10px; text-align: center;">
-                    
-                    <!-- 動態倒數計時器 (開放期間顯示) -->
                     <div id="countdownDisplay">
                         ⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span>
                     </div>
-
-                    <!-- 開放時顯示的表單 (週一至週三) -->
                     <div id="formContainer">
                         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
                     </div>
-
-                    <!-- 未開放時顯示的提示畫面 (週四至週日) -->
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
                         <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於下周一至周三開放~敬請期待</h3>
                         <p style="font-size: 22px; color: #7f8c8d;">休息一下，我們下週見！</p>
@@ -521,11 +517,9 @@
             });
         }
 
-        // === 每秒更新的表單倒數計時與開關邏輯 ===
         function startFormCountdown() {
             function updateTimer() {
                 const now = new Date();
-                // 轉換為台灣時間字串再轉回 Date，確保時區正確
                 const twTimeStr = now.toLocaleString("en-US", {timeZone: "Asia/Taipei"});
                 const twDate = new Date(twTimeStr);
                 const today = twDate.getDay(); 
@@ -535,13 +529,11 @@
                 const countdownDisplay = document.getElementById("countdownDisplay");
                 const timerText = document.getElementById("timerText");
 
-                // 如果是週一(1)、週二(2)、週三(3)
                 if (today >= 1 && today <= 3) {
                     formContainer.style.display = "block";
                     closedMessage.style.display = "none";
                     countdownDisplay.style.display = "block";
                     
-                    // 設定目標時間為本週三晚上 23:59:59
                     const targetDate = new Date(twDate);
                     targetDate.setDate(twDate.getDate() + (3 - today));
                     targetDate.setHours(23, 59, 59, 999);
@@ -557,15 +549,14 @@
                         timerText.innerText = `${d} 天 ${h} 小時 ${m} 分 ${s} 秒`;
                     }
                 } else {
-                    // 週四至週日隱藏表單與倒數，顯示休息提示
                     formContainer.style.display = "none";
                     countdownDisplay.style.display = "none";
                     closedMessage.style.display = "block";
                 }
             }
             
-            updateTimer(); // 網頁載入時先執行一次
-            setInterval(updateTimer, 1000); // 之後每秒自動更新一次
+            updateTimer(); 
+            setInterval(updateTimer, 1000); 
         }
 
         const items = [
@@ -640,7 +631,7 @@
             setupTabs();
             setupSubTabs();
             calculate();
-            startFormCountdown(); // 啟動自動倒數計時器
+            startFormCountdown(); 
         };
     </script>
 </body>

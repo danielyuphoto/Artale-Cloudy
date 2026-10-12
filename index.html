@@ -18,7 +18,7 @@
             margin: auto; 
         }
         
-        /* 毛玻璃共用樣式 (讓背景透出高質感模糊) */
+        /* 毛玻璃共用樣式 */
         .glass-panel {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(8px);
@@ -39,12 +39,12 @@
         }
         .header-container img.badge { 
             height: 100px; 
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); /* 讓去背圖有立體感 */
-            transition: transform 0.3s ease; /* 加入動畫過渡效果 */
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); 
+            transition: transform 0.3s ease; 
             cursor: pointer;
         } 
         .header-container img.badge:hover {
-            transform: scale(1.1); /* 滑鼠游標移上時微放大 */
+            transform: scale(1.1); 
         }
         .header-container h2 { 
             margin: 0; 
@@ -65,13 +65,19 @@
             gap: 15px; 
         }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; }
+        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap;}
         input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; }
         input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
-        /* 表格區塊 */
-        table { width: 100%; border-collapse: collapse; overflow: hidden; }
+        /* 表格區塊與響應式滑動設定 */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch; /* 讓 iOS 滑動更順暢 */
+            border-radius: 12px;
+        }
+        table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; /* 確保表格不會被無限壓縮 */ }
         th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); }
         th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 16px; letter-spacing: 1px; }
         tr:hover { background-color: rgba(255, 255, 255, 0.6); }
@@ -87,13 +93,38 @@
             margin-top: 40px;
         }
         .footer-container img.nameplate {
-            height: 120px; /* 放大名牌 */
+            height: 120px; 
             filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-            transition: transform 0.3s ease; /* 加入動畫過渡效果 */
+            transition: transform 0.3s ease; 
             cursor: pointer;
         }
         .footer-container img.nameplate:hover {
-            transform: scale(1.05); /* 滑鼠游標移上時微放大 */
+            transform: scale(1.05); 
+        }
+
+        /* ========== 手機版響應式設計 (RWD) ========== */
+        @media (max-width: 768px) {
+            body { padding: 10px 10px 30px 10px; }
+            
+            /* 標題與勳章等比例縮小，保留對稱感 */
+            .header-container { gap: 10px; padding: 15px; margin-bottom: 15px; }
+            .header-container img.badge { height: 50px; } 
+            .header-container h2 { font-size: 18px; }
+            
+            /* 控制面板改為上下排列 */
+            .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
+            .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+            
+            /* 調整表格字體大小 */
+            th, td { padding: 10px 8px; font-size: 14px; }
+            th { font-size: 14px; }
+            input[type="number"] { width: 70px; padding: 4px 8px; }
+            
+            /* 底部名牌縮小 */
+            .footer-container img.nameplate { height: 75px; }
+            
+            /* VIP 提示文字折行處理 */
+            .vip-note { margin-left: 0; display: block; margin-top: 5px; }
         }
     </style>
 </head>
@@ -124,8 +155,8 @@
         </div>
     </div>
 
-    <!-- 表格區塊 -->
-    <div class="glass-panel">
+    <!-- 表格區塊 (外層包覆 table-responsive 實現手機滑動) -->
+    <div class="glass-panel table-responsive">
         <table>
             <thead>
                 <tr>
@@ -149,7 +180,6 @@
     </div>
 
     <script>
-        // 依照指定順序排列的道具清單
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -163,7 +193,6 @@
         ];
 
         function calculate() {
-            // 讀取儲值基準與匯率
             const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
             const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
             const wcCostTWD = twdCost / wcAmount; 
@@ -172,16 +201,13 @@
             const isVip = document.getElementById('vipCheck').checked;
             const tax = isVip ? 0.03 : 0.05;
             
-            // 計算 VIP 回本門檻 (6400 WC 換算)
             const vipCostTWD = 6400 * wcCostTWD;
             const vipCostMeso = vipCostTWD * (10000 / twdRate); 
             const breakEvenMeso = (vipCostMeso / 0.02) / 10000; 
             
-            // 更新介面上的 VIP 提示文字
             document.getElementById('vipText').innerText = 
                 `※ 90天VIP成本為6400 WC，以目前匯率需賣出約 ${breakEvenMeso.toFixed(2)} 億楓幣方可回本`;
 
-            // 產出表格內容
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
@@ -218,13 +244,11 @@
             });
         }
 
-        // 當拍賣場價格被修改時更新資料
         function updateAH(index, newValue) {
             items[index].ah = parseFloat(newValue) || 0;
             calculate();
         }
 
-        // 網頁載入時立刻執行計算
         calculate();
     </script>
 </body>

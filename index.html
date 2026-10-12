@@ -75,13 +75,13 @@
             pointer-events: none; 
         }
         .cloud-title-wrapper::before {
-            width: 110px; /* 雲朵凸起稍微加大以配合放大的標題 */
+            width: 110px; 
             height: 110px;
             top: -45px;
             left: 15%;
         }
         .cloud-title-wrapper::after {
-            width: 140px; /* 雲朵凸起稍微加大以配合放大的標題 */
+            width: 140px; 
             height: 140px;
             top: -60px;
             right: 15%;
@@ -93,17 +93,17 @@
             position: relative;
             z-index: 2;
         }
-        /* 標題英文字母：優美手寫書法體 (Dancing Script) - 尺寸放大 */
+        /* 標題英文字母：優美手寫書法體 (Dancing Script) */
         .title-cursive {
             font-family: 'Dancing Script', 'Brush Script MT', cursive;
-            font-size: 56px; /* 從 46px 放大到 56px */
+            font-size: 56px; 
             color: #2c3e50;
             margin-right: 12px;
         }
-        /* 標題中文：Zen Maru Gothic 設定 - 尺寸放大 */
+        /* 標題中文：Zen Maru Gothic 設定 */
         .title-zen {
             font-family: 'Zen Maru Gothic', sans-serif;
-            font-size: 46px; /* 從 38px 放大到 46px */
+            font-size: 46px; 
             font-weight: 700;
             color: #2c3e50;
             letter-spacing: 2px;
@@ -252,7 +252,7 @@
         .profit-good { color: #c0392b; font-weight: bold; }
         .profit-bad { color: #7f8c8d; }
 
-        /* 王團名單專屬上方小切換按鈕 (移除 Emoji，純文字) */
+        /* 王團名單專屬上方小切換按鈕 */
         .sub-tabs {
             display: flex;
             gap: 10px;
@@ -276,6 +276,27 @@
             background: #e67e22; 
             color: white;
             border-color: #d35400;
+        }
+
+        /* 倒數計時器外觀設計 */
+        #countdownDisplay {
+            background: rgba(255, 243, 205, 0.8); 
+            border: 2px dashed #f39c12; 
+            border-radius: 8px; 
+            padding: 12px; 
+            margin-bottom: 15px; 
+            color: #d35400; 
+            font-weight: bold; 
+            font-size: 20px; 
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            font-family: 'Segoe UI', Tahoma, sans-serif; /* 倒數數字保持清晰 */
+        }
+        #timerText {
+            color: #c0392b; 
+            font-size: 24px;
+            display: inline-block;
+            min-width: 220px; /* 避免數字跳動時長度變化太大 */
         }
 
         /* iframe 嵌入樣式 */
@@ -332,6 +353,9 @@
             .embed-container { height: 550px; }
             .footer-container img.nameplate { height: 75px; }
             .vip-note { margin-left: 0; display: block; margin-top: 5px; }
+            
+            #countdownDisplay { font-size: 16px; padding: 10px; }
+            #timerText { font-size: 18px; }
         }
     </style>
 </head>
@@ -351,7 +375,7 @@
     <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 (最後一個按鈕名稱已更新) -->
+        <!-- 左側導覽列 -->
         <div class="sidebar glass-panel">
             <button class="active" data-tab="homeTab">🏡 公會首頁</button>
             <button data-tab="recruitTab">⭐ 公會招生</button>
@@ -383,10 +407,25 @@
                 </div>
             </div>
 
-            <!-- 頁籤：突襲王團報名 -->
+            <!-- 頁籤：突襲王團報名 (加入倒數計時區塊) -->
             <div id="signupTab" class="tab-content">
-                <div class="glass-panel" style="padding: 10px;">
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+                <div class="glass-panel" style="padding: 10px; text-align: center;">
+                    
+                    <!-- 動態倒數計時器 (開放期間顯示) -->
+                    <div id="countdownDisplay">
+                        ⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span>
+                    </div>
+
+                    <!-- 開放時顯示的表單 (週一至週三) -->
+                    <div id="formContainer">
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+                    </div>
+
+                    <!-- 未開放時顯示的提示畫面 (週四至週日) -->
+                    <div id="closedMessage" style="display: none; padding: 120px 20px;">
+                        <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於下周一至周三開放~敬請期待</h3>
+                        <p style="font-size: 22px; color: #7f8c8d;">休息一下，我們下週見！</p>
+                    </div>
                 </div>
             </div>
 
@@ -482,6 +521,53 @@
             });
         }
 
+        // === 每秒更新的表單倒數計時與開關邏輯 ===
+        function startFormCountdown() {
+            function updateTimer() {
+                const now = new Date();
+                // 轉換為台灣時間字串再轉回 Date，確保時區正確
+                const twTimeStr = now.toLocaleString("en-US", {timeZone: "Asia/Taipei"});
+                const twDate = new Date(twTimeStr);
+                const today = twDate.getDay(); 
+
+                const formContainer = document.getElementById("formContainer");
+                const closedMessage = document.getElementById("closedMessage");
+                const countdownDisplay = document.getElementById("countdownDisplay");
+                const timerText = document.getElementById("timerText");
+
+                // 如果是週一(1)、週二(2)、週三(3)
+                if (today >= 1 && today <= 3) {
+                    formContainer.style.display = "block";
+                    closedMessage.style.display = "none";
+                    countdownDisplay.style.display = "block";
+                    
+                    // 設定目標時間為本週三晚上 23:59:59
+                    const targetDate = new Date(twDate);
+                    targetDate.setDate(twDate.getDate() + (3 - today));
+                    targetDate.setHours(23, 59, 59, 999);
+
+                    const diff = targetDate - twDate;
+
+                    if (diff > 0) {
+                        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                        const h = Math.floor((diff / (1000 * 60 * 60)) % 24).toString().padStart(2, '0');
+                        const m = Math.floor((diff / 1000 / 60) % 60).toString().padStart(2, '0');
+                        const s = Math.floor((diff / 1000) % 60).toString().padStart(2, '0');
+
+                        timerText.innerText = `${d} 天 ${h} 小時 ${m} 分 ${s} 秒`;
+                    }
+                } else {
+                    // 週四至週日隱藏表單與倒數，顯示休息提示
+                    formContainer.style.display = "none";
+                    countdownDisplay.style.display = "none";
+                    closedMessage.style.display = "block";
+                }
+            }
+            
+            updateTimer(); // 網頁載入時先執行一次
+            setInterval(updateTimer, 1000); // 之後每秒自動更新一次
+        }
+
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -554,6 +640,7 @@
             setupTabs();
             setupSubTabs();
             calculate();
+            startFormCountdown(); // 啟動自動倒數計時器
         };
     </script>
 </body>

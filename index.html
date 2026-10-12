@@ -14,7 +14,7 @@
             background-attachment: fixed;
             color: #333; 
             padding: 20px 20px 40px 20px; 
-            max-width: 1350px; /* 稍微加大整體最大寬度，讓右側物件更大 */
+            max-width: 1350px; 
             margin: auto; 
         }
         
@@ -65,13 +65,13 @@
             align-items: flex-start;
         }
 
-        /* 左側導覽列 (整體再往左獨立靠齊) */
+        /* 左側導覽列 */
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 12px;
             padding: 20px;
-            width: 220px; /* 固定合適寬度 */
+            width: 220px; 
             flex-shrink: 0;
             position: sticky;
             top: 20px; 
@@ -102,7 +102,7 @@
             transform: translateX(5px);
         }
 
-        /* 右側主要內容區 (自動佔滿剩餘空間，使物件更大更清楚) */
+        /* 右側主要內容區 */
         .main-content {
             flex: 1;
             min-width: 0; 
@@ -121,7 +121,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 公會招生圖放大 1.5 倍 + 逐漸放大特效 */
+        /* 公會招生圖修正：限制在右側範圍內，且呈現清晰大圖 */
         @keyframes zoomInEffect {
             from { opacity: 0; transform: scale(0.92); }
             to { opacity: 1; transform: scale(1); }
@@ -133,8 +133,8 @@
             animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .recruit-image-container img {
-            width: 150%; /* 放大 1.5 倍 */
-            max-width: none; /* 解除原本 max-width 限制 */
+            width: 100%; /* 確保圖片乖乖填滿右側區塊，絕不溢出左側 */
+            max-width: 1000px; /* 限制最大寬度，讓它比原本更大更清晰，但又不會大到破版 */
             height: auto;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -212,10 +212,10 @@
             border-color: #d35400;
         }
 
-        /* iframe 嵌入樣式 (給表單與試算表用) */
+        /* iframe 嵌入樣式 */
         .embed-container {
             width: 100%;
-            height: 750px; /* 稍微加高 iframe 顯示範圍 */
+            height: 750px; 
             border: none;
             border-radius: 12px;
             background: #fff; 
@@ -247,9 +247,6 @@
             .sidebar button { text-align: center; padding: 10px 15px; font-size: 14px; }
             .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
             
-            /* 手機版招生圖維持正常寬度避免跑版 */
-            .recruit-image-container img { width: 100%; max-width: 100%; }
-
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
             th, td { padding: 10px 8px; font-size: 14px; }
@@ -263,17 +260,17 @@
 </head>
 <body>
 
-    <!-- 圖片與標題區塊 (現代白底雲朵柔邊框) -->
+    <!-- 標題區塊 -->
     <div class="header-container">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
         <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</h2>
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 
-    <!-- 左右排版主容器 -->
+    <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 (順序已調整) -->
+        <!-- 左側導覽列 -->
         <div class="sidebar glass-panel">
             <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
             <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>
@@ -285,7 +282,7 @@
         <!-- 右側動態內容區 -->
         <div class="main-content">
             
-            <!-- 頁籤零：公會首頁 -->
+            <!-- 頁籤：公會首頁 -->
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container">
                     <img src="公會合照.png" alt="Cloudy公會大合照">
@@ -298,21 +295,21 @@
                 </div>
             </div>
 
-            <!-- 頁籤一：公會招生 (放大 1.5 倍 + 逐漸放大特效) -->
+            <!-- 頁籤：公會招生 -->
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
                     <img src="公會招生圖.png" alt="Cloudy公會招生資訊">
                 </div>
             </div>
 
-            <!-- 頁籤二：突襲王團報名表單 -->
+            <!-- 頁籤：突襲王團報名 -->
             <div id="signupTab" class="tab-content">
                 <div class="glass-panel" style="padding: 10px;">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
                 </div>
             </div>
 
-            <!-- 頁籤三：每週王團名單公告 -->
+            <!-- 頁籤：每週王團名單 -->
             <div id="rosterTab" class="tab-content">
                 <div class="sub-tabs">
                     <button class="active" onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129')">🌲 樹王團</button>
@@ -324,7 +321,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤四：點數商品儲值or楓幣購買計算 -->
+            <!-- 頁籤：點數商品儲值or楓幣購買計算 -->
             <div id="calcTab" class="tab-content">
                 <div class="controls glass-panel">
                     <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
@@ -362,8 +359,8 @@
                 </div>
             </div>
 
-        </div> <!-- /main-content -->
-    </div> <!-- /layout-container -->
+        </div> 
+    </div> 
 
     <!-- 底部名牌區塊 -->
     <div class="footer-container">
@@ -371,7 +368,6 @@
     </div>
 
     <script>
-        // === 頁籤切換邏輯 ===
         function openTab(evt, tabId) {
             let tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
@@ -385,7 +381,6 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // === 王團子分頁切換邏輯 (樹王/龍王/困拉) ===
         function switchSheet(evt, sheetUrl) {
             document.getElementById('rosterIframe').src = sheetUrl;
             let subButtons = document.querySelectorAll(".sub-tabs button");
@@ -395,7 +390,6 @@
             evt.currentTarget.classList.add("active");
         }
 
-        // === 計算器邏輯 ===
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -440,12 +434,12 @@
                 }
 
                 const sellNet = item.ah * (1 - tax);
-                const profit = sellNet - theoryMeso;
+                const realProfit = sellNet - theoryMeso;
                 let profitHtml = '';
-                if (profit > 0) {
-                    profitHtml = `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>`;
+                if (realProfit > 0) {
+                    profitHtml = `<span class="profit-good">賺 ${realProfit.toFixed(1)} 萬</span>`;
                 } else {
-                    profitHtml = `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`;
+                    profitHtml = `<span class="profit-bad">虧 ${Math.abs(realProfit).toFixed(1)} 萬</span>`;
                 }
 
                 tr.innerHTML = `

@@ -68,8 +68,9 @@
             width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
             border: 3px solid rgba(255, 255, 255, 0.9); transition: 0.5s; 
         }
-        .recruit-image-container img { cursor: pointer; transform-origin: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .recruit-image-container img:hover { transform: scale(1.3); z-index: 999; position: relative; }
+        /* 讓招生的圖片支援放大游標 */
+        .recruit-image-container img { cursor: zoom-in; transform-origin: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .recruit-image-container img:hover { transform: scale(1.05); z-index: 999; position: relative; }
         @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
         
         .intro-box { padding: 25px; line-height: 1.8; font-size: 20px; }
@@ -180,7 +181,8 @@
             
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container flex-center">
-                    <img src="公會合照.png" alt="合照" loading="lazy">
+                    <!-- 移除 loading="lazy" 以恢復完整尺寸 -->
+                    <img src="公會合照.png" alt="合照">
                 </div>
                 <div class="glass-panel intro-box">
                     <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
@@ -191,7 +193,10 @@
 
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
-                    <img src="公會招生圖.png" alt="招生資訊" loading="lazy">
+                    <!-- 為招生圖加上燈箱 data 屬性 -->
+                    <img src="公會招生圖.png" alt="招生資訊" loading="lazy" data-index="0" data-group="g-recruit" class="lightbox-trigger">
+                    <!-- 隱藏的備註，給燈箱抓取用 -->
+                    <div class="photo-caption" style="display: none;">Cloudy 公會招生中！</div>
                 </div>
             </div>
 
@@ -205,7 +210,7 @@
                         <div class="photo-count">📸 共 1 張照片 (點擊放大)</div>
                         <div class="gallery-container" style="overflow-x: hidden;">
                             <div class="photo-wrapper">
-                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" data-index="0" data-group="g1">
+                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" data-index="0" data-group="g1" class="lightbox-trigger">
                                 <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
                             </div>
                         </div>
@@ -217,11 +222,11 @@
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
                         <div class="photo-count">📸 共 5 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" data-index="0" data-group="g2"><div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" data-index="1" data-group="g2"><div class="photo-caption">「消滅和牛燒肉」活動海報</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="g2"><div class="photo-caption">這是給有出席活動的夥伴的一點心意</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="g2"><div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="g2"><div class="photo-caption">「消滅和牛燒肉」活動成功！</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" data-index="0" data-group="g2" class="lightbox-trigger"><div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" data-index="1" data-group="g2" class="lightbox-trigger"><div class="photo-caption">「消滅和牛燒肉」活動海報</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="g2" class="lightbox-trigger"><div class="photo-caption">這是給有出席活動的夥伴的一點心意</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="g2" class="lightbox-trigger"><div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="g2" class="lightbox-trigger"><div class="photo-caption">「消滅和牛燒肉」活動成功！</div></div>
                         </div>
                     </div>
                     
@@ -231,10 +236,10 @@
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
                         <div class="photo-count">📸 共 4 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="g3"><div class="photo-caption">新春財源廣進活動公告</div></div>
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_2.png" loading="lazy" data-index="1" data-group="g3"><div class="photo-caption">新春財源廣進活動成果</div></div>
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_3.png" loading="lazy" data-index="2" data-group="g3"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_4.png" loading="lazy" data-index="3" data-group="g3"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="g3" class="lightbox-trigger"><div class="photo-caption">新春財源廣進活動公告</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_2.png" loading="lazy" data-index="1" data-group="g3" class="lightbox-trigger"><div class="photo-caption">新春財源廣進活動成果</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_3.png" loading="lazy" data-index="2" data-group="g3" class="lightbox-trigger"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_4.png" loading="lazy" data-index="3" data-group="g3" class="lightbox-trigger"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
                         </div>
                     </div>
 
@@ -244,9 +249,9 @@
                         <h4 class="history-title">【台中線下副本】</h4>
                         <div class="photo-count">📸 共 3 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_1.png" loading="lazy" data-index="0" data-group="g4"><div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div></div>
-                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_2.png" loading="lazy" data-index="1" data-group="g4"><div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div></div>
-                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="g4"><div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_1.png" loading="lazy" data-index="0" data-group="g4" class="lightbox-trigger"><div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_2.png" loading="lazy" data-index="1" data-group="g4" class="lightbox-trigger"><div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="g4" class="lightbox-trigger"><div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div></div>
                         </div>
                     </div>
 
@@ -256,8 +261,8 @@
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
                         <div class="photo-count">📸 共 2 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="0" data-group="g5"><div class="photo-caption">肝帝爭霸戰即將開肝！</div></div>
-                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="1" data-group="g5"><div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div></div>
+                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="0" data-group="g5" class="lightbox-trigger"><div class="photo-caption">肝帝爭霸戰即將開肝！</div></div>
+                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="1" data-group="g5" class="lightbox-trigger"><div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div></div>
                         </div>
                     </div>
 
@@ -347,9 +352,8 @@
             });
         }
 
-        // 2. 全局時間管理器 (快取 DOM，極大節省效能)
+        // 2. 全局時間管理器
         function initTimers() {
-            // 在 Interval 外部事先尋找 DOM，避免每秒重複搜尋
             const els = {
                 formContainer: document.getElementById("formContainer"),
                 formMsg: document.getElementById("closedMessage"),
@@ -396,7 +400,7 @@
             update(); setInterval(update, 1000);
         }
 
-        // 3. 點商計算機 (一次性渲染 HTML 減少 Reflow)
+        // 3. 點商計算機
         const items = [
             { name: "飄雪結晶", wc: 300/11, ah: 40 }, { name: "突襲額外票券", wc: 1200/7, ah: 370 },
             { name: "高級瞬移之石", wc: 400/11, ah: 81 }, { name: "凍結加持器", wc: 450/11, ah: 97 },
@@ -413,7 +417,7 @@
             
             document.getElementById('vipText').textContent = `※ VIP成本 6400 WC，約需賣出 ${((6400*wcTWD*(10000/rate))/0.02/10000).toFixed(2)} 億楓幣回本`;
             
-            let html = ''; // 在記憶體中組裝，再一次性寫入表格
+            let html = ''; 
             items.forEach((item, i) => {
                 const thMeso = (item.wc * wcTWD) * (10000 / rate);
                 const profit = (item.ah * (1 - tax)) - thMeso;
@@ -428,13 +432,14 @@
         }
         function updateAH(i, val) { items[i].ah = parseFloat(val) || 0; calculate(); }
 
-        // 4. 燈箱相簿邏輯
+        // 4. 燈箱相簿邏輯 (支援活動紀錄 與 招生圖)
         function initLightbox() {
             const box = document.getElementById("lightbox"), imgEl = document.getElementById("lightbox-img");
             const cap = document.getElementById("lightbox-caption"), prev = document.getElementById("lightbox-prev"), next = document.getElementById("lightbox-next");
             let group = [], idx = 0;
 
-            document.querySelectorAll(".photo-wrapper img").forEach(img => {
+            // 抓取所有有 .lightbox-trigger 的圖片
+            document.querySelectorAll(".lightbox-trigger").forEach(img => {
                 img.addEventListener("click", e => {
                     group = Array.from(document.querySelectorAll(`img[data-group="${e.target.dataset.group}"]`));
                     idx = parseInt(e.target.dataset.index);

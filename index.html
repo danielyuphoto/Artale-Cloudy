@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Artale 𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬網頁</title>
+    <title>Artale Cloudy 公會小窩</title>
     <style>
-        /* 全局字體改用草書/手寫風格 */
+        /* 全局字體改回清晰易讀的無襯線字體 */
         body { 
-            font-family: 'Brush Script MT', 'STXingkai', 'Xingkai SC', 'KaiTi', 'DFKai-SB', cursive, sans-serif; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, 'Microsoft JhengHei', sans-serif; 
             /* 神木村背景 */
             background-image: url('神木村.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             color: #333; 
-            padding: 20px 20px 40px 20px; 
-            max-width: 1350px; 
+            padding: 20px 10px 40px 10px; /* 縮小兩側內距 */
+            max-width: 1450px; /* 放寬最大寬度，讓左側選單能更靠左，右側內容更大 */
             margin: auto; 
         }
         
@@ -52,16 +52,14 @@
         .cloud-title-wrapper {
             position: relative;
             background: rgba(255, 255, 255, 0.95);
-            border-radius: 80px; /* 主體為大圓角橢圓 */
+            border-radius: 80px; 
             padding: 25px 50px; 
             display: flex;
             align-items: center;
             justify-content: center;
-            /* 雲朵周邊的高強度柔邊發光特效 */
             box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85);
             z-index: 1;
         }
-        /* 利用 ::before 和 ::after 畫出雲朵上方的凸起圓弧 */
         .cloud-title-wrapper::before,
         .cloud-title-wrapper::after {
             content: '';
@@ -83,6 +81,7 @@
             top: -55px;
             right: 15%;
         }
+        /* 標題專屬：保留草書/手寫風格 */
         .cloud-title-wrapper h2 { 
             margin: 0; 
             color: #2c3e50; 
@@ -93,12 +92,13 @@
             text-shadow: 2px 2px 4px rgba(255,255,255,0.9);
             position: relative;
             z-index: 2;
+            font-family: 'Brush Script MT', 'STXingkai', 'Xingkai SC', 'KaiTi', 'DFKai-SB', cursive, sans-serif; 
         }
 
         /* 左右排版容器 */
         .layout-container {
             display: flex;
-            gap: 25px;
+            gap: 30px;
             align-items: flex-start;
         }
 
@@ -112,21 +112,21 @@
             flex-shrink: 0;
             position: sticky;
             top: 20px; 
-            z-index: 20; /* 確保選單不會被放大後的圖片蓋住 */
+            z-index: 20; 
         }
         .sidebar button {
             background: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 14px 18px;
             border-radius: 8px;
-            font-size: 18px; 
+            font-size: 16px; 
             font-weight: bold;
             color: #2c3e50;
             text-align: left;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: inherit; 
+            /* 使用全局字體 */
         }
         .sidebar button:hover {
             background: rgba(255, 255, 255, 0.95);
@@ -169,7 +169,7 @@
             display: flex;
             justify-content: center;
             animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-            padding: 20px 0; /* 預留放大空間避免裁切 */
+            padding: 20px 0; 
         }
         .recruit-image-container img {
             width: 100%; 
@@ -188,7 +188,7 @@
         .recruit-image-container img:hover {
             transform: scale(1.3); 
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            z-index: 999; /* 放大時確保圖層在最上方 */
+            z-index: 999; 
         }
 
         /* 首頁大合照與介紹區塊 */
@@ -208,7 +208,7 @@
         .intro-box {
             padding: 25px;
             line-height: 1.8;
-            font-size: 20px; 
+            font-size: 17px; 
             color: #2c3e50;
         }
         .intro-box h3 {
@@ -216,21 +216,21 @@
             border-bottom: 2px solid rgba(52, 152, 219, 0.3);
             padding-bottom: 10px;
             color: #2980b9;
-            font-size: 24px;
+            font-size: 22px;
         }
         
         /* === 計算器專用樣式 === */
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
-        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; font-family: sans-serif; }
+        .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 16px;}
+        input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; }
         input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
         table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
-        th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
-        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 18px; letter-spacing: 1px; }
+        th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 16px; }
+        th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 16px; letter-spacing: 1px; }
         tr:hover { background-color: rgba(255, 255, 255, 0.6); }
         .buy-ah { color: #27ae60; font-weight: bold; }
         .buy-wc { color: #2980b9; font-weight: bold; }
@@ -248,13 +248,12 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             padding: 8px 18px;
             border-radius: 6px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: bold;
             color: #2c3e50;
             cursor: pointer;
             transition: all 0.2s ease;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-family: inherit;
         }
         .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
         .sub-tabs button.active {
@@ -283,7 +282,6 @@
             .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
             .header-container img.badge { height: 50px; } 
             
-            /* 手機版雲朵邊框微調 */
             .cloud-title-wrapper {
                 padding: 15px 30px; 
                 border-radius: 40px;
@@ -303,17 +301,16 @@
                 top: 0;
             }
             .sidebar::-webkit-scrollbar { display: none; } 
-            .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
+            .sidebar button { text-align: center; padding: 10px 15px; font-size: 14px; }
             .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
             
             .recruit-image-container img { width: 100%; max-width: 100%; }
-            /* 手機板取消懸停放大，避免滑動時體驗不佳 */
             .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
 
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            th, td { padding: 10px 8px; font-size: 15px; }
-            th { font-size: 15px; }
+            th, td { padding: 10px 8px; font-size: 14px; }
+            th { font-size: 14px; }
             input[type="number"] { width: 70px; padding: 4px 8px; }
             .embed-container { height: 550px; }
             .footer-container img.nameplate { height: 75px; }
@@ -328,7 +325,7 @@
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
         
         <div class="cloud-title-wrapper">
-            <h2>Artale 𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬網頁</h2>
+            <h2>Artale Cloudy 公會小窩</h2>
         </div>
         
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
@@ -343,7 +340,8 @@
             <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>
             <button onclick="openTab(event, 'signupTab')">⚔️ 突襲王團報名</button>
             <button onclick="openTab(event, 'rosterTab')">📜 每週王團名單</button>
-            <button onclick="openTab(event, 'calcTab')">💰 點數商品儲值or楓幣購買計算</button>
+            <!-- 按鈕名稱已更新 -->
+            <button onclick="openTab(event, 'calcTab')">💰 點商行情分析計算</button>
         </div>
 
         <!-- 右側動態內容區 -->
@@ -388,7 +386,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：點數商品儲值or楓幣購買計算 -->
+            <!-- 頁籤：點商行情分析計算 -->
             <div id="calcTab" class="tab-content">
                 <div class="controls glass-panel">
                     <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">

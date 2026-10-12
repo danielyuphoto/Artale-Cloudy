@@ -14,7 +14,7 @@
             background-attachment: fixed;
             color: #333; 
             padding: 20px 20px 40px 20px; 
-            max-width: 1200px; 
+            max-width: 1350px; /* 稍微加大整體最大寬度，讓右側物件更大 */
             margin: auto; 
         }
         
@@ -28,7 +28,7 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
-        /* 全新設計：現代白底雲朵柔邊標題框 */
+        /* 現代白底雲朵柔邊標題框 */
         .header-container { 
             display: flex; 
             align-items: center; 
@@ -37,7 +37,6 @@
             margin-bottom: 30px; 
             padding: 20px 30px; 
             background: #ffffff;
-            /* 柔邊雲朵多層陰影與圓角設計 */
             border-radius: 50px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 0 6px rgba(255, 255, 255, 0.6);
             border: 2px solid rgba(230, 240, 255, 0.8);
@@ -56,7 +55,7 @@
             font-weight: 700;
             text-align: center; 
             letter-spacing: 0.5px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 統一字體 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
         }
 
         /* 左右排版容器 */
@@ -66,22 +65,23 @@
             align-items: flex-start;
         }
 
-        /* 左側導覽列 (側邊欄) */
+        /* 左側導覽列 (整體再往左獨立靠齊) */
         .sidebar {
             display: flex;
             flex-direction: column;
             gap: 12px;
             padding: 20px;
-            min-width: 240px;
+            width: 220px; /* 固定合適寬度 */
+            flex-shrink: 0;
             position: sticky;
             top: 20px; 
         }
         .sidebar button {
             background: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 14px 20px;
+            padding: 14px 18px;
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             color: #2c3e50;
             text-align: left;
@@ -102,7 +102,7 @@
             transform: translateX(5px);
         }
 
-        /* 右側主要內容區 */
+        /* 右側主要內容區 (自動佔滿剩餘空間，使物件更大更清楚) */
         .main-content {
             flex: 1;
             min-width: 0; 
@@ -121,7 +121,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 公會招生圖專屬動態特效 (逐漸放大淡入) */
+        /* 公會招生圖放大 1.5 倍 + 逐漸放大特效 */
         @keyframes zoomInEffect {
             from { opacity: 0; transform: scale(0.92); }
             to { opacity: 1; transform: scale(1); }
@@ -133,7 +133,8 @@
             animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .recruit-image-container img {
-            max-width: 100%;
+            width: 150%; /* 放大 1.5 倍 */
+            max-width: none; /* 解除原本 max-width 限制 */
             height: auto;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -214,7 +215,7 @@
         /* iframe 嵌入樣式 (給表單與試算表用) */
         .embed-container {
             width: 100%;
-            height: 700px;
+            height: 750px; /* 稍微加高 iframe 顯示範圍 */
             border: none;
             border-radius: 12px;
             background: #fff; 
@@ -246,12 +247,15 @@
             .sidebar button { text-align: center; padding: 10px 15px; font-size: 14px; }
             .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
             
+            /* 手機版招生圖維持正常寬度避免跑版 */
+            .recruit-image-container img { width: 100%; max-width: 100%; }
+
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
             th, td { padding: 10px 8px; font-size: 14px; }
             th { font-size: 14px; }
             input[type="number"] { width: 70px; padding: 4px 8px; }
-            .embed-container { height: 500px; }
+            .embed-container { height: 550px; }
             .footer-container img.nameplate { height: 75px; }
             .vip-note { margin-left: 0; display: block; margin-top: 5px; }
         }
@@ -269,13 +273,13 @@
     <!-- 左右排版主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 -->
+        <!-- 左側導覽列 (順序已調整) -->
         <div class="sidebar glass-panel">
             <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
             <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>
-            <button onclick="openTab(event, 'calcTab')">💰 點數商品儲值or楓幣購買計算</button>
             <button onclick="openTab(event, 'signupTab')">⚔️ 突襲王團報名</button>
             <button onclick="openTab(event, 'rosterTab')">📜 每週王團名單</button>
+            <button onclick="openTab(event, 'calcTab')">💰 點數商品儲值or楓幣購買計算</button>
         </div>
 
         <!-- 右側動態內容區 -->
@@ -294,14 +298,33 @@
                 </div>
             </div>
 
-            <!-- 頁籤一：公會招生 (具備逐漸放大特效) -->
+            <!-- 頁籤一：公會招生 (放大 1.5 倍 + 逐漸放大特效) -->
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
-                    <img src="公會招生圖.png" alt="Cloudy公會招生資訊">
+                    <img src="公會招生圖.jpg" alt="Cloudy公會招生資訊">
                 </div>
             </div>
 
-            <!-- 頁籤二：點數商品儲值or楓幣購買計算 -->
+            <!-- 頁籤二：突襲王團報名表單 -->
+            <div id="signupTab" class="tab-content">
+                <div class="glass-panel" style="padding: 10px;">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+                </div>
+            </div>
+
+            <!-- 頁籤三：每週王團名單公告 -->
+            <div id="rosterTab" class="tab-content">
+                <div class="sub-tabs">
+                    <button class="active" onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129')">🌲 樹王團</button>
+                    <button onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0')">🐉 龍王團</button>
+                    <button onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249')">👑 困拉團</button>
+                </div>
+                <div class="glass-panel" style="padding: 10px;">
+                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單">載入中...</iframe>
+                </div>
+            </div>
+
+            <!-- 頁籤四：點數商品儲值or楓幣購買計算 -->
             <div id="calcTab" class="tab-content">
                 <div class="controls glass-panel">
                     <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
@@ -336,25 +359,6 @@
                             <!-- 內容由 JavaScript 動態生成 -->
                         </tbody>
                     </table>
-                </div>
-            </div>
-
-            <!-- 頁籤三：突襲王團報名表單 -->
-            <div id="signupTab" class="tab-content">
-                <div class="glass-panel" style="padding: 10px;">
-                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
-                </div>
-            </div>
-
-            <!-- 頁籤四：每週王團名單公告 -->
-            <div id="rosterTab" class="tab-content">
-                <div class="sub-tabs">
-                    <button class="active" onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129')">🌲 樹王團</button>
-                    <button onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0')">🐉 龍王團</button>
-                    <button onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249')">👑 困拉團</button>
-                </div>
-                <div class="glass-panel" style="padding: 10px;">
-                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單">載入中...</iframe>
                 </div>
             </div>
 

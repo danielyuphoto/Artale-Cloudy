@@ -196,4 +196,31 @@
                 const profit = sellNet - theoryMeso;
                 let profitHtml = '';
                 if (profit > 0) {
-                    profitHtml =
+                    profitHtml = `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>`;
+                } else {
+                    profitHtml = `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`;
+                }
+
+                tr.innerHTML = `
+                    <td>${item.name}</td>
+                    <td>${item.wc.toFixed(1)}</td>
+                    <td>${theoryMeso.toFixed(1)}</td>
+                    <td><input type="number" value="${item.ah}" style="width: 75px;" onchange="updateAH(${index}, this.value)"></td>
+                    <td>${buyAdvice}</td>
+                    <td>${profitHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // 當拍賣場價格被修改時更新資料
+        function updateAH(index, newValue) {
+            items[index].ah = parseFloat(newValue) || 0;
+            calculate();
+        }
+
+        // 網頁載入時立刻執行計算
+        calculate();
+    </script>
+</body>
+</html>

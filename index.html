@@ -303,13 +303,13 @@
     </div>
 
     <script>
-        // === 頁籤切換邏輯 (支援左側選單) ===
+        // === 頁籤切換邏輯 (修正版：精準抓取左側選單按鈕) ===
         function openTab(evt, tabId) {
             let tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove("active");
             }
-            let tabLinks = document.getElementsByClassName("sidebar")[0].getElementsByTagName("button");
+            let tabLinks = document.querySelectorAll(".sidebar button");
             for (let i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].classList.remove("active");
             }
@@ -372,4 +372,22 @@
 
                 tr.innerHTML = `
                     <td>${item.name}</td>
-                    <td>${item.wc.toFixed
+                    <td>${item.wc.toFixed(1)}</td>
+                    <td>${theoryMeso.toFixed(1)}</td>
+                    <td><input type="number" value="${item.ah}" style="width: 75px;" onchange="updateAH(${index}, this.value)"></td>
+                    <td>${buyAdvice}</td>
+                    <td>${profitHtml}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updateAH(index, newValue) {
+            items[index].ah = parseFloat(newValue) || 0;
+            calculate();
+        }
+
+        calculate();
+    </script>
+</body>
+</html>

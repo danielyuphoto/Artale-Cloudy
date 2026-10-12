@@ -28,17 +28,22 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.15);
         }
         
-        /* 標題與對稱勳章區塊 */
+        /* 全新設計：現代白底雲朵柔邊標題框 */
         .header-container { 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             gap: 25px; 
             margin-bottom: 30px; 
-            padding: 20px; 
+            padding: 20px 30px; 
+            background: #ffffff;
+            /* 柔邊雲朵多層陰影與圓角設計 */
+            border-radius: 50px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12), 0 0 0 6px rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(230, 240, 255, 0.8);
         }
         .header-container img.badge { 
-            height: 100px; 
+            height: 90px; 
             filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); 
             transition: transform 0.3s ease; 
             cursor: pointer;
@@ -48,10 +53,10 @@
             margin: 0; 
             color: #2c3e50; 
             font-size: 32px; 
-            font-weight: 800;
+            font-weight: 700;
             text-align: center; 
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+            letter-spacing: 0.5px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 統一字體 */
         }
 
         /* 左右排版容器 */
@@ -83,6 +88,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         .sidebar button:hover {
             background: rgba(255, 255, 255, 0.95);
@@ -115,31 +121,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 王團名單專屬上方小切換按鈕 */
-        .sub-tabs {
+        /* 公會招生圖專屬動態特效 (逐漸放大淡入) */
+        @keyframes zoomInEffect {
+            from { opacity: 0; transform: scale(0.92); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .recruit-image-container {
+            width: 100%;
             display: flex;
-            gap: 10px;
-            margin-bottom: 15px;
+            justify-content: center;
+            animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-        .sub-tabs button {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-size: 15px;
-            font-weight: bold;
-            color: #2c3e50;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .sub-tabs button:hover {
-            background: rgba(255, 255, 255, 0.95);
-        }
-        .sub-tabs button.active {
-            background: #e67e22; /* 用溫暖的橘色區隔王團子分頁 */
-            color: white;
-            border-color: #d35400;
+        .recruit-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.9);
         }
 
         /* 首頁大合照與介紹區塊 */
@@ -187,6 +185,32 @@
         .profit-good { color: #c0392b; font-weight: bold; }
         .profit-bad { color: #7f8c8d; }
 
+        /* 王團名單專屬上方小切換按鈕 */
+        .sub-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .sub-tabs button {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 8px 18px;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
+        .sub-tabs button.active {
+            background: #e67e22; 
+            color: white;
+            border-color: #d35400;
+        }
+
         /* iframe 嵌入樣式 (給表單與試算表用) */
         .embed-container {
             width: 100%;
@@ -204,9 +228,9 @@
         /* 手機版 RWD */
         @media (max-width: 768px) {
             body { padding: 10px 10px 30px 10px; }
-            .header-container { gap: 10px; padding: 15px; margin-bottom: 15px; }
-            .header-container img.badge { height: 50px; } 
-            .header-container h2 { font-size: 22px; }
+            .header-container { gap: 10px; padding: 12px 15px; margin-bottom: 15px; border-radius: 30px; }
+            .header-container img.badge { height: 45px; } 
+            .header-container h2 { font-size: 18px; }
             
             .layout-container { flex-direction: column; gap: 15px; }
             .sidebar { 
@@ -235,10 +259,10 @@
 </head>
 <body>
 
-    <!-- 圖片與標題區塊 (左右對稱勳章) -->
-    <div class="header-container glass-panel">
+    <!-- 圖片與標題區塊 (現代白底雲朵柔邊框) -->
+    <div class="header-container">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
-        <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會首頁</h2>
+        <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</h2>
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 
@@ -248,6 +272,7 @@
         <!-- 左側導覽列 -->
         <div class="sidebar glass-panel">
             <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
+            <button onclick="openTab(event, 'recruitTab')">⭐ 公會招生</button>
             <button onclick="openTab(event, 'calcTab')">💰 點數商品儲值or楓幣購買計算</button>
             <button onclick="openTab(event, 'signupTab')">⚔️ 突襲王團報名</button>
             <button onclick="openTab(event, 'rosterTab')">📜 每週王團名單</button>
@@ -269,7 +294,14 @@
                 </div>
             </div>
 
-            <!-- 頁籤一：點數商品儲值or楓幣購買計算 -->
+            <!-- 頁籤一：公會招生 (具備逐漸放大特效) -->
+            <div id="recruitTab" class="tab-content">
+                <div class="recruit-image-container">
+                    <img src="公會招生圖.jpg" alt="Cloudy公會招生資訊">
+                </div>
+            </div>
+
+            <!-- 頁籤二：點數商品儲值or楓幣購買計算 -->
             <div id="calcTab" class="tab-content">
                 <div class="controls glass-panel">
                     <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
@@ -307,14 +339,14 @@
                 </div>
             </div>
 
-            <!-- 頁籤二：突襲王團報名表單 -->
+            <!-- 頁籤三：突襲王團報名表單 -->
             <div id="signupTab" class="tab-content">
                 <div class="glass-panel" style="padding: 10px;">
                     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
                 </div>
             </div>
 
-            <!-- 頁籤三：每週王團名單公告 (內含樹王、龍王、困拉小按鈕切換) -->
+            <!-- 頁籤四：每週王團名單公告 -->
             <div id="rosterTab" class="tab-content">
                 <div class="sub-tabs">
                     <button class="active" onclick="switchSheet(event, 'https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129')">🌲 樹王團</button>
@@ -335,7 +367,7 @@
     </div>
 
     <script>
-        // === 頁籤切換邏輯 (左側選單) ===
+        // === 頁籤切換邏輯 ===
         function openTab(evt, tabId) {
             let tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {

@@ -16,8 +16,8 @@
             background-position: center;
             background-attachment: fixed;
             color: #333; 
-            padding: 20px 5px 40px 5px; /* 縮小左右內邊距，讓兩側能更靠邊 */
-            max-width: 1600px; /* 放寬最大寬度，大幅增加右側顯示空間 */
+            padding: 20px 5px 40px 5px; 
+            max-width: 1600px; 
             margin: auto; 
         }
         
@@ -75,15 +75,15 @@
             pointer-events: none; 
         }
         .cloud-title-wrapper::before {
-            width: 100px;
-            height: 100px;
-            top: -40px;
+            width: 110px; /* 雲朵凸起稍微加大以配合放大的標題 */
+            height: 110px;
+            top: -45px;
             left: 15%;
         }
         .cloud-title-wrapper::after {
-            width: 130px;
-            height: 130px;
-            top: -55px;
+            width: 140px; /* 雲朵凸起稍微加大以配合放大的標題 */
+            height: 140px;
+            top: -60px;
             right: 15%;
         }
         .cloud-title-wrapper h2 { 
@@ -93,17 +93,17 @@
             position: relative;
             z-index: 2;
         }
-        /* 標題英文字母：優美手寫書法體 (Dancing Script) */
+        /* 標題英文字母：優美手寫書法體 (Dancing Script) - 尺寸放大 */
         .title-cursive {
             font-family: 'Dancing Script', 'Brush Script MT', cursive;
-            font-size: 46px; /* 稍微放大以展現書法氣勢 */
+            font-size: 56px; /* 從 46px 放大到 56px */
             color: #2c3e50;
-            margin-right: 10px;
+            margin-right: 12px;
         }
-        /* 標題中文：Zen Maru Gothic 設定 */
+        /* 標題中文：Zen Maru Gothic 設定 - 尺寸放大 */
         .title-zen {
             font-family: 'Zen Maru Gothic', sans-serif;
-            font-size: 38px;
+            font-size: 46px; /* 從 38px 放大到 46px */
             font-weight: 700;
             color: #2c3e50;
             letter-spacing: 2px;
@@ -112,7 +112,7 @@
         /* 左右排版容器 */
         .layout-container {
             display: flex;
-            gap: 25px; /* 縮小一點點間距讓出空間給右側 */
+            gap: 25px; 
             align-items: flex-start;
             position: relative;
             z-index: 20;
@@ -124,7 +124,7 @@
             flex-direction: column;
             gap: 12px;
             padding: 20px;
-            width: 210px; /* 稍微再收窄一點，把空間給右邊 */
+            width: 210px; 
             flex-shrink: 0;
             position: sticky;
             top: 20px; 
@@ -261,7 +261,7 @@
         .sub-tabs button {
             background: rgba(255, 255, 255, 0.7);
             border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 8px 20px; /* 左右稍微加寬增加質感 */
+            padding: 8px 20px; 
             border-radius: 6px;
             font-size: 18px;
             font-weight: bold;
@@ -304,8 +304,8 @@
             }
             .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
             .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
-            .title-cursive { font-size: 28px; }
-            .title-zen { font-size: 22px; }
+            .title-cursive { font-size: 32px; }
+            .title-zen { font-size: 26px; }
             
             .layout-container { flex-direction: column; gap: 15px; }
             .sidebar { 
@@ -351,13 +351,13 @@
     <!-- 主容器 -->
     <div class="layout-container">
         
-        <!-- 左側導覽列 -->
+        <!-- 左側導覽列 (最後一個按鈕名稱已更新) -->
         <div class="sidebar glass-panel">
             <button class="active" data-tab="homeTab">🏡 公會首頁</button>
             <button data-tab="recruitTab">⭐ 公會招生</button>
             <button data-tab="signupTab">⚔️ 突襲王團報名</button>
             <button data-tab="rosterTab">📜 每週王團名單</button>
-            <button data-tab="calcTab">💰 點商行情分析計算</button>
+            <button data-tab="calcTab">💰 點商行情計算表</button>
         </div>
 
         <!-- 右側動態內容區 -->
@@ -390,7 +390,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：每週王團名單 (純文字按鈕) -->
+            <!-- 頁籤：每週王團名單 -->
             <div id="rosterTab" class="tab-content">
                 <div class="sub-tabs">
                     <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">樹王團</button>
@@ -402,7 +402,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：點商行情分析計算 -->
+            <!-- 頁籤：點商行情計算表 -->
             <div id="calcTab" class="tab-content">
                 <div class="controls glass-panel">
                     <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">

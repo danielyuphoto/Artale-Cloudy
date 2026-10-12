@@ -14,7 +14,7 @@
             background-attachment: fixed;
             color: #333; 
             padding: 20px 20px 40px 20px; 
-            max-width: 1100px; 
+            max-width: 1200px; 
             margin: auto; 
         }
         
@@ -34,7 +34,7 @@
             align-items: center; 
             justify-content: center; 
             gap: 25px; 
-            margin-bottom: 20px; 
+            margin-bottom: 30px; 
             padding: 20px; 
         }
         .header-container img.badge { 
@@ -54,51 +54,52 @@
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
 
-        /* 公會大合照展示區 */
-        .hero-image-container {
-            width: 100%;
+        /* 左右排版容器 */
+        .layout-container {
             display: flex;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-        .hero-image-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255, 255, 255, 0.8);
+            gap: 25px;
+            align-items: flex-start;
         }
 
-        /* 導覽列 (頁籤切換) */
-        .nav-tabs {
+        /* 左側導覽列 (側邊欄) */
+        .sidebar {
             display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px;
+            min-width: 240px;
+            position: sticky;
+            top: 20px; 
         }
-        .nav-tabs button {
-            background: rgba(255, 255, 255, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 12px 25px;
-            border-radius: 30px;
+        .sidebar button {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            padding: 14px 20px;
+            border-radius: 8px;
             font-size: 16px;
             font-weight: bold;
             color: #2c3e50;
+            text-align: left;
             cursor: pointer;
             transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-        .nav-tabs button:hover {
+        .sidebar button:hover {
             background: rgba(255, 255, 255, 0.95);
-            transform: translateY(-2px);
+            transform: translateX(5px); 
         }
-        .nav-tabs button.active {
+        .sidebar button.active {
             background: #3498db;
             color: white;
             border-color: #2980b9;
             box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+            transform: translateX(5px);
+        }
+
+        /* 右側主要內容區 */
+        .main-content {
+            flex: 1;
+            min-width: 0; 
         }
 
         /* 頁籤內容切換設定 */
@@ -112,6 +113,33 @@
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 首頁大合照與介紹區塊 */
+        .hero-image-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .hero-image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+        .intro-box {
+            padding: 25px;
+            line-height: 1.8;
+            font-size: 17px;
+            color: #2c3e50;
+        }
+        .intro-box h3 {
+            margin-top: 0;
+            border-bottom: 2px solid rgba(52, 152, 219, 0.3);
+            padding-bottom: 10px;
+            color: #2980b9;
         }
         
         /* === 計算器專用樣式 === */
@@ -151,9 +179,22 @@
             body { padding: 10px 10px 30px 10px; }
             .header-container { gap: 10px; padding: 15px; margin-bottom: 15px; }
             .header-container img.badge { height: 50px; } 
-            .header-container h2 { font-size: 20px; }
-            .hero-image-container { margin-bottom: 15px; }
-            .nav-tabs button { padding: 8px 16px; font-size: 14px; }
+            .header-container h2 { font-size: 22px; }
+            
+            .layout-container { flex-direction: column; gap: 15px; }
+            .sidebar { 
+                flex-direction: row; 
+                width: 100%; 
+                overflow-x: auto; 
+                padding: 10px; 
+                white-space: nowrap; 
+                position: relative; 
+                top: 0;
+            }
+            .sidebar::-webkit-scrollbar { display: none; } 
+            .sidebar button { text-align: center; padding: 10px 15px; font-size: 14px; }
+            .sidebar button:hover, .sidebar button.active { transform: translateY(-2px); } 
+            
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
             th, td { padding: 10px 8px; font-size: 14px; }
@@ -174,71 +215,87 @@
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 
-    <!-- 首頁大合照 -->
-    <div class="hero-image-container">
-        <img src="公會合照.png" alt="Cloudy公會大合照">
-    </div>
+    <!-- 左右排版主容器 -->
+    <div class="layout-container">
+        
+        <!-- 左側導覽列 -->
+        <div class="sidebar glass-panel">
+            <button class="active" onclick="openTab(event, 'homeTab')">🏡 公會首頁</button>
+            <button onclick="openTab(event, 'calcTab')">💰 點數商品儲值or楓幣購買計算</button>
+            <button onclick="openTab(event, 'signupTab')">⚔️ 突襲王團報名</button>
+            <button onclick="openTab(event, 'rosterTab')">📜 每週王團名單</button>
+        </div>
 
-    <!-- 導覽列按鈕 -->
-    <div class="nav-tabs">
-        <button class="active" onclick="openTab(event, 'calcTab')">點數折溢價計算</button>
-        <button onclick="openTab(event, 'signupTab')">突襲王團報名</button>
-        <button onclick="openTab(event, 'rosterTab')">每週王團名單</button>
-    </div>
-
-    <!-- 頁籤一：點數折溢價計算表 -->
-    <div id="calcTab" class="tab-content active">
-        <div class="controls glass-panel">
-            <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
-                <label>💰 儲值基準： 
-                    <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
-                    <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
-                </label>
-                <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+        <!-- 右側動態內容區 -->
+        <div class="main-content">
+            
+            <!-- 頁籤零：公會首頁 (預設顯示，包含合照與介紹框) -->
+            <div id="homeTab" class="tab-content active">
+                <div class="hero-image-container">
+                    <img src="公會合照.png" alt="Cloudy公會大合照">
+                </div>
+                
+                <div class="glass-panel intro-box">
+                    <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
+                    <p>歡迎來到 Cloudy 專屬入口網站！這裡是我們的公會佈告欄與實用工具區。</p>
+                    <p>這裡目前預留了介紹空間，未來你可以隨時在原始碼中修改這段文字，放入公會招募條件、出團規定、或是想對小夥伴們說的話唷！</p>
+                </div>
             </div>
-            <div class="controls-row">
-                <label>
-                    <input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 
-                    👑 擁有拍賣場VIP (手續費降至3%)
-                </label>
-                <span id="vipText" class="vip-note"></span>
+
+            <!-- 頁籤一：點數商品儲值or楓幣購買計算 -->
+            <div id="calcTab" class="tab-content">
+                <div class="controls glass-panel">
+                    <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
+                        <label>💰 儲值基準： 
+                            <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
+                            <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
+                        </label>
+                        <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+                    </div>
+                    <div class="controls-row">
+                        <label>
+                            <input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 
+                            👑 擁有拍賣場VIP (手續費降至3%)
+                        </label>
+                        <span id="vipText" class="vip-note"></span>
+                    </div>
+                </div>
+
+                <div class="glass-panel table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>商城道具</th>
+                                <th>WC 單價</th>
+                                <th>理論點數成本<br>(萬楓幣)</th>
+                                <th>目前拍賣行情<br>(萬楓幣)</th>
+                                <th>買來自用建議</th>
+                                <th>用WC購買後賣出<br>(萬楓幣)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- 內容由 JavaScript 動態生成 -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <div class="glass-panel table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>商城道具</th>
-                        <th>WC 單價</th>
-                        <th>理論點數成本<br>(萬楓幣)</th>
-                        <th>目前拍賣行情<br>(萬楓幣)</th>
-                        <th>買來自用建議</th>
-                        <th>用WC購買後賣出<br>(萬楓幣)</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- 內容由 JavaScript 動態生成 -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+            <!-- 頁籤二：突襲王團報名表單 -->
+            <div id="signupTab" class="tab-content">
+                <div class="glass-panel" style="padding: 10px;">
+                    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+                </div>
+            </div>
 
-    <!-- 頁籤二：突襲王團報名表單 -->
-    <div id="signupTab" class="tab-content">
-        <div class="glass-panel" style="padding: 10px;">
-            <!-- 已更新為專屬表單，並設定為嵌入模式 -->
-            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
-        </div>
-    </div>
+            <!-- 頁籤三：每週王團名單公告 -->
+            <div id="rosterTab" class="tab-content">
+                <div class="glass-panel" style="padding: 10px;">
+                    <iframe src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false" class="embed-container" title="每週王團名單">載入中...</iframe>
+                </div>
+            </div>
 
-    <!-- 頁籤三：每週王團名單公告 -->
-    <div id="rosterTab" class="tab-content">
-        <div class="glass-panel" style="padding: 10px;">
-            <!-- 已加上 widget=false&chrome=false 來隱藏下方的工作表切換列 -->
-            <iframe src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false" class="embed-container" title="每週王團名單">載入中...</iframe>
-        </div>
-    </div>
+        </div> <!-- /main-content -->
+    </div> <!-- /layout-container -->
 
     <!-- 底部名牌區塊 -->
     <div class="footer-container">
@@ -246,13 +303,13 @@
     </div>
 
     <script>
-        // === 頁籤切換邏輯 ===
+        // === 頁籤切換邏輯 (支援左側選單) ===
         function openTab(evt, tabId) {
             let tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove("active");
             }
-            let tabLinks = document.getElementsByClassName("nav-tabs")[0].getElementsByTagName("button");
+            let tabLinks = document.getElementsByClassName("sidebar")[0].getElementsByTagName("button");
             for (let i = 0; i < tabLinks.length; i++) {
                 tabLinks[i].classList.remove("active");
             }
@@ -315,22 +372,4 @@
 
                 tr.innerHTML = `
                     <td>${item.name}</td>
-                    <td>${item.wc.toFixed(1)}</td>
-                    <td>${theoryMeso.toFixed(1)}</td>
-                    <td><input type="number" value="${item.ah}" style="width: 75px;" onchange="updateAH(${index}, this.value)"></td>
-                    <td>${buyAdvice}</td>
-                    <td>${profitHtml}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function updateAH(index, newValue) {
-            items[index].ah = parseFloat(newValue) || 0;
-            calculate();
-        }
-
-        calculate();
-    </script>
-</body>
-</html>
+                    <td>${item.wc.toFixed

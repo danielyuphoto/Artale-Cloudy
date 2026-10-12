@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
+    <!-- 加上 preconnect 讓瀏覽器提早準備連線 Google 字體，加快文字顯示 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
         /* 全局字體：華康手札體 */
         body { 
             font-family: '華康手札體 Std W7 OpenType', 'DFHandwriting-W7', 'DFPHandwriting-W7', 'Segoe UI', 'Microsoft JhengHei', sans-serif; 
-            /* 神木村背景 */
             background-image: url('神木村.webp');
             background-size: cover;
             background-position: center;
@@ -32,56 +34,27 @@
         
         /* 標題與對稱勳章區塊 */
         .header-container { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 20px; 
-            margin-bottom: 40px; 
-            padding: 10px; 
-            margin-top: 20px;
-            position: relative; 
-            z-index: 10;
+            display: flex; align-items: center; justify-content: center; 
+            gap: 20px; margin-bottom: 40px; padding: 10px; margin-top: 20px; position: relative; z-index: 10;
         }
         .header-container img.badge { 
-            height: 90px; 
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); 
-            transition: transform 0.3s ease; 
-            cursor: pointer;
-            z-index: 5;
+            height: 90px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; z-index: 5;
         } 
         .header-container img.badge:hover { transform: scale(1.1); }
         
         /* === 純 CSS 繪製：柔邊雲朵特效外框 === */
         .cloud-title-wrapper {
-            position: relative;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 80px; 
-            padding: 25px 50px; 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85);
-            z-index: 1;
+            position: relative; background: rgba(255, 255, 255, 0.95); border-radius: 80px; 
+            padding: 25px 50px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85); z-index: 1;
         }
-        .cloud-title-wrapper::before,
-        .cloud-title-wrapper::after {
-            content: '';
-            position: absolute;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 50%;
-            z-index: -1;
-            box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8);
-            pointer-events: none; 
+        .cloud-title-wrapper::before, .cloud-title-wrapper::after {
+            content: ''; position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50%;
+            z-index: -1; box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8); pointer-events: none; 
         }
         .cloud-title-wrapper::before { width: 110px; height: 110px; top: -45px; left: 15%; }
         .cloud-title-wrapper::after { width: 140px; height: 140px; top: -60px; right: 15%; }
-        .cloud-title-wrapper h2 { 
-            margin: 0; 
-            text-align: center; 
-            text-shadow: 2px 2px 4px rgba(255,255,255,0.9);
-            position: relative;
-            z-index: 2;
-        }
+        .cloud-title-wrapper h2 { margin: 0; text-align: center; text-shadow: 2px 2px 4px rgba(255,255,255,0.9); position: relative; z-index: 2; }
         .title-cursive { font-family: 'Dancing Script', 'Brush Script MT', cursive; font-size: 56px; color: #2c3e50; margin-right: 12px; }
         .title-zen { font-family: 'Zen Maru Gothic', sans-serif; font-size: 46px; font-weight: 700; color: #2c3e50; letter-spacing: 2px; }
 
@@ -126,28 +99,11 @@
         .gallery-container::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.5); border-radius: 4px; }
         .gallery-container::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.8); }
         
-        /* 每一張照片的專屬容器 (包含照片與備註) */
-        .photo-wrapper {
-            flex: 0 0 100%;
-            scroll-snap-align: center;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+        .photo-wrapper { flex: 0 0 100%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 10px; }
         .photo-wrapper img { width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .photo-caption {
-            font-size: 17px;
-            color: #d35400;
-            text-align: center;
-            font-weight: bold;
-            background: rgba(255, 243, 205, 0.8);
-            padding: 8px 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-family: inherit; /* 沿用華康手札體 */
-        }
+        .photo-caption { font-size: 17px; color: #d35400; text-align: center; font-weight: bold; background: rgba(255, 243, 205, 0.8); padding: 8px 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-family: inherit; }
         
-        /* === 計算器與其他專用樣式 === */
+        /* === 計算器專用樣式 === */
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
@@ -212,6 +168,7 @@
 
     <!-- 標題區塊 -->
     <div class="header-container">
+        <!-- 頂部圖片沒有加 lazy，確保一進網頁立刻顯示 -->
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
         <div class="cloud-title-wrapper">
             <h2><span class="title-cursive">Artale Cloudy</span> <span class="title-zen">公會小窩</span></h2>
@@ -238,7 +195,8 @@
             <!-- 頁籤：公會首頁 -->
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container">
-                    <img src="公會合照.png" alt="Cloudy公會大合照">
+                    <!-- 加入 loading="lazy" -->
+                    <img src="公會合照.png" alt="Cloudy公會大合照" loading="lazy">
                 </div>
                 <div class="glass-panel intro-box">
                     <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
@@ -250,115 +208,115 @@
             <!-- 頁籤：公會招生 -->
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
-                    <img src="公會招生圖.png" alt="Cloudy公會招生資訊">
+                    <!-- 加入 loading="lazy" -->
+                    <img src="公會招生圖.png" alt="Cloudy公會招生資訊" loading="lazy">
                 </div>
             </div>
 
-            <!-- 頁籤：公會活動紀錄 (包含照片備註) -->
+            <!-- 頁籤：公會活動紀錄 (所有照片皆加上 loading="lazy" 節省極大資源) -->
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
                     
-                    <!-- 2026.09.07 肝帝爭霸戰 (2張) -->
+                    <!-- 2026.09.07 肝帝爭霸戰 -->
                     <div class="history-card">
                         <span class="history-date">2026.09.07</span>
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
                         <div class="photo-count">📸 共 2 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">肝帝爭霸戰即將開肝！</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">恭喜各位肝蒂～活動圓滿結束！</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2026.03.09 台中線下副本 (3張) -->
+                    <!-- 2026.03.09 台中線下副本 -->
                     <div class="history-card">
                         <span class="history-date">2026.03.09</span>
                         <h4 class="history-title">【台中線下副本】</h4>
                         <div class="photo-count">📸 共 3 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.03.09_台中線下副本_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.03.09_台中線下副本_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.03.09_台中線下副本_3.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2026.02.16 新春財源廣進活動 (4張) -->
+                    <!-- 2026.02.16 新春財源廣進活動 -->
                     <div class="history-card">
                         <span class="history-date">2026.02.16</span>
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
                         <div class="photo-count">📸 共 4 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <!-- 附檔名已修正為 .jpg -->
-                                <img src="2026.02.16_新春財源廣進_1.jpg" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">新春財源廣進活動公告</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.02.16_新春財源廣進_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">新春財源廣進活動成果</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.02.16_新春財源廣進_3.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">新春財源廣進活動大合照～</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.02.16_新春財源廣進_4.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">新春財源廣進活動大合照～</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2025.12.27 第一次線下聚會 (5張) -->
+                    <!-- 2025.12.27 第一次線下聚會 -->
                     <div class="history-card">
                         <span class="history-date">2025.12.27</span>
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
                         <div class="photo-count">📸 共 5 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「消滅和牛燒肉」活動海報</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_3.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">這是給有出席活動的夥伴的一點心意</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_4.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_5.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_5.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「消滅和牛燒肉」活動成功！</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 2025.11.17 第一張合照 (1張) -->
+                    <!-- 2025.11.17 第一張合照 -->
                     <div class="history-card">
                         <span class="history-date">2025.11.17</span>
                         <h4 class="history-title">【Cloudy公會第一張合照】</h4>
                         <div class="photo-count">📸 共 1 張照片</div>
                         <div class="gallery-container" style="overflow-x: hidden;">
                             <div class="photo-wrapper">
-                                <img src="2025.11.17_第一張合照_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
                             </div>
                         </div>
@@ -374,7 +332,8 @@
                         ⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span>
                     </div>
                     <div id="formContainer">
-                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+                        <!-- iframe 加入 loading="lazy" -->
+                        <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單" loading="lazy">載入中...</iframe>
                     </div>
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
                         <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於下周一至周三開放~敬請期待</h3>
@@ -391,7 +350,8 @@
                     <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
                 </div>
                 <div class="glass-panel" style="padding: 10px;">
-                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單">載入中...</iframe>
+                    <!-- iframe 加入 loading="lazy" -->
+                    <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單" loading="lazy">載入中...</iframe>
                 </div>
             </div>
 
@@ -438,7 +398,8 @@
 
     <!-- 底部名牌區塊 -->
     <div class="footer-container">
-        <img src="公會名牌截圖(去背).png" alt="公會名牌(去背)" class="nameplate">
+        <!-- 底部裝飾圖片也加入 lazy -->
+        <img src="公會名牌截圖(去背).png" alt="公會名牌(去背)" class="nameplate" loading="lazy">
     </div>
 
     <!-- JavaScript 邏輯區 -->

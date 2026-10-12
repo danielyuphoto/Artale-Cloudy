@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
-    <!-- 加上 preconnect 讓瀏覽器提早準備連線 Google 字體，加快文字顯示 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
@@ -22,70 +21,43 @@
             margin: auto; 
         }
         
-        /* 毛玻璃共用樣式 */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-        }
+        .glass-panel { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.4); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
         
-        /* 標題與對稱勳章區塊 */
-        .header-container { 
-            display: flex; align-items: center; justify-content: center; 
-            gap: 20px; margin-bottom: 40px; padding: 10px; margin-top: 20px; position: relative; z-index: 10;
-        }
-        .header-container img.badge { 
-            height: 90px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; z-index: 5;
-        } 
+        .header-container { display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 40px; padding: 10px; margin-top: 20px; position: relative; z-index: 10; }
+        .header-container img.badge { height: 90px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; z-index: 5; } 
         .header-container img.badge:hover { transform: scale(1.1); }
         
-        /* === 純 CSS 繪製：柔邊雲朵特效外框 === */
-        .cloud-title-wrapper {
-            position: relative; background: rgba(255, 255, 255, 0.95); border-radius: 80px; 
-            padding: 25px 50px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85); z-index: 1;
-        }
-        .cloud-title-wrapper::before, .cloud-title-wrapper::after {
-            content: ''; position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50%;
-            z-index: -1; box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8); pointer-events: none; 
-        }
+        .cloud-title-wrapper { position: relative; background: rgba(255, 255, 255, 0.95); border-radius: 80px; padding: 25px 50px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(0,0,0,0.1), 0 0 35px 20px rgba(255, 255, 255, 0.85); z-index: 1; }
+        .cloud-title-wrapper::before, .cloud-title-wrapper::after { content: ''; position: absolute; background: rgba(255, 255, 255, 0.95); border-radius: 50%; z-index: -1; box-shadow: 0 0 30px 15px rgba(255, 255, 255, 0.8); pointer-events: none; }
         .cloud-title-wrapper::before { width: 110px; height: 110px; top: -45px; left: 15%; }
         .cloud-title-wrapper::after { width: 140px; height: 140px; top: -60px; right: 15%; }
         .cloud-title-wrapper h2 { margin: 0; text-align: center; text-shadow: 2px 2px 4px rgba(255,255,255,0.9); position: relative; z-index: 2; }
         .title-cursive { font-family: 'Dancing Script', 'Brush Script MT', cursive; font-size: 56px; color: #2c3e50; margin-right: 12px; }
         .title-zen { font-family: 'Zen Maru Gothic', sans-serif; font-size: 46px; font-weight: 700; color: #2c3e50; letter-spacing: 2px; }
 
-        /* 左右排版容器 */
         .layout-container { display: flex; gap: 25px; align-items: flex-start; position: relative; z-index: 20; }
 
-        /* 左側導覽列 */
-        .sidebar { display: flex; flex-direction: column; gap: 12px; padding: 20px; width: 210px; flex-shrink: 0; position: sticky; top: 20px; z-index: 9999; }
+        .sidebar { display: flex; flex-direction: column; gap: 12px; padding: 20px; width: 210px; flex-shrink: 0; position: sticky; top: 20px; z-index: 900; }
         .sidebar button { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); padding: 14px 18px; border-radius: 8px; font-size: 18px; font-weight: bold; color: #2c3e50; text-align: left; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: inherit; }
         .sidebar button:hover { background: rgba(255, 255, 255, 0.95); transform: translateX(5px); }
         .sidebar button.active { background: #3498db; color: white; border-color: #2980b9; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); transform: translateX(5px); }
 
-        /* 右側主要內容區 */
         .main-content { flex: 1; min-width: 0; }
         .tab-content { display: none; animation: fadeIn 0.4s ease-in-out; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 公會招生圖 */
         @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
         .recruit-image-container { width: 100%; display: flex; justify-content: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; padding: 20px 0; }
         .recruit-image-container img { width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 3px solid rgba(255, 255, 255, 0.9); transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s ease; cursor: pointer; transform-origin: center center; z-index: 10; position: relative; }
         .recruit-image-container img:hover { transform: scale(1.3); box-shadow: 0 25px 50px rgba(0,0,0,0.5); z-index: 999; }
 
-        /* 首頁大合照與介紹區塊 */
         .hero-image-container { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
         .hero-image-container img { max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); border: 3px solid rgba(255, 255, 255, 0.8); }
         .intro-box { padding: 25px; line-height: 1.8; font-size: 20px; color: #2c3e50; }
         .intro-box h3 { margin-top: 0; border-bottom: 2px solid rgba(52, 152, 219, 0.3); padding-bottom: 10px; color: #2980b9; font-size: 24px; }
 
-        /* === 歷史活動紀錄網格與相簿樣式 === */
+        /* 歷史活動紀錄樣式 */
         .history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; padding: 10px; }
         .history-card { background: rgba(255, 255, 255, 0.75); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 16px; padding: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; display: flex; flex-direction: column; gap: 10px; }
         .history-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); background: rgba(255, 255, 255, 0.95); }
@@ -100,10 +72,60 @@
         .gallery-container::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.8); }
         
         .photo-wrapper { flex: 0 0 100%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 10px; }
-        .photo-wrapper img { width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        /* 圖片新增滑鼠手勢與互動特效 */
+        .photo-wrapper img { 
+            width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+            cursor: zoom-in; transition: opacity 0.2s;
+        }
+        .photo-wrapper img:hover { opacity: 0.85; }
         .photo-caption { font-size: 17px; color: #d35400; text-align: center; font-weight: bold; background: rgba(255, 243, 205, 0.8); padding: 8px 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-family: inherit; }
-        
-        /* === 計算器專用樣式 === */
+
+        /* === 全螢幕燈箱 (Lightbox) 樣式 === */
+        #lightbox {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000; /* 最高層級 */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        #lightbox.active { opacity: 1; pointer-events: auto; }
+        #lightbox-img {
+            max-width: 90%;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(0,0,0,0.5);
+            border: 3px solid white;
+            transition: transform 0.3s ease;
+        }
+        #lightbox-caption {
+            color: white;
+            font-size: 22px;
+            margin-top: 15px;
+            font-family: '華康手札體 Std W7 OpenType', 'Segoe UI', sans-serif;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+        }
+        /* 燈箱導覽按鈕 */
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            font-size: 40px; color: white; background: rgba(0,0,0,0.5);
+            border: none; border-radius: 50%; width: 60px; height: 60px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.3s;
+        }
+        .lightbox-nav:hover { background: rgba(0,0,0,0.8); }
+        #lightbox-prev { left: 30px; }
+        #lightbox-next { right: 30px; }
+        #lightbox-close {
+            position: absolute; top: 20px; right: 30px;
+            font-size: 35px; color: white; background: none; border: none; cursor: pointer;
+        }
+
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
@@ -145,7 +167,7 @@
             .title-cursive { font-size: 32px; }
             .title-zen { font-size: 26px; }
             .layout-container { flex-direction: column; gap: 15px; }
-            .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; position: relative; top: 0; }
+            .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; position: relative; top: 0; z-index: 900; }
             .sidebar::-webkit-scrollbar { display: none; } 
             .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
             .recruit-image-container img { width: 100%; max-width: 100%; }
@@ -161,14 +183,26 @@
             .footer-container img.nameplate { height: 75px; }
             #countdownDisplay { font-size: 16px; padding: 10px; }
             #timerText { font-size: 18px; }
+            /* 手機版燈箱按鈕調整 */
+            .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
+            #lightbox-prev { left: 10px; }
+            #lightbox-next { right: 10px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- 全螢幕燈箱 (預設隱藏) -->
+    <div id="lightbox">
+        <button id="lightbox-close">✖</button>
+        <button id="lightbox-prev" class="lightbox-nav">◀</button>
+        <img id="lightbox-img" src="" alt="放大照片">
+        <div id="lightbox-caption"></div>
+        <button id="lightbox-next" class="lightbox-nav">▶</button>
+    </div>
+
     <!-- 標題區塊 -->
     <div class="header-container">
-        <!-- 頂部圖片沒有加 lazy，確保一進網頁立刻顯示 -->
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
         <div class="cloud-title-wrapper">
             <h2><span class="title-cursive">Artale Cloudy</span> <span class="title-zen">公會小窩</span></h2>
@@ -192,10 +226,8 @@
         <!-- 右側動態內容區 -->
         <div class="main-content">
             
-            <!-- 頁籤：公會首頁 -->
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container">
-                    <!-- 加入 loading="lazy" -->
                     <img src="公會合照.png" alt="Cloudy公會大合照" loading="lazy">
                 </div>
                 <div class="glass-panel intro-box">
@@ -205,77 +237,25 @@
                 </div>
             </div>
 
-            <!-- 頁籤：公會招生 -->
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
-                    <!-- 加入 loading="lazy" -->
                     <img src="公會招生圖.png" alt="Cloudy公會招生資訊" loading="lazy">
                 </div>
             </div>
 
-            <!-- 頁籤：公會活動紀錄 (所有照片皆加上 loading="lazy" 節省極大資源) -->
+            <!-- 頁籤：公會活動紀錄 (已反轉時間排序：最舊在上) -->
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
-                    
-                    <!-- 2026.09.07 肝帝爭霸戰 -->
-                    <div class="history-card">
-                        <span class="history-date">2026.09.07</span>
-                        <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
-                        <div class="photo-count">📸 共 2 張照片 (可左右滑動)</div>
-                        <div class="gallery-container">
-                            <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">肝帝爭霸戰即將開肝！</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">恭喜各位肝蒂～活動圓滿結束！</div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- 2026.03.09 台中線下副本 -->
+                    <!-- 2025.11.17 第一張合照 -->
                     <div class="history-card">
-                        <span class="history-date">2026.03.09</span>
-                        <h4 class="history-title">【台中線下副本】</h4>
-                        <div class="photo-count">📸 共 3 張照片 (可左右滑動)</div>
-                        <div class="gallery-container">
+                        <span class="history-date">2025.11.17</span>
+                        <h4 class="history-title">【Cloudy公會第一張合照】</h4>
+                        <div class="photo-count">📸 共 1 張照片 (點擊放大)</div>
+                        <div class="gallery-container" style="overflow-x: hidden;">
                             <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_3.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 2026.02.16 新春財源廣進活動 -->
-                    <div class="history-card">
-                        <span class="history-date">2026.02.16</span>
-                        <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
-                        <div class="photo-count">📸 共 4 張照片 (可左右滑動)</div>
-                        <div class="gallery-container">
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動公告</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動成果</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_3.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動大合照～</div>
-                            </div>
-                            <div class="photo-wrapper">
-                                <img src="2026.02.16_新春財源廣進_4.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">新春財源廣進活動大合照～</div>
+                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" data-index="0" data-group="group1" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
                             </div>
                         </div>
                     </div>
@@ -284,40 +264,90 @@
                     <div class="history-card">
                         <span class="history-date">2025.12.27</span>
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
-                        <div class="photo-count">📸 共 5 張照片 (可左右滑動)</div>
+                        <div class="photo-count">📸 共 5 張照片 (可左右滑動/點擊放大)</div>
                         <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_1.png" loading="lazy" data-index="0" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_2.png" loading="lazy" data-index="1" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「消滅和牛燒肉」活動海報</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_3.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_3.png" loading="lazy" data-index="2" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">這是給有出席活動的夥伴的一點心意</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_4.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_4.png" loading="lazy" data-index="3" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_5.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_5.png" loading="lazy" data-index="4" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「消滅和牛燒肉」活動成功！</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 2025.11.17 第一張合照 -->
+                    <!-- 2026.02.16 新春財源廣進活動 -->
                     <div class="history-card">
-                        <span class="history-date">2025.11.17</span>
-                        <h4 class="history-title">【Cloudy公會第一張合照】</h4>
-                        <div class="photo-count">📸 共 1 張照片</div>
-                        <div class="gallery-container" style="overflow-x: hidden;">
+                        <span class="history-date">2026.02.16</span>
+                        <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
+                        <div class="photo-count">📸 共 4 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <img src="2025.11.17_第一張合照_1.png" loading="lazy" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
-                                <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
+                                <img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動公告</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.02.16_新春財源廣進_2.png" loading="lazy" data-index="1" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動成果</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.02.16_新春財源廣進_3.png" loading="lazy" data-index="2" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動大合照～</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.02.16_新春財源廣進_4.png" loading="lazy" data-index="3" data-group="group3" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動大合照～</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2026.03.09 台中線下副本 -->
+                    <div class="history-card">
+                        <span class="history-date">2026.03.09</span>
+                        <h4 class="history-title">【台中線下副本】</h4>
+                        <div class="photo-count">📸 共 3 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="gallery-container">
+                            <div class="photo-wrapper">
+                                <img src="2026.03.09_台中線下副本_1.png" loading="lazy" data-index="0" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.03.09_台中線下副本_2.png" loading="lazy" data-index="1" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.03.09_台中線下副本_3.png" loading="lazy" data-index="2" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2026.09.07 肝帝爭霸戰 (已修復備註與檔名順序) -->
+                    <div class="history-card">
+                        <span class="history-date">2026.09.07</span>
+                        <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
+                        <div class="photo-count">📸 共 2 張照片 (可左右滑動/點擊放大)</div>
+                        <div class="gallery-container">
+                            <div class="photo-wrapper">
+                                <img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="0" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">肝帝爭霸戰即將開肝！</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="1" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div>
                             </div>
                         </div>
                     </div>
@@ -332,7 +362,6 @@
                         ⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span>
                     </div>
                     <div id="formContainer">
-                        <!-- iframe 加入 loading="lazy" -->
                         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單" loading="lazy">載入中...</iframe>
                     </div>
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
@@ -350,7 +379,6 @@
                     <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
                 </div>
                 <div class="glass-panel" style="padding: 10px;">
-                    <!-- iframe 加入 loading="lazy" -->
                     <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單" loading="lazy">載入中...</iframe>
                 </div>
             </div>
@@ -398,12 +426,12 @@
 
     <!-- 底部名牌區塊 -->
     <div class="footer-container">
-        <!-- 底部裝飾圖片也加入 lazy -->
         <img src="公會名牌截圖(去背).png" alt="公會名牌(去背)" class="nameplate" loading="lazy">
     </div>
 
     <!-- JavaScript 邏輯區 -->
     <script>
+        // === 頁籤切換 ===
         function setupTabs() {
             const sidebarBtns = document.querySelectorAll(".sidebar button");
             const tabContents = document.querySelectorAll(".tab-content");
@@ -423,6 +451,7 @@
             });
         }
 
+        // === iframe 表單切換 ===
         function setupSubTabs() {
             const subBtns = document.querySelectorAll(".sub-tabs button");
             const iframe = document.getElementById("rosterIframe");
@@ -436,6 +465,7 @@
             });
         }
 
+        // === 王團報名倒數計時 ===
         function startFormCountdown() {
             function updateTimer() {
                 const now = new Date();
@@ -478,6 +508,7 @@
             setInterval(updateTimer, 1000); 
         }
 
+        // === 點商行情計算器 ===
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },
@@ -494,7 +525,6 @@
             const twdCost = parseFloat(document.getElementById('twdCost').value) || 1830;
             const wcAmount = parseFloat(document.getElementById('wcAmount').value) || 13200;
             const wcCostTWD = twdCost / wcAmount; 
-
             const twdRate = parseFloat(document.getElementById('twdRate').value) || 1;
             const isVip = document.getElementById('vipCheck').checked;
             const tax = isVip ? 0.03 : 0.05;
@@ -503,31 +533,17 @@
             const vipCostMeso = vipCostTWD * (10000 / twdRate); 
             const breakEvenMeso = (vipCostMeso / 0.02) / 10000; 
             
-            document.getElementById('vipText').innerText = 
-                `※ 90天VIP成本為6400 WC，以目前匯率需賣出約 ${breakEvenMeso.toFixed(2)} 億楓幣方可回本`;
-
+            document.getElementById('vipText').innerText = `※ 90天VIP成本為6400 WC，以目前匯率需賣出約 ${breakEvenMeso.toFixed(2)} 億楓幣方可回本`;
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = '';
 
             items.forEach((item, index) => {
                 const theoryMeso = (item.wc * wcCostTWD) * (10000 / twdRate);
                 const tr = document.createElement('tr');
-                
-                let buyAdvice = '';
-                if (item.ah < theoryMeso) {
-                    buyAdvice = `<span class="buy-ah">✅ 用楓幣拉拍賣</span>`;
-                } else {
-                    buyAdvice = `<span class="buy-wc">💎 直接扣 WC 買</span>`;
-                }
-
+                let buyAdvice = item.ah < theoryMeso ? `<span class="buy-ah">✅ 用楓幣拉拍賣</span>` : `<span class="buy-wc">💎 直接扣 WC 買</span>`;
                 const sellNet = item.ah * (1 - tax);
                 const realProfit = sellNet - theoryMeso;
-                let profitHtml = '';
-                if (realProfit > 0) {
-                    profitHtml = `<span class="profit-good">賺 ${realProfit.toFixed(1)} 萬</span>`;
-                } else {
-                    profitHtml = `<span class="profit-bad">虧 ${Math.abs(realProfit).toFixed(1)} 萬</span>`;
-                }
+                let profitHtml = realProfit > 0 ? `<span class="profit-good">賺 ${realProfit.toFixed(1)} 萬</span>` : `<span class="profit-bad">虧 ${Math.abs(realProfit).toFixed(1)} 萬</span>`;
 
                 tr.innerHTML = `
                     <td>${item.name}</td>
@@ -540,17 +556,95 @@
                 tbody.appendChild(tr);
             });
         }
+        function updateAH(index, newValue) { items[index].ah = parseFloat(newValue) || 0; calculate(); }
 
-        function updateAH(index, newValue) {
-            items[index].ah = parseFloat(newValue) || 0;
-            calculate();
+        // === 全螢幕照片燈箱 (Lightbox) 邏輯 ===
+        function setupLightbox() {
+            const lightbox = document.getElementById("lightbox");
+            const lightboxImg = document.getElementById("lightbox-img");
+            const lightboxCaption = document.getElementById("lightbox-caption");
+            const closeBtn = document.getElementById("lightbox-close");
+            const prevBtn = document.getElementById("lightbox-prev");
+            const nextBtn = document.getElementById("lightbox-next");
+
+            let currentGroup = [];
+            let currentIndex = 0;
+
+            // 為所有歷史照片綁定點擊事件
+            document.querySelectorAll(".photo-wrapper img").forEach(img => {
+                img.addEventListener("click", function(e) {
+                    const groupName = this.getAttribute("data-group");
+                    // 找出同一個活動群組的所有圖片
+                    currentGroup = Array.from(document.querySelectorAll(`img[data-group="${groupName}"]`));
+                    currentIndex = parseInt(this.getAttribute("data-index"));
+
+                    updateLightboxImage();
+                    lightbox.classList.add("active");
+                    e.stopPropagation(); // 防止點擊事件冒泡觸發關閉
+                });
+            });
+
+            // 更新燈箱圖片與文字
+            function updateLightboxImage() {
+                const targetImg = currentGroup[currentIndex];
+                lightboxImg.src = targetImg.src;
+                // 從相鄰的 .photo-caption 取得備註文字
+                lightboxCaption.innerText = targetImg.nextElementSibling.innerText;
+                
+                // 只有一張圖的活動，隱藏左右箭頭
+                prevBtn.style.display = currentGroup.length > 1 ? "flex" : "none";
+                nextBtn.style.display = currentGroup.length > 1 ? "flex" : "none";
+            }
+
+            // 下一張
+            function showNext(e) {
+                if(e) e.stopPropagation();
+                if (currentGroup.length <= 1) return;
+                currentIndex = (currentIndex + 1) % currentGroup.length;
+                updateLightboxImage();
+            }
+
+            // 上一張
+            function showPrev(e) {
+                if(e) e.stopPropagation();
+                if (currentGroup.length <= 1) return;
+                currentIndex = (currentIndex - 1 + currentGroup.length) % currentGroup.length;
+                updateLightboxImage();
+            }
+
+            // 關閉燈箱
+            function closeLightbox() {
+                lightbox.classList.remove("active");
+            }
+
+            // 綁定按鈕事件
+            nextBtn.addEventListener("click", showNext);
+            prevBtn.addEventListener("click", showPrev);
+            closeBtn.addEventListener("click", closeLightbox);
+            
+            // 點擊黑色背景關閉 (如果不小心點到圖片本身，就不會關閉)
+            lightbox.addEventListener("click", function(e) {
+                if (e.target !== lightboxImg && e.target !== prevBtn && e.target !== nextBtn) {
+                    closeLightbox();
+                }
+            });
+
+            // 鍵盤左右鍵切換、ESC 關閉
+            document.addEventListener("keydown", function(e) {
+                if (!lightbox.classList.contains("active")) return;
+                if (e.key === "ArrowRight") showNext();
+                if (e.key === "ArrowLeft") showPrev();
+                if (e.key === "Escape") closeLightbox();
+            });
         }
 
+        // === 網頁初始化 ===
         window.onload = function() {
             setupTabs();
             setupSubTabs();
             calculate();
             startFormCountdown(); 
+            setupLightbox(); // 啟動燈箱功能
         };
     </script>
 </body>

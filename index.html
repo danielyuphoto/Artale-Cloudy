@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬 - 點數商品折溢價計算表</title>
+    <title>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬入口網</title>
     <style>
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -34,7 +34,7 @@
             align-items: center; 
             justify-content: center; 
             gap: 25px; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
             padding: 20px; 
         }
         .header-container img.badge { 
@@ -43,41 +43,72 @@
             transition: transform 0.3s ease; 
             cursor: pointer;
         } 
-        .header-container img.badge:hover {
-            transform: scale(1.1); 
-        }
+        .header-container img.badge:hover { transform: scale(1.1); }
         .header-container h2 { 
             margin: 0; 
             color: #2c3e50; 
-            font-size: 28px; 
+            font-size: 32px; 
             font-weight: 800;
             text-align: center; 
             letter-spacing: 1px;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
         }
-        
-        /* 參數控制區塊 */
-        .controls { 
-            padding: 20px; 
-            margin-bottom: 25px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px; 
+
+        /* 導覽列 (頁籤切換) */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
         }
+        .nav-tabs button {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .nav-tabs button:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+        }
+        .nav-tabs button.active {
+            background: #3498db;
+            color: white;
+            border-color: #2980b9;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+        }
+
+        /* 頁籤內容切換設定 */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* === 計算器專用樣式 === */
+        .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap;}
         input[type="number"] { padding: 6px 10px; width: 85px; border: 1px solid #bdc3c7; border-radius: 6px; background: rgba(255, 255, 255, 0.9); font-size: 15px; outline: none; transition: 0.2s; }
         input[type="number"]:focus { border-color: #3498db; box-shadow: 0 0 5px rgba(52, 152, 219, 0.5); }
         .vip-note { font-size: 0.95em; color: #c0392b; font-weight: bold; margin-left: 5px; }
         
-        /* 表格區塊與響應式滑動設定 */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; /* 讓 iOS 滑動更順暢 */
-            border-radius: 12px;
-        }
-        table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; /* 確保表格不會被無限壓縮 */ }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; }
+        table { width: 100%; border-collapse: collapse; overflow: hidden; min-width: 700px; }
         th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); }
         th { background-color: rgba(44, 62, 80, 0.95); color: #fff; font-size: 16px; letter-spacing: 1px; }
         tr:hover { background-color: rgba(255, 255, 255, 0.6); }
@@ -86,44 +117,34 @@
         .profit-good { color: #c0392b; font-weight: bold; }
         .profit-bad { color: #7f8c8d; }
 
-        /* 底部公會名牌區塊 */
-        .footer-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 40px;
-        }
-        .footer-container img.nameplate {
-            height: 120px; 
-            filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-            transition: transform 0.3s ease; 
-            cursor: pointer;
-        }
-        .footer-container img.nameplate:hover {
-            transform: scale(1.05); 
+        /* iframe 嵌入樣式 (給表單與試算表用) */
+        .embed-container {
+            width: 100%;
+            height: 700px;
+            border: none;
+            border-radius: 12px;
+            background: #fff; /* 避免透明背景影響試算表閱讀 */
         }
 
-        /* ========== 手機版響應式設計 (RWD) ========== */
+        /* 底部公會名牌區塊 */
+        .footer-container { display: flex; justify-content: center; margin-top: 40px; }
+        .footer-container img.nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: transform 0.3s ease; cursor: pointer; }
+        .footer-container img.nameplate:hover { transform: scale(1.05); }
+
+        /* 手機版 RWD */
         @media (max-width: 768px) {
             body { padding: 10px 10px 30px 10px; }
-            
-            /* 標題與勳章等比例縮小，保留對稱感 */
             .header-container { gap: 10px; padding: 15px; margin-bottom: 15px; }
             .header-container img.badge { height: 50px; } 
-            .header-container h2 { font-size: 18px; }
-            
-            /* 控制面板改為上下排列 */
+            .header-container h2 { font-size: 20px; }
+            .nav-tabs button { padding: 8px 16px; font-size: 14px; }
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            
-            /* 調整表格字體大小 */
             th, td { padding: 10px 8px; font-size: 14px; }
             th { font-size: 14px; }
             input[type="number"] { width: 70px; padding: 4px 8px; }
-            
-            /* 底部名牌縮小 */
+            .embed-container { height: 500px; }
             .footer-container img.nameplate { height: 75px; }
-            
-            /* VIP 提示文字折行處理 */
             .vip-note { margin-left: 0; display: block; margin-top: 5px; }
         }
     </style>
@@ -133,45 +154,69 @@
     <!-- 圖片與標題區塊 (左右對稱勳章) -->
     <div class="header-container glass-panel">
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(左)" class="badge">
-        <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會專屬<br>點數商品折溢價計算表</h2>
+        <h2>𝑪𝒍𝒐𝒖𝒅𝒚 公會首頁</h2>
         <img src="公會勳章截圖(去背).png" alt="Cloudy公會勳章(右)" class="badge">
     </div>
 
-    <!-- 參數控制區塊 -->
-    <div class="controls glass-panel">
-        <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
-            <label>💰 儲值基準： 
-                <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
-                <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
-            </label>
-            <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+    <!-- 導覽列按鈕 -->
+    <div class="nav-tabs">
+        <button class="active" onclick="openTab(event, 'calcTab')">點數折溢價計算</button>
+        <button onclick="openTab(event, 'signupTab')">突襲王團報名</button>
+        <button onclick="openTab(event, 'rosterTab')">每週王團名單</button>
+    </div>
+
+    <!-- 頁籤一：點數折溢價計算表 -->
+    <div id="calcTab" class="tab-content active">
+        <div class="controls glass-panel">
+            <div class="controls-row" style="border-bottom: 1px dashed rgba(0,0,0,0.2); padding-bottom: 15px;">
+                <label>💰 儲值基準： 
+                    <input type="number" id="twdCost" value="1830" oninput="calculate()"> 台幣 = 
+                    <input type="number" id="wcAmount" value="13200" oninput="calculate()"> WC
+                </label>
+                <label>📈 今日 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
+            </div>
+            <div class="controls-row">
+                <label>
+                    <input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 
+                    👑 擁有拍賣場VIP (手續費降至3%)
+                </label>
+                <span id="vipText" class="vip-note"></span>
+            </div>
         </div>
-        <div class="controls-row">
-            <label>
-                <input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 
-                👑 擁有拍賣場VIP (手續費降至3%)
-            </label>
-            <span id="vipText" class="vip-note"></span>
+
+        <div class="glass-panel table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>商城道具</th>
+                        <th>WC 單價</th>
+                        <th>理論點數成本<br>(萬楓幣)</th>
+                        <th>目前拍賣行情<br>(萬楓幣)</th>
+                        <th>買來自用建議</th>
+                        <th>用WC購買後賣出<br>(萬楓幣)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- 內容由 JavaScript 動態生成 -->
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- 表格區塊 (外層包覆 table-responsive 實現手機滑動) -->
-    <div class="glass-panel table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th>商城道具</th>
-                    <th>WC 單價</th>
-                    <th>理論點數成本<br>(萬楓幣)</th>
-                    <th>目前拍賣行情<br>(萬楓幣)</th>
-                    <th>買來自用建議</th>
-                    <th>用WC購買後賣出<br>(萬楓幣)</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <!-- 內容由 JavaScript 動態生成 -->
-            </tbody>
-        </table>
+    <!-- 頁籤二：突襲王團報名表單 -->
+    <div id="signupTab" class="tab-content">
+        <div class="glass-panel" style="padding: 10px;">
+            <!-- 請將下方 src="" 裡面的網址換成你建立的 Google 表單連結 -->
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSe-xxxxxx/viewform?embedded=true" class="embed-container" title="王團報名表單">載入中...</iframe>
+        </div>
+    </div>
+
+    <!-- 頁籤三：每週王團名單公告 -->
+    <div id="rosterTab" class="tab-content">
+        <div class="glass-panel" style="padding: 10px;">
+            <!-- 已經為你連上你們公會專用的「Cloudy突襲王團安排」試算表 -->
+            <iframe src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=true&headers=false" class="embed-container" title="每週王團名單">載入中...</iframe>
+        </div>
     </div>
 
     <!-- 底部名牌區塊 -->
@@ -180,6 +225,24 @@
     </div>
 
     <script>
+        // === 頁籤切換邏輯 ===
+        function openTab(evt, tabId) {
+            // 隱藏所有頁籤內容
+            let tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            // 移除所有按鈕的 active 狀態
+            let tabLinks = document.getElementsByClassName("nav-tabs")[0].getElementsByTagName("button");
+            for (let i = 0; i < tabLinks.length; i++) {
+                tabLinks[i].classList.remove("active");
+            }
+            // 顯示被點擊的頁籤，並將按鈕設為 active
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // === 計算器邏輯 ===
         const items = [
             { name: "飄雪結晶 (雪花)", wc: 300/11, ah: 40 },
             { name: "突襲額外獎勵票券", wc: 1200/7, ah: 370 },

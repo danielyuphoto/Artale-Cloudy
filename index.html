@@ -82,60 +82,17 @@
             position: relative;
             z-index: 2;
         }
-        .title-cursive {
-            font-family: 'Dancing Script', 'Brush Script MT', cursive;
-            font-size: 56px; 
-            color: #2c3e50;
-            margin-right: 12px;
-        }
-        .title-zen {
-            font-family: 'Zen Maru Gothic', sans-serif;
-            font-size: 46px; 
-            font-weight: 700;
-            color: #2c3e50;
-            letter-spacing: 2px;
-        }
+        .title-cursive { font-family: 'Dancing Script', 'Brush Script MT', cursive; font-size: 56px; color: #2c3e50; margin-right: 12px; }
+        .title-zen { font-family: 'Zen Maru Gothic', sans-serif; font-size: 46px; font-weight: 700; color: #2c3e50; letter-spacing: 2px; }
 
         /* 左右排版容器 */
-        .layout-container {
-            display: flex;
-            gap: 25px; 
-            align-items: flex-start;
-            position: relative;
-            z-index: 20;
-        }
+        .layout-container { display: flex; gap: 25px; align-items: flex-start; position: relative; z-index: 20; }
 
         /* 左側導覽列 */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding: 20px;
-            width: 210px; 
-            flex-shrink: 0;
-            position: sticky;
-            top: 20px; 
-            z-index: 9999; 
-        }
-        .sidebar button {
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            padding: 14px 18px;
-            border-radius: 8px;
-            font-size: 18px; 
-            font-weight: bold;
-            color: #2c3e50;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            font-family: inherit; 
-        }
+        .sidebar { display: flex; flex-direction: column; gap: 12px; padding: 20px; width: 210px; flex-shrink: 0; position: sticky; top: 20px; z-index: 9999; }
+        .sidebar button { background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); padding: 14px 18px; border-radius: 8px; font-size: 18px; font-weight: bold; color: #2c3e50; text-align: left; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: inherit; }
         .sidebar button:hover { background: rgba(255, 255, 255, 0.95); transform: translateX(5px); }
-        .sidebar button.active {
-            background: #3498db; color: white; border-color: #2980b9;
-            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); transform: translateX(5px);
-        }
+        .sidebar button.active { background: #3498db; color: white; border-color: #2980b9; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4); transform: translateX(5px); }
 
         /* 右側主要內容區 */
         .main-content { flex: 1; min-width: 0; }
@@ -156,79 +113,41 @@
         .intro-box h3 { margin-top: 0; border-bottom: 2px solid rgba(52, 152, 219, 0.3); padding-bottom: 10px; color: #2980b9; font-size: 24px; }
 
         /* === 歷史活動紀錄網格與相簿樣式 === */
-        .history-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            padding: 10px;
-        }
-        .history-card {
-            background: rgba(255, 255, 255, 0.75);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-            border-radius: 16px;
-            padding: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .history-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
-            background: rgba(255, 255, 255, 0.95);
-        }
-        .history-date {
-            align-self: flex-start;
-            font-size: 15px;
-            color: #d35400;
-            font-weight: bold;
-            background: rgba(243, 156, 18, 0.2);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-family: 'Segoe UI', Tahoma, sans-serif; 
-            letter-spacing: 1px;
-        }
-        .history-title {
-            font-size: 22px;
-            color: #2c3e50;
-            font-weight: bold;
-            line-height: 1.4;
-            margin: 0 0 5px 0;
-            font-family: inherit;
-        }
-        .photo-count {
-            font-size: 15px;
-            color: #7f8c8d;
-            font-family: 'Segoe UI', sans-serif;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        /* 橫向滾動的小相簿容器 */
-        .gallery-container {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            padding-bottom: 10px; /* 給滾動條預留空間 */
-        }
-        /* 美化相簿的橫向滾動條 */
+        .history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; padding: 10px; }
+        .history-card { background: rgba(255, 255, 255, 0.75); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 16px; padding: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; display: flex; flex-direction: column; gap: 10px; }
+        .history-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.15); background: rgba(255, 255, 255, 0.95); }
+        .history-date { align-self: flex-start; font-size: 15px; color: #d35400; font-weight: bold; background: rgba(243, 156, 18, 0.2); padding: 4px 12px; border-radius: 20px; font-family: 'Segoe UI', Tahoma, sans-serif; letter-spacing: 1px; }
+        .history-title { font-size: 22px; color: #2c3e50; font-weight: bold; line-height: 1.4; margin: 0 0 5px 0; font-family: inherit; }
+        .photo-count { font-size: 15px; color: #7f8c8d; font-family: 'Segoe UI', sans-serif; font-weight: bold; margin-bottom: 5px; }
+        
+        .gallery-container { display: flex; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 15px; align-items: flex-start; }
         .gallery-container::-webkit-scrollbar { height: 8px; }
         .gallery-container::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 4px; }
         .gallery-container::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.5); border-radius: 4px; }
         .gallery-container::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.8); }
         
-        .gallery-container img {
-            flex: 0 0 100%; /* 讓每一張圖片佔滿卡片寬度 */
-            scroll-snap-align: center; /* 滾動時自動對齊中央 */
-            height: 240px; 
-            object-fit: cover; 
-            border-radius: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        /* 每一張照片的專屬容器 (包含照片與備註) */
+        .photo-wrapper {
+            flex: 0 0 100%;
+            scroll-snap-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .photo-wrapper img { width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .photo-caption {
+            font-size: 17px;
+            color: #d35400;
+            text-align: center;
+            font-weight: bold;
+            background: rgba(255, 243, 205, 0.8);
+            padding: 8px 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-family: inherit; /* 沿用華康手札體 */
         }
         
-        /* === 計算器專用樣式 === */
+        /* === 計算器與其他專用樣式 === */
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
         .controls label { font-weight: bold; display: flex; align-items: center; gap: 5px; color: #1a252f; flex-wrap: wrap; font-size: 18px;}
@@ -246,13 +165,11 @@
         .profit-good { color: #c0392b; font-weight: bold; }
         .profit-bad { color: #7f8c8d; }
 
-        /* 王團名單切換按鈕 */
         .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
         .sub-tabs button { background: rgba(255, 255, 255, 0.7); border: 1px solid rgba(255, 255, 255, 0.8); padding: 8px 20px; border-radius: 6px; font-size: 18px; font-weight: bold; color: #2c3e50; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.05); font-family: inherit; }
         .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); }
         .sub-tabs button.active { background: #e67e22; color: white; border-color: #d35400; }
 
-        /* 倒數計時器 */
         #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; border-radius: 8px; padding: 12px; margin-bottom: 15px; color: #d35400; font-weight: bold; font-size: 20px; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.05); font-family: 'Segoe UI', Tahoma, sans-serif; }
         #timerText { color: #c0392b; font-size: 24px; display: inline-block; min-width: 220px; }
         .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
@@ -266,24 +183,19 @@
             body { padding: 10px 5px 30px 5px; }
             .header-container { gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
             .header-container img.badge { height: 50px; } 
-            
             .cloud-title-wrapper { padding: 15px 30px; border-radius: 40px; }
             .cloud-title-wrapper::before { width: 50px; height: 50px; top: -20px; }
             .cloud-title-wrapper::after { width: 70px; height: 70px; top: -30px; }
             .title-cursive { font-size: 32px; }
             .title-zen { font-size: 26px; }
-            
             .layout-container { flex-direction: column; gap: 15px; }
             .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; position: relative; top: 0; }
             .sidebar::-webkit-scrollbar { display: none; } 
             .sidebar button { text-align: center; padding: 10px 15px; font-size: 16px; }
-            
             .recruit-image-container img { width: 100%; max-width: 100%; }
             .recruit-image-container img:hover { transform: scale(1); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
-            
             .history-grid { grid-template-columns: 1fr; }
-            .gallery-container img { height: 200px; }
-
+            .photo-wrapper img { height: 200px; }
             .controls { padding: 15px; gap: 15px; margin-bottom: 15px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
             th, td { padding: 10px 8px; font-size: 16px; }
@@ -342,7 +254,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：公會活動紀錄 (多張照片橫向滾動設計) -->
+            <!-- 頁籤：公會活動紀錄 (包含照片備註) -->
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
                     
@@ -352,8 +264,14 @@
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
                         <div class="photo-count">📸 共 2 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
-                            <img src="2026.09.07_肝帝爭霸戰_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
-                            <img src="2026.09.07_肝帝爭霸戰_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
+                            <div class="photo-wrapper">
+                                <img src="2026.09.07_肝帝爭霸戰_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">肝帝爭霸戰即將開肝！</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.09.07_肝帝爭霸戰_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">恭喜各位肝蒂～活動圓滿結束！</div>
+                            </div>
                         </div>
                     </div>
 
@@ -363,9 +281,18 @@
                         <h4 class="history-title">【台中線下副本】</h4>
                         <div class="photo-count">📸 共 3 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
-                            <img src="2026.03.09_台中線下副本_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
-                            <img src="2026.03.09_台中線下副本_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
-                            <img src="2026.03.09_台中線下副本_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片3'">
+                            <div class="photo-wrapper">
+                                <img src="2026.03.09_台中線下副本_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.03.09_台中線下副本_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.03.09_台中線下副本_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div>
+                            </div>
                         </div>
                     </div>
 
@@ -375,10 +302,23 @@
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
                         <div class="photo-count">📸 共 4 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
-                            <img src="2026.02.16_新春財源廣進_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
-                            <img src="2026.02.16_新春財源廣進_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
-                            <img src="2026.02.16_新春財源廣進_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片3'">
-                            <img src="2026.02.16_新春財源廣進_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片4'">
+                            <div class="photo-wrapper">
+                                <!-- 附檔名已修正為 .jpg -->
+                                <img src="2026.02.16_新春財源廣進_1.jpg" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動公告</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.02.16_新春財源廣進_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動成果</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.02.16_新春財源廣進_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動大合照～</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2026.02.16_新春財源廣進_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">新春財源廣進活動大合照～</div>
+                            </div>
                         </div>
                     </div>
 
@@ -388,11 +328,26 @@
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
                         <div class="photo-count">📸 共 5 張照片 (可左右滑動)</div>
                         <div class="gallery-container">
-                            <img src="2025.12.27_第一次線下聚會_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
-                            <img src="2025.12.27_第一次線下聚會_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片2'">
-                            <img src="2025.12.27_第一次線下聚會_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片3'">
-                            <img src="2025.12.27_第一次線下聚會_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片4'">
-                            <img src="2025.12.27_第一次線下聚會_5.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片5'">
+                            <div class="photo-wrapper">
+                                <img src="2025.12.27_第一次線下聚會_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2025.12.27_第一次線下聚會_2.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">「消滅和牛燒肉」活動海報</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2025.12.27_第一次線下聚會_3.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">這是給有出席活動的夥伴的一點心意</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2025.12.27_第一次線下聚會_4.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div>
+                            </div>
+                            <div class="photo-wrapper">
+                                <img src="2025.12.27_第一次線下聚會_5.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">「消滅和牛燒肉」活動成功！</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -401,8 +356,11 @@
                         <span class="history-date">2025.11.17</span>
                         <h4 class="history-title">【Cloudy公會第一張合照】</h4>
                         <div class="photo-count">📸 共 1 張照片</div>
-                        <div class="gallery-container" style="overflow-x: hidden;"> <!-- 只有1張圖不需要橫向捲軸 -->
-                            <img src="2025.11.17_第一張合照_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=照片1'">
+                        <div class="gallery-container" style="overflow-x: hidden;">
+                            <div class="photo-wrapper">
+                                <img src="2025.11.17_第一張合照_1.png" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
+                            </div>
                         </div>
                     </div>
 

@@ -72,7 +72,6 @@
         .gallery-container::-webkit-scrollbar-thumb:hover { background: rgba(52, 152, 219, 0.8); }
         
         .photo-wrapper { flex: 0 0 100%; scroll-snap-align: center; display: flex; flex-direction: column; gap: 10px; }
-        /* 圖片新增滑鼠手勢與互動特效 */
         .photo-wrapper img { 
             width: 100%; height: 240px; object-fit: cover; border-radius: 10px; border: 2px solid rgba(255, 255, 255, 0.9); box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
             cursor: zoom-in; transition: opacity 0.2s;
@@ -82,49 +81,16 @@
 
         /* === 全螢幕燈箱 (Lightbox) 樣式 === */
         #lightbox {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000; /* 最高層級 */
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000; opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
         }
         #lightbox.active { opacity: 1; pointer-events: auto; }
-        #lightbox-img {
-            max-width: 90%;
-            max-height: 80vh;
-            border-radius: 8px;
-            box-shadow: 0 0 25px rgba(0,0,0,0.5);
-            border: 3px solid white;
-            transition: transform 0.3s ease;
-        }
-        #lightbox-caption {
-            color: white;
-            font-size: 22px;
-            margin-top: 15px;
-            font-family: '華康手札體 Std W7 OpenType', 'Segoe UI', sans-serif;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
-        }
-        /* 燈箱導覽按鈕 */
-        .lightbox-nav {
-            position: absolute; top: 50%; transform: translateY(-50%);
-            font-size: 40px; color: white; background: rgba(0,0,0,0.5);
-            border: none; border-radius: 50%; width: 60px; height: 60px;
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            transition: background 0.3s;
-        }
+        #lightbox-img { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 0 25px rgba(0,0,0,0.5); border: 3px solid white; transition: transform 0.3s ease; }
+        #lightbox-caption { color: white; font-size: 22px; margin-top: 15px; font-family: '華康手札體 Std W7 OpenType', 'Segoe UI', sans-serif; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
+        .lightbox-nav { position: absolute; top: 50%; transform: translateY(-50%); font-size: 40px; color: white; background: rgba(0,0,0,0.5); border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
         .lightbox-nav:hover { background: rgba(0,0,0,0.8); }
         #lightbox-prev { left: 30px; }
         #lightbox-next { right: 30px; }
-        #lightbox-close {
-            position: absolute; top: 20px; right: 30px;
-            font-size: 35px; color: white; background: none; border: none; cursor: pointer;
-        }
+        #lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 35px; color: white; background: none; border: none; cursor: pointer; }
 
         .controls { padding: 20px; margin-bottom: 25px; display: flex; flex-direction: column; gap: 15px; }
         .controls-row { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
@@ -183,7 +149,6 @@
             .footer-container img.nameplate { height: 75px; }
             #countdownDisplay { font-size: 16px; padding: 10px; }
             #timerText { font-size: 18px; }
-            /* 手機版燈箱按鈕調整 */
             .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
             #lightbox-prev { left: 10px; }
             #lightbox-next { right: 10px; }
@@ -243,7 +208,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：公會活動紀錄 (已反轉時間排序：最舊在上) -->
+            <!-- 頁籤：公會活動紀錄 (已反轉時間排序：最舊在上，且副檔名完美校對) -->
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
 
@@ -260,7 +225,7 @@
                         </div>
                     </div>
 
-                    <!-- 2025.12.27 第一次線下聚會 -->
+                    <!-- 2025.12.27 第一次線下聚會 (注意 _3 _4 _5 是 .jpg) -->
                     <div class="history-card">
                         <span class="history-date">2025.12.27</span>
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
@@ -275,21 +240,21 @@
                                 <div class="photo-caption">「消滅和牛燒肉」活動海報</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_3.png" loading="lazy" data-index="2" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">這是給有出席活動的夥伴的一點心意</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_4.png" loading="lazy" data-index="3" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2025.12.27_第一次線下聚會_5.png" loading="lazy" data-index="4" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="group2" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">「消滅和牛燒肉」活動成功！</div>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- 2026.02.16 新春財源廣進活動 -->
+                    <!-- 2026.02.16 新春財源廣進活動 (注意 _1 是 .jpg) -->
                     <div class="history-card">
                         <span class="history-date">2026.02.16</span>
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
@@ -314,7 +279,7 @@
                         </div>
                     </div>
 
-                    <!-- 2026.03.09 台中線下副本 -->
+                    <!-- 2026.03.09 台中線下副本 (注意 _3 是 .jpg) -->
                     <div class="history-card">
                         <span class="history-date">2026.03.09</span>
                         <h4 class="history-title">【台中線下副本】</h4>
@@ -329,24 +294,24 @@
                                 <div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.03.09_台中線下副本_3.png" loading="lazy" data-index="2" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="group4" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 2026.09.07 肝帝爭霸戰 (已修復備註與檔名順序) -->
+                    <!-- 2026.09.07 肝帝爭霸戰 -->
                     <div class="history-card">
                         <span class="history-date">2026.09.07</span>
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
                         <div class="photo-count">📸 共 2 張照片 (可左右滑動/點擊放大)</div>
                         <div class="gallery-container">
                             <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="0" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="0" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">肝帝爭霸戰即將開肝！</div>
                             </div>
                             <div class="photo-wrapper">
-                                <img src="2026.09.07_肝帝爭霸戰_1.png" loading="lazy" data-index="1" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2026.09.07_肝帝爭霸戰_2.png" loading="lazy" data-index="1" data-group="group5" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
                                 <div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div>
                             </div>
                         </div>
@@ -570,33 +535,27 @@
             let currentGroup = [];
             let currentIndex = 0;
 
-            // 為所有歷史照片綁定點擊事件
             document.querySelectorAll(".photo-wrapper img").forEach(img => {
                 img.addEventListener("click", function(e) {
                     const groupName = this.getAttribute("data-group");
-                    // 找出同一個活動群組的所有圖片
                     currentGroup = Array.from(document.querySelectorAll(`img[data-group="${groupName}"]`));
                     currentIndex = parseInt(this.getAttribute("data-index"));
 
                     updateLightboxImage();
                     lightbox.classList.add("active");
-                    e.stopPropagation(); // 防止點擊事件冒泡觸發關閉
+                    e.stopPropagation(); 
                 });
             });
 
-            // 更新燈箱圖片與文字
             function updateLightboxImage() {
                 const targetImg = currentGroup[currentIndex];
                 lightboxImg.src = targetImg.src;
-                // 從相鄰的 .photo-caption 取得備註文字
                 lightboxCaption.innerText = targetImg.nextElementSibling.innerText;
                 
-                // 只有一張圖的活動，隱藏左右箭頭
                 prevBtn.style.display = currentGroup.length > 1 ? "flex" : "none";
                 nextBtn.style.display = currentGroup.length > 1 ? "flex" : "none";
             }
 
-            // 下一張
             function showNext(e) {
                 if(e) e.stopPropagation();
                 if (currentGroup.length <= 1) return;
@@ -604,7 +563,6 @@
                 updateLightboxImage();
             }
 
-            // 上一張
             function showPrev(e) {
                 if(e) e.stopPropagation();
                 if (currentGroup.length <= 1) return;
@@ -612,24 +570,20 @@
                 updateLightboxImage();
             }
 
-            // 關閉燈箱
             function closeLightbox() {
                 lightbox.classList.remove("active");
             }
 
-            // 綁定按鈕事件
             nextBtn.addEventListener("click", showNext);
             prevBtn.addEventListener("click", showPrev);
             closeBtn.addEventListener("click", closeLightbox);
             
-            // 點擊黑色背景關閉 (如果不小心點到圖片本身，就不會關閉)
             lightbox.addEventListener("click", function(e) {
                 if (e.target !== lightboxImg && e.target !== prevBtn && e.target !== nextBtn) {
                     closeLightbox();
                 }
             });
 
-            // 鍵盤左右鍵切換、ESC 關閉
             document.addEventListener("keydown", function(e) {
                 if (!lightbox.classList.contains("active")) return;
                 if (e.key === "ArrowRight") showNext();
@@ -638,13 +592,12 @@
             });
         }
 
-        // === 網頁初始化 ===
         window.onload = function() {
             setupTabs();
             setupSubTabs();
             calculate();
             startFormCountdown(); 
-            setupLightbox(); // 啟動燈箱功能
+            setupLightbox(); 
         };
     </script>
 </body>

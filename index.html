@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
-    <!-- 預連線 Google Fonts 加速字體載入 -->
+    <!-- 預連線 Google Fonts 加速字體載入，並新增可愛跳躍風格的 Mochiy Pop P One 作為大波浪圓體的備用 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mochiy+Pop+P+One&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
     <style>
         /* ================= 1. 全局與共用樣式 ================= */
         body { 
@@ -72,8 +72,37 @@
         .recruit-image-container img:hover { transform: scale(1.05); z-index: 999; position: relative; }
         @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
         
-        .intro-box { padding: 25px; line-height: 1.8; font-size: 20px; }
-        .intro-box h3 { margin-top: 0; border-bottom: 2px solid rgba(52, 152, 219, 0.3); padding-bottom: 10px; color: #2980b9; font-size: 24px; }
+        /* 專屬首頁文字介紹框 (大波浪圓體設定) */
+        .intro-box { padding: 30px; line-height: 1.8; font-size: 20px; }
+        .intro-custom-wave {
+            /* 優先使用華康大波浪圓體，若無則降級為 Google 的 Mochiy Pop P One (跳躍波浪感)，最後才是 Zen Maru Gothic */
+            font-family: '華康大波浪圓體', 'DFPWave-W12', 'Mochiy Pop P One', 'Zen Maru Gothic', sans-serif;
+            color: #2c3e50;
+            letter-spacing: 1px;
+        }
+        .intro-custom-wave p { margin-bottom: 12px; }
+        .intro-custom-wave .wave-title {
+            text-align: center;
+            font-size: 28px;
+            color: #2980b9;
+            margin-bottom: 25px;
+            border-bottom: 2px dashed rgba(52, 152, 219, 0.4);
+            padding-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .intro-custom-wave .highlight-item {
+            color: #d35400;
+            font-size: 22px;
+            font-weight: normal; /* 因為此字體本身偏粗，保持 normal 即可 */
+        }
+        .intro-custom-wave .footer-cheer {
+            text-align: center;
+            font-size: 26px;
+            color: #c0392b;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 2px dashed rgba(192, 57, 43, 0.3);
+        }
 
         /* ================= 4. 歷史活動畫廊 ================= */
         .history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; padding: 10px; }
@@ -106,40 +135,16 @@
 
         /* ================= 6. Q版立體手帳風 音樂播放器 ================= */
         .cute-music-player {
-            margin-top: 15px;
-            padding: 15px 10px;
-            background: linear-gradient(135deg, rgba(255,240,245,0.9) 0%, rgba(255,228,225,0.9) 100%);
-            border: 2px dashed #ffb6c1;
-            border-radius: 16px;
-            text-align: center;
-            box-shadow: 0 6px 12px rgba(255, 182, 193, 0.3), inset 0 2px 4px rgba(255,255,255,0.8);
-            transition: transform 0.3s ease;
+            margin-top: 15px; padding: 15px 10px; background: linear-gradient(135deg, rgba(255,240,245,0.9) 0%, rgba(255,228,225,0.9) 100%);
+            border: 2px dashed #ffb6c1; border-radius: 16px; text-align: center;
+            box-shadow: 0 6px 12px rgba(255, 182, 193, 0.3), inset 0 2px 4px rgba(255,255,255,0.8); transition: transform 0.3s ease;
         }
-        .cute-music-player:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 16px rgba(255, 182, 193, 0.5), inset 0 2px 4px rgba(255,255,255,0.9);
-        }
-        .music-title {
-            font-size: 16px;
-            color: #d87093;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-shadow: 1px 1px 0px rgba(255,255,255,1);
-        }
-        /* 音符跳動動畫 */
-        @keyframes bounceNote {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-4px) rotate(10deg); }
-        }
+        .cute-music-player:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 16px rgba(255, 182, 193, 0.5), inset 0 2px 4px rgba(255,255,255,0.9); }
+        .music-title { font-size: 16px; color: #d87093; font-weight: bold; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; text-shadow: 1px 1px 0px rgba(255,255,255,1); }
+        @keyframes bounceNote { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-4px) rotate(10deg); } }
         .music-note { display: inline-block; animation: bounceNote 1.5s infinite ease-in-out; }
         .music-note.delay { animation-delay: 0.75s; }
-        
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
-        /* 美化原生的 audio 控制條顏色 (僅支援部分瀏覽器) */
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
         /* ================= 7. 其他 UI 元件 (iframe / 表格 / 計算器) ================= */
@@ -173,7 +178,7 @@
             .layout-container { flex-direction: column; }
             .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; }
             .sidebar button { padding: 10px 15px; font-size: 16px; }
-            .cute-music-player { margin-top: 0; margin-left: 10px; min-width: 250px; } /* 手機板將音樂播放器排在按鈕後方橫移 */
+            .cute-music-player { margin-top: 0; margin-left: 10px; min-width: 250px; } 
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -182,6 +187,7 @@
             #countdownDisplay { font-size: 16px; } #timerText { font-size: 18px; }
             .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
             #lightbox-prev { left: 10px; } #lightbox-next { right: 10px; }
+            .intro-custom-wave .wave-title { font-size: 22px; }
         }
     </style>
 </head>
@@ -214,32 +220,44 @@
             <button data-tab="rosterTab">📜 每週王團名單</button>
             <button data-tab="calcTab">💰 點商行情計算表</button>
 
-            <!-- ================= Q版音樂控制面板 ================= -->
+            <!-- Q版音樂控制面板 -->
             <div class="cute-music-player">
                 <div class="music-title">
                     <span class="music-note">🎵</span>
                     公會專屬點唱機
                     <span class="music-note delay">🎵</span>
                 </div>
-                <!-- 已加入 autoplay，並由下方 JS 輔助突破瀏覽器限制 -->
                 <audio id="bgMusic" src="網頁背景音樂.mp3" loop autoplay controls></audio>
             </div>
-            <!-- =============================================== -->
         </div>
 
         <div class="main-content">
             
+            <!-- 頁籤：公會首頁 -->
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container flex-center">
                     <img src="公會合照.png" alt="合照">
                 </div>
-                <div class="glass-panel intro-box">
-                    <h3>關於 𝑪𝒍𝒐𝒖𝒅𝒚 公會</h3>
-                    <p>歡迎來到 Cloudy 專屬入口網站！這裡是我們的公會佈告欄與實用工具區。</p>
-                    <p>這裡目前預留了介紹空間，未來你可以隨時在原始碼中修改這段文字，放入公會招募條件、出團規定、或是想對小夥伴們說的話唷！</p>
+                
+                <!-- 全新專屬介紹文：套用大波浪圓體與精緻排版 -->
+                <div class="glass-panel intro-box intro-custom-wave">
+                    <div class="wave-title">☁️ 嗨！歡迎登入 Cloudy 專屬小窩！ ☁️</div>
+                    
+                    <p>各位 Cloudy 的小夥伴們，經過幹部們的爆肝努力，我們終於有自己的專屬地盤啦！🎉</p>
+                    <p>不管你是來找回憶、找隊友還是找工具，這裡通通為你準備好了：</p>
+                    
+                    <p><span class="highlight-item">✨ 活動點滴紀錄</span>：回顧我們過去一起舉辦過的各種瘋狂活動與專屬大合照！</p>
+                    <p><span class="highlight-item">🔥 每週突襲王報名＆分組公告</span>：打王絕對不迷路！每週的報名表單和專屬分組公告都在這，隨時掌握出團動態。</p>
+                    <p><span class="highlight-item">💰 獨家理財神器</span>：自己人開發的「儲值WC買點商」與「楓幣比值計算」小工具，幫你精打細算，輕鬆把裝備衝到最頂！</p>
+                    
+                    <p style="margin-top: 20px;">這一切的努力，都是因為幹部們超在乎大家，希望能給大家最棒的公會體驗、最順暢的遊戲日常！</p>
+                    <p>有空就多來小窩聽聽點唱機的音樂、多加入DC一同閒聊！</p>
+                    
+                    <div class="footer-cheer">準備好你的熱情，我們繼續在遊戲裡熱血沸騰吧！</div>
                 </div>
             </div>
 
+            <!-- 頁籤：公會招生 -->
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
                     <img src="公會招生圖.png" alt="招生資訊" loading="lazy" data-index="0" data-group="g-recruit" class="lightbox-trigger">
@@ -247,6 +265,7 @@
                 </div>
             </div>
 
+            <!-- 頁籤：公會活動紀錄 -->
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
 
@@ -377,15 +396,13 @@
         <img src="公會名牌截圖(去背).png" alt="公會名牌" class="nameplate" loading="lazy">
     </div>
 
-    <!-- JavaScript 邏輯區 -->
+    <!-- JavaScript 優化版 -->
     <script>
         // 1. UI 頁籤切換處理
         function initTabs() {
             document.querySelectorAll(".sidebar button").forEach(btn => {
                 btn.addEventListener("click", function() {
-                    // 若按到的是音樂播放器內的按鈕則忽略
                     if(!this.hasAttribute("data-tab")) return; 
-                    
                     document.querySelectorAll(".sidebar button[data-tab], .tab-content").forEach(el => el.classList.remove("active"));
                     this.classList.add("active");
                     document.getElementById(this.getAttribute("data-tab")).classList.add("active");
@@ -519,20 +536,16 @@
             });
         }
 
-        // 5. 智慧音樂播放機制 (突破瀏覽器自動播放限制)
+        // 5. 智慧音樂播放機制
         function initAudio() {
             const audio = document.getElementById("bgMusic");
-            audio.volume = 0.4; // 預設音量稍微調低，不刺耳
+            audio.volume = 0.4; 
             
-            // 嘗試直接播放
             const playPromise = audio.play();
-            
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
-                    // 若被瀏覽器阻擋，則監聽使用者的第一次互動 (點擊或滑動畫面)
                     const startAudio = () => {
                         audio.play();
-                        // 播放成功後就移除監聽，避免重複執行
                         document.removeEventListener("click", startAudio);
                         document.removeEventListener("touchstart", startAudio);
                     };

@@ -68,7 +68,6 @@
             width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
             border: 3px solid rgba(255, 255, 255, 0.9); transition: 0.5s; 
         }
-        /* 讓招生的圖片支援放大游標 */
         .recruit-image-container img { cursor: zoom-in; transform-origin: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .recruit-image-container img:hover { transform: scale(1.05); z-index: 999; position: relative; }
         @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
@@ -105,7 +104,45 @@
         #lightbox-prev { left: 30px; } #lightbox-next { right: 30px; }
         #lightbox-close { top: 20px; right: 30px; font-size: 35px; background: none; }
 
-        /* ================= 6. 其他 UI 元件 (iframe / 表格 / 計算器) ================= */
+        /* ================= 6. Q版立體手帳風 音樂播放器 ================= */
+        .cute-music-player {
+            margin-top: 15px;
+            padding: 15px 10px;
+            background: linear-gradient(135deg, rgba(255,240,245,0.9) 0%, rgba(255,228,225,0.9) 100%);
+            border: 2px dashed #ffb6c1;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 6px 12px rgba(255, 182, 193, 0.3), inset 0 2px 4px rgba(255,255,255,0.8);
+            transition: transform 0.3s ease;
+        }
+        .cute-music-player:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(255, 182, 193, 0.5), inset 0 2px 4px rgba(255,255,255,0.9);
+        }
+        .music-title {
+            font-size: 16px;
+            color: #d87093;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,1);
+        }
+        /* 音符跳動動畫 */
+        @keyframes bounceNote {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-4px) rotate(10deg); }
+        }
+        .music-note { display: inline-block; animation: bounceNote 1.5s infinite ease-in-out; }
+        .music-note.delay { animation-delay: 0.75s; }
+        
+        audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
+        /* 美化原生的 audio 控制條顏色 (僅支援部分瀏覽器) */
+        audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
+
+        /* ================= 7. 其他 UI 元件 (iframe / 表格 / 計算器) ================= */
         .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
         .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
         #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; color: #d35400; font-size: 20px; text-align: center; padding: 12px; margin-bottom: 15px; font-family: Tahoma, sans-serif; }
@@ -126,7 +163,7 @@
         .nameplate { height: 120px; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.25)); transition: 0.3s; cursor: pointer; }
         .nameplate:hover { transform: scale(1.05); }
 
-        /* ================= 7. 手機版 RWD ================= */
+        /* ================= 8. 手機版 RWD ================= */
         @media (max-width: 768px) {
             body { padding: 10px 5px 30px; }
             .header-container { flex-wrap: wrap; }
@@ -136,6 +173,7 @@
             .layout-container { flex-direction: column; }
             .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; }
             .sidebar button { padding: 10px 15px; font-size: 16px; }
+            .cute-music-player { margin-top: 0; margin-left: 10px; min-width: 250px; } /* 手機板將音樂播放器排在按鈕後方橫移 */
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -175,13 +213,24 @@
             <button data-tab="signupTab">⚔️ 突襲王團報名</button>
             <button data-tab="rosterTab">📜 每週王團名單</button>
             <button data-tab="calcTab">💰 點商行情計算表</button>
+
+            <!-- ================= Q版音樂控制面板 ================= -->
+            <div class="cute-music-player">
+                <div class="music-title">
+                    <span class="music-note">🎵</span>
+                    公會專屬點唱機
+                    <span class="music-note delay">🎵</span>
+                </div>
+                <!-- 已加入 autoplay，並由下方 JS 輔助突破瀏覽器限制 -->
+                <audio id="bgMusic" src="網頁背景音樂.mp3" loop autoplay controls></audio>
+            </div>
+            <!-- =============================================== -->
         </div>
 
         <div class="main-content">
             
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container flex-center">
-                    <!-- 移除 loading="lazy" 以恢復完整尺寸 -->
                     <img src="公會合照.png" alt="合照">
                 </div>
                 <div class="glass-panel intro-box">
@@ -193,9 +242,7 @@
 
             <div id="recruitTab" class="tab-content">
                 <div class="recruit-image-container">
-                    <!-- 為招生圖加上燈箱 data 屬性 -->
                     <img src="公會招生圖.png" alt="招生資訊" loading="lazy" data-index="0" data-group="g-recruit" class="lightbox-trigger">
-                    <!-- 隱藏的備註，給燈箱抓取用 -->
                     <div class="photo-caption" style="display: none;">Cloudy 公會招生中！</div>
                 </div>
             </div>
@@ -330,13 +377,16 @@
         <img src="公會名牌截圖(去背).png" alt="公會名牌" class="nameplate" loading="lazy">
     </div>
 
-    <!-- JavaScript 優化版 -->
+    <!-- JavaScript 邏輯區 -->
     <script>
         // 1. UI 頁籤切換處理
         function initTabs() {
             document.querySelectorAll(".sidebar button").forEach(btn => {
                 btn.addEventListener("click", function() {
-                    document.querySelectorAll(".sidebar button, .tab-content").forEach(el => el.classList.remove("active"));
+                    // 若按到的是音樂播放器內的按鈕則忽略
+                    if(!this.hasAttribute("data-tab")) return; 
+                    
+                    document.querySelectorAll(".sidebar button[data-tab], .tab-content").forEach(el => el.classList.remove("active"));
                     this.classList.add("active");
                     document.getElementById(this.getAttribute("data-tab")).classList.add("active");
                 });
@@ -432,13 +482,12 @@
         }
         function updateAH(i, val) { items[i].ah = parseFloat(val) || 0; calculate(); }
 
-        // 4. 燈箱相簿邏輯 (支援活動紀錄 與 招生圖)
+        // 4. 燈箱相簿邏輯
         function initLightbox() {
             const box = document.getElementById("lightbox"), imgEl = document.getElementById("lightbox-img");
             const cap = document.getElementById("lightbox-caption"), prev = document.getElementById("lightbox-prev"), next = document.getElementById("lightbox-next");
             let group = [], idx = 0;
 
-            // 抓取所有有 .lightbox-trigger 的圖片
             document.querySelectorAll(".lightbox-trigger").forEach(img => {
                 img.addEventListener("click", e => {
                     group = Array.from(document.querySelectorAll(`img[data-group="${e.target.dataset.group}"]`));
@@ -470,8 +519,31 @@
             });
         }
 
+        // 5. 智慧音樂播放機制 (突破瀏覽器自動播放限制)
+        function initAudio() {
+            const audio = document.getElementById("bgMusic");
+            audio.volume = 0.4; // 預設音量稍微調低，不刺耳
+            
+            // 嘗試直接播放
+            const playPromise = audio.play();
+            
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    // 若被瀏覽器阻擋，則監聽使用者的第一次互動 (點擊或滑動畫面)
+                    const startAudio = () => {
+                        audio.play();
+                        // 播放成功後就移除監聽，避免重複執行
+                        document.removeEventListener("click", startAudio);
+                        document.removeEventListener("touchstart", startAudio);
+                    };
+                    document.addEventListener("click", startAudio);
+                    document.addEventListener("touchstart", startAudio);
+                });
+            }
+        }
+
         // 啟動所有功能
-        window.onload = () => { initTabs(); calculate(); initTimers(); initLightbox(); };
+        window.onload = () => { initTabs(); calculate(); initTimers(); initLightbox(); initAudio(); };
     </script>
 </body>
 </html>

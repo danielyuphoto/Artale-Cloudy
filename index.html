@@ -216,7 +216,8 @@
             <button data-tab="recruitTab">⭐ 公會招生</button>
             <button data-tab="historyTab">📸 公會活動紀錄</button>
             <button data-tab="signupTab">⚔️ 突襲王團報名</button>
-            <button data-tab="rosterTab">📜 每週王團名單</button>
+            <!-- 更新按鈕文字為：每週突襲王團隊伍 -->
+            <button data-tab="rosterTab">📜 每週突襲王團隊伍</button>
             <button data-tab="calcTab">💰 點商行情計算表</button>
 
             <!-- Q版音樂控制面板 -->
@@ -226,7 +227,6 @@
                     公會專屬點唱機
                     <span class="music-note delay">🎵</span>
                 </div>
-                <!-- 加上 ?v=2 強制瀏覽器抓取新檔案 -->
                 <audio id="bgMusic" src="網頁背景音樂.mp3?v=2" loop autoplay controls></audio>
             </div>
         </div>
@@ -239,7 +239,6 @@
                     <img src="公會合照.jpg" alt="合照">
                 </div>
                 
-                <!-- 全新專屬介紹文：套用大波浪圓體與精緻排版 -->
                 <div class="glass-panel intro-box intro-custom-wave">
                     <div class="wave-title">☁️ 嗨！歡迎登入 Cloudy 專屬小窩！ ☁️</div>
                     
@@ -269,7 +268,6 @@
             <div id="historyTab" class="tab-content">
                 <div class="history-grid">
 
-                    <!-- 第一張合照 -->
                     <div class="history-card">
                         <span class="history-date">2025.11.17</span>
                         <h4 class="history-title">【Cloudy公會第一張合照】</h4>
@@ -282,7 +280,6 @@
                         </div>
                     </div>
 
-                    <!-- 第一次線下聚會 -->
                     <div class="history-card">
                         <span class="history-date">2025.12.27</span>
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
@@ -296,7 +293,6 @@
                         </div>
                     </div>
                     
-                    <!-- 新春活動 -->
                     <div class="history-card">
                         <span class="history-date">2026.02.16</span>
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
@@ -309,7 +305,6 @@
                         </div>
                     </div>
 
-                    <!-- 台中線下副本 -->
                     <div class="history-card">
                         <span class="history-date">2026.03.09</span>
                         <h4 class="history-title">【台中線下副本】</h4>
@@ -321,7 +316,6 @@
                         </div>
                     </div>
 
-                    <!-- 肝帝爭霸戰 -->
                     <div class="history-card">
                         <span class="history-date">2026.09.07</span>
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
@@ -343,13 +337,14 @@
                         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單" loading="lazy"></iframe>
                     </div>
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
-                        <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於下周一至周三開放~敬請期待</h3>
+                        <!-- 更新休息提示文字：下週一至週二 -->
+                        <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於每週一至週二開放~敬請期待</h3>
                         <p style="font-size: 22px; color: #7f8c8d;">休息一下，我們下週見！</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 頁籤：每週王團名單 -->
+            <!-- 頁籤：每週突襲王團隊伍 -->
             <div id="rosterTab" class="tab-content">
                 <div id="rosterContainerWrapper">
                     <div class="sub-tabs">
@@ -358,7 +353,7 @@
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
                     </div>
                     <div class="glass-panel" style="padding: 10px;">
-                        <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週王團名單" loading="lazy"></iframe>
+                        <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
                     </div>
                 </div>
                 <div id="rosterClosedMessage" class="glass-panel" style="display: none; padding: 120px 20px; text-align: center; margin-top: 15px;">
@@ -435,14 +430,14 @@
                 const today = twDate.getDay(); 
                 const hour = twDate.getHours();
 
-                // 報名表 (週一~週三開放)
-                if (today >= 1 && today <= 3) {
+                // 報名表 (修改為：週一 00:00 ~ 週二 23:59 開放)
+                if (today >= 1 && today <= 2) {
                     els.formContainer.style.display = "block";
                     els.formMsg.style.display = "none";
                     els.countDisp.style.display = "block";
                     
                     const target = new Date(twDate);
-                    target.setDate(twDate.getDate() + (3 - today));
+                    target.setDate(twDate.getDate() + (2 - today));
                     target.setHours(23, 59, 59, 999);
                     
                     const diff = target - twDate;

@@ -45,12 +45,13 @@
         /* ================= 3. 版面佈局 ================= */
         .layout-container { display: flex; gap: 25px; align-items: flex-start; position: relative; z-index: 20; }
         
-        /* 左側導覽列 */
-        .sidebar { display: flex; flex-direction: column; gap: 12px; padding: 20px; width: 210px; flex-shrink: 0; position: sticky; top: 20px; z-index: 900; }
+        /* 左側導覽列 (寬度加寬至260px) */
+        .sidebar { display: flex; flex-direction: column; gap: 12px; padding: 20px; width: 260px; flex-shrink: 0; position: sticky; top: 20px; z-index: 900; }
         .sidebar button, .sub-tabs button { 
             background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); padding: 14px 18px; 
             border-radius: 8px; font-size: 18px; font-weight: bold; color: #2c3e50; text-align: left; cursor: pointer; 
             transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); font-family: inherit; 
+            white-space: nowrap; /* 確保文字絕對不折行 */
         }
         .sidebar button:hover, .sub-tabs button:hover { background: rgba(255, 255, 255, 0.95); transform: translateX(5px); }
         .sidebar button.active, .sub-tabs button.active { background: #3498db; color: white; border-color: #2980b9; transform: translateX(5px); }
@@ -216,7 +217,6 @@
             <button data-tab="recruitTab">⭐ 公會招生</button>
             <button data-tab="historyTab">📸 公會活動紀錄</button>
             <button data-tab="signupTab">⚔️ 突襲王團報名</button>
-            <!-- 更新按鈕文字為：每週突襲王團隊伍 -->
             <button data-tab="rosterTab">📜 每週突襲王團隊伍</button>
             <button data-tab="calcTab">💰 點商行情計算表</button>
 
@@ -337,7 +337,6 @@
                         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSef8Gupvet4Tz2fsTVYbQ-LzYV1h88sRATUabVAeHoGfTymbA/viewform?embedded=true" class="embed-container" title="王團報名表單" loading="lazy"></iframe>
                     </div>
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
-                        <!-- 更新休息提示文字：下週一至週二 -->
                         <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於每週一至週二開放~敬請期待</h3>
                         <p style="font-size: 22px; color: #7f8c8d;">休息一下，我們下週見！</p>
                     </div>
@@ -430,7 +429,7 @@
                 const today = twDate.getDay(); 
                 const hour = twDate.getHours();
 
-                // 報名表 (修改為：週一 00:00 ~ 週二 23:59 開放)
+                // 報名表 (週一 00:00 ~ 週二 23:59 開放)
                 if (today >= 1 && today <= 2) {
                     els.formContainer.style.display = "block";
                     els.formMsg.style.display = "none";

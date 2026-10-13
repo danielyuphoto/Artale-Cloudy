@@ -145,7 +145,7 @@
         .music-note { display: inline-block; animation: bounceNote 1.5s infinite ease-in-out; }
         .music-note.delay { animation-delay: 0.75s; }
         
-        /* 播放器切換按鈕與歌名顯示區 */
+        /* 播放器切換按鈕與跑馬燈歌名顯示區 */
         .song-display-box {
             display: flex; align-items: center; justify-content: space-between;
             background: rgba(255, 255, 255, 0.6); border-radius: 20px;
@@ -154,12 +154,27 @@
         .song-ctrl-btn {
             background: none; border: none; font-size: 18px; cursor: pointer;
             color: #d87093; transition: transform 0.2s; display: flex; align-items: center; justify-content: center;
-            padding: 0; outline: none;
+            padding: 0; outline: none; flex-shrink: 0;
         }
         .song-ctrl-btn:hover { transform: scale(1.2); color: #c0392b; }
+        
+        /* 跑馬燈外框 (加入左右邊緣漸層模糊，質感提升) */
         .current-song-marquee {
-            flex: 1; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
-            color: #2c3e50; font-weight: bold; font-size: 14px; margin: 0 8px; font-family: 'Segoe UI', Tahoma, sans-serif;
+            flex: 1; overflow: hidden; white-space: nowrap; margin: 0 8px; position: relative;
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        /* 跑馬燈內文字，無限向左滑動 */
+        #currentSongName {
+            display: inline-block;
+            color: #2c3e50; font-weight: bold; font-size: 14px; font-family: 'Segoe UI', Tahoma, sans-serif;
+            padding-left: 100%;
+            animation: marqueeScroll 10s linear infinite;
+        }
+        /* 滑動動畫設定 */
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-100%); }
         }
 
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
@@ -196,7 +211,7 @@
             .layout-container { flex-direction: column; }
             .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; }
             .sidebar button { padding: 10px 15px; font-size: 16px; }
-            .cute-music-player { margin-top: 0; margin-left: 10px; min-width: 260px; } 
+            .cute-music-player { margin-top: 0; margin-left: 10px; min-width: 250px; } 
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -245,13 +260,14 @@
                     公會專屬點唱機
                     <span class="music-note delay">🎵</span>
                 </div>
-                <!-- 新增：歌名顯示與切換按鈕 -->
                 <div class="song-display-box">
                     <button id="prevSongBtn" class="song-ctrl-btn" title="上一首">⏮</button>
+                    <!-- 修改：將文字包裝成會自動滑動的跑馬燈 -->
                     <div class="current-song-marquee"><span id="currentSongName">載入中...</span></div>
                     <button id="nextSongBtn" class="song-ctrl-btn" title="下一首">⏭</button>
                 </div>
-                <audio id="bgMusic" autoplay controls></audio>
+                <!-- 修改：加入 controlsList="nodownload noplaybackrate" 隱藏點點選單 -->
+                <audio id="bgMusic" autoplay controls controlsList="nodownload noplaybackrate"></audio>
             </div>
         </div>
 
@@ -554,7 +570,7 @@
             });
         }
 
-        // 5. 智慧「洗牌」音樂播放機制 (含歌名顯示與切換按鈕)
+        // 5. 智慧「洗牌」音樂播放機制 (含歌名跑馬燈與隱藏選單)
         function initAudio() {
             const audio = document.getElementById("bgMusic");
             const songNameDisplay = document.getElementById("currentSongName");
@@ -592,7 +608,6 @@
             let shuffledIndices = [];
             let currentIndex = 0;
 
-            // 洗牌演算法 (將歌單順序打亂)
             function shufflePlaylist() {
                 shuffledIndices = playlist.map((_, i) => i);
                 for (let i = shuffledIndices.length - 1; i > 0; i--) {
@@ -604,11 +619,8 @@
             function playSong(index) {
                 if (playlist.length === 0) return;
                 
-                // 確保 index 循環不超出範圍
                 currentIndex = (index + playlist.length) % playlist.length;
-                
                 const songFile = playlist[shuffledIndices[currentIndex]];
-                // 去除 .mp3 讓顯示更乾淨
                 const songName = songFile.replace('.mp3', '');
                 
                 songNameDisplay.innerText = songName;
@@ -628,19 +640,14 @@
                 }
             }
 
-            // 初始化時先洗牌，然後播第一首
             shufflePlaylist();
             playSong(0);
 
-            // 綁定控制按鈕
             nextBtn.addEventListener("click", () => playSong(currentIndex + 1));
             prevBtn.addEventListener("click", () => playSong(currentIndex - 1));
-            
-            // 播完自動下一首
             audio.addEventListener("ended", () => playSong(currentIndex + 1));
         }
 
-        // 啟動所有功能
         window.onload = () => { initTabs(); calculate(); initTimers(); initLightbox(); initAudio(); };
     </script>
 </body>

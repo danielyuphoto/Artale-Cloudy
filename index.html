@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artale Cloudy 公會小窩</title>
-    <!-- 預連線 Google Fonts 加速字體載入，並新增可愛跳躍風格的 Mochiy Pop P One 作為大波浪圓體的備用 -->
+    <!-- 預連線 Google Fonts 加速字體載入 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Mochiy+Pop+P+One&family=Zen+Maru+Gothic:wght@700&display=swap" rel="stylesheet">
@@ -15,12 +15,10 @@
             background: url('神木村.webp') center/cover fixed;
             color: #333; padding: 20px 5px 40px; max-width: 1600px; margin: auto; 
         }
-        /* 合併毛玻璃樣式 */
         .glass-panel, .history-card, #countdownDisplay, .photo-caption { 
             background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
             border: 1px solid rgba(255,255,255,0.4); border-radius: 12px; box-shadow: 0 8px 16px rgba(0,0,0,0.15); 
         }
-        /* 合併 Flex 置中樣式 */
         .flex-center { display: flex; align-items: center; justify-content: center; }
 
         /* ================= 2. 標題與勳章 ================= */
@@ -153,7 +151,7 @@
 
         /* ================= 7. 其他 UI 元件 ================= */
         .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
-        .sub-tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .sub-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
         #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; color: #d35400; font-size: 20px; text-align: center; padding: 12px; margin-bottom: 15px; font-family: Tahoma, sans-serif; }
         #timerText { color: #c0392b; font-size: 24px; display: inline-block; min-width: 220px; }
         
@@ -263,8 +261,7 @@
             <!-- 頁籤：公會首頁 -->
             <div id="homeTab" class="tab-content active">
                 <div class="hero-image-container flex-center">
-                    <!-- 強制繞過快取載入新圖 ?v=3 -->
-                    <img src="公會合照.png?v=3" alt="合照">
+                    <img src="公會合照.jpg?v=3" alt="合照">
                 </div>
                 
                 <div class="glass-panel intro-box intro-custom-wave">
@@ -378,6 +375,7 @@
                         <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">樹王團</button>
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">龍王團</button>
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
+                        <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=1399000704">蝴蝶/炎魔團</button>
                     </div>
                     <div class="glass-panel" style="padding: 10px;">
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
@@ -420,14 +418,33 @@
 
     <!-- JavaScript 優化版 -->
     <script>
-        // 1. UI 頁籤切換處理
+        // ================= 全局設定區 =================
+        const CONFIG = {
+            playlist: [
+                "北部森林 藤條巢穴.mp3", "墮落城市.mp3", "大木林 和風鄰近的地方.mp3", 
+                "天空之城.mp3", "天空之城塔門口.mp3", "奇幻村.mp3", "弓箭手村.mp3", 
+                "弓箭手村北邊山丘.mp3", "弓箭手村市集.mp3", "摩登101.mp3", "水世界.mp3", 
+                "沼澤地.mp3", "玩具城 愛奧斯塔100樓.mp3", "玩具城 時間分岔道.mp3", 
+                "玩具城 玩具工廠 [主工程A].mp3", "玩具城 遺忘的時間之路.mp3", 
+                "玩具城 遺忘的時間之路4.mp3", "玩具城.mp3", "登入畫面.mp3", 
+                "神木村.mp3", "童話村.mp3", "維多利亞港.mp3", 
+                "網頁背景音樂.mp3", "黃金海岸.mp3"
+            ],
+            calcItems: [
+                { name: "飄雪結晶", wc: 300/11, ah: 40 }, { name: "突襲額外票券", wc: 1200/7, ah: 370 },
+                { name: "高級瞬移之石", wc: 400/11, ah: 81 }, { name: "凍結加持器", wc: 450/11, ah: 97 },
+                { name: "神秘符咒", wc: 450/11, ah: 92 }, { name: "神秘背包", wc: 250, ah: 520 },
+                { name: "AP初始化", wc: 400, ah: 920 }, { name: "SP初始化", wc: 300, ah: 679 }, { name: "寵物", wc: 1600, ah: 3500 }
+            ]
+        };
+
+        // ================= 1. UI 頁籤切換 =================
         function initTabs() {
-            document.querySelectorAll(".sidebar button").forEach(btn => {
+            document.querySelectorAll(".sidebar button[data-tab]").forEach(btn => {
                 btn.addEventListener("click", function() {
-                    if(!this.hasAttribute("data-tab")) return; 
                     document.querySelectorAll(".sidebar button[data-tab], .tab-content").forEach(el => el.classList.remove("active"));
                     this.classList.add("active");
-                    document.getElementById(this.getAttribute("data-tab")).classList.add("active");
+                    document.getElementById(this.dataset.tab).classList.add("active");
                 });
             });
 
@@ -436,13 +453,14 @@
                 btn.addEventListener("click", function() {
                     document.querySelectorAll(".sub-tabs button").forEach(b => b.classList.remove("active"));
                     this.classList.add("active");
-                    iframe.src = this.getAttribute("data-url");
+                    iframe.src = this.dataset.url;
                 });
             });
         }
 
-        // 2. 全局時間管理器
+        // ================= 2. 時間與倒數管理器 =================
         function initTimers() {
+            // 快取 DOM 節點，提升效能
             const els = {
                 formContainer: document.getElementById("formContainer"),
                 formMsg: document.getElementById("closedMessage"),
@@ -457,7 +475,7 @@
                 const today = twDate.getDay(); 
                 const hour = twDate.getHours();
 
-                // 報名表 (週一 00:00 ~ 週二 23:59 開放)
+                // 報名表：週一 00:00 ~ 週二 23:59 開放
                 if (today >= 1 && today <= 2) {
                     els.formContainer.style.display = "block";
                     els.formMsg.style.display = "none";
@@ -481,7 +499,7 @@
                     els.formMsg.style.display = "block";
                 }
 
-                // 王團名單 (週二 08:00 ~ 週三 17:59 隱藏排表)
+                // 名單：週二 08:00 ~ 週三 17:59 隱藏
                 const isClosed = (today === 2 && hour >= 8) || (today === 3 && hour < 18);
                 els.rosterWrap.style.display = isClosed ? "none" : "block";
                 els.rosterMsg.style.display = isClosed ? "block" : "none";
@@ -489,14 +507,7 @@
             update(); setInterval(update, 1000);
         }
 
-        // 3. 點商計算機
-        const items = [
-            { name: "飄雪結晶", wc: 300/11, ah: 40 }, { name: "突襲額外票券", wc: 1200/7, ah: 370 },
-            { name: "高級瞬移之石", wc: 400/11, ah: 81 }, { name: "凍結加持器", wc: 450/11, ah: 97 },
-            { name: "神秘符咒", wc: 450/11, ah: 92 }, { name: "神秘背包", wc: 250, ah: 520 },
-            { name: "AP初始化", wc: 400, ah: 920 }, { name: "SP初始化", wc: 300, ah: 679 }, { name: "寵物", wc: 1600, ah: 3500 }
-        ];
-
+        // ================= 3. 點商計算機 =================
         function calculate() {
             const cost = parseFloat(document.getElementById('twdCost').value) || 1830;
             const wc = parseFloat(document.getElementById('wcAmount').value) || 13200;
@@ -507,7 +518,7 @@
             document.getElementById('vipText').textContent = `※ VIP成本 6400 WC，約需賣出 ${((6400*wcTWD*(10000/rate))/0.02/10000).toFixed(2)} 億楓幣回本`;
             
             let html = ''; 
-            items.forEach((item, i) => {
+            CONFIG.calcItems.forEach((item, i) => {
                 const thMeso = (item.wc * wcTWD) * (10000 / rate);
                 const profit = (item.ah * (1 - tax)) - thMeso;
                 html += `<tr>
@@ -519,9 +530,9 @@
             });
             document.getElementById('tableBody').innerHTML = html;
         }
-        function updateAH(i, val) { items[i].ah = parseFloat(val) || 0; calculate(); }
+        function updateAH(i, val) { CONFIG.calcItems[i].ah = parseFloat(val) || 0; calculate(); }
 
-        // 4. 燈箱相簿邏輯
+        // ================= 4. 燈箱相簿 =================
         function initLightbox() {
             const box = document.getElementById("lightbox"), imgEl = document.getElementById("lightbox-img");
             const cap = document.getElementById("lightbox-caption"), prev = document.getElementById("lightbox-prev"), next = document.getElementById("lightbox-next");
@@ -558,46 +569,17 @@
             });
         }
 
-        // 5. 智慧「洗牌」音樂播放機制
+        // ================= 5. 洗牌音樂播放器 =================
         function initAudio() {
             const audio = document.getElementById("bgMusic");
             const songNameDisplay = document.getElementById("currentSongName");
-            const nextBtn = document.getElementById("nextSongBtn");
-            const prevBtn = document.getElementById("prevSongBtn");
             audio.volume = 0.4; 
-            
-            const playlist = [
-                "北部森林 藤條巢穴.mp3",
-                "墮落城市.mp3",
-                "大木林 和風鄰近的地方.mp3",
-                "天空之城.mp3",
-                "天空之城塔門口.mp3",
-                "奇幻村.mp3",
-                "弓箭手村.mp3",
-                "弓箭手村北邊山丘.mp3",
-                "弓箭手村市集.mp3",
-                "摩登101.mp3",
-                "水世界.mp3",
-                "沼澤地.mp3",
-                "玩具城 愛奧斯塔100樓.mp3",
-                "玩具城 時間分岔道.mp3",
-                "玩具城 玩具工廠 [主工程A].mp3",
-                "玩具城 遺忘的時間之路.mp3",
-                "玩具城 遺忘的時間之路4.mp3",
-                "玩具城.mp3",
-                "登入畫面.mp3",
-                "神木村.mp3",
-                "童話村.mp3",
-                "維多利亞港.mp3",
-                "網頁背景音樂.mp3",
-                "黃金海岸.mp3"
-            ];
             
             let shuffledIndices = [];
             let currentIndex = 0;
 
             function shufflePlaylist() {
-                shuffledIndices = playlist.map((_, i) => i);
+                shuffledIndices = CONFIG.playlist.map((_, i) => i);
                 for (let i = shuffledIndices.length - 1; i > 0; i--) {
                     const j = Math.floor(Math.random() * (i + 1));
                     [shuffledIndices[i], shuffledIndices[j]] = [shuffledIndices[j], shuffledIndices[i]];
@@ -605,63 +587,57 @@
             }
 
             function playSong(index) {
-                if (playlist.length === 0) return;
+                if (CONFIG.playlist.length === 0) return;
                 
-                currentIndex = (index + playlist.length) % playlist.length;
-                const songFile = playlist[shuffledIndices[currentIndex]];
-                const songName = songFile.replace('.mp3', '');
-                
-                songNameDisplay.innerText = songName;
+                currentIndex = (index + CONFIG.playlist.length) % CONFIG.playlist.length;
+                const songFile = CONFIG.playlist[shuffledIndices[currentIndex]];
+                songNameDisplay.innerText = songFile.replace('.mp3', '');
                 audio.src = songFile + "?v=" + new Date().getTime();
                 
                 const playPromise = audio.play();
                 if (playPromise !== undefined) {
                     playPromise.catch(error => {
-                        const startAudio = () => {
-                            audio.play();
-                            document.removeEventListener("click", startAudio);
-                            document.removeEventListener("touchstart", startAudio);
-                        };
-                        document.addEventListener("click", startAudio);
-                        document.addEventListener("touchstart", startAudio);
+                        const startAudio = () => { audio.play(); document.removeEventListener("click", startAudio); document.removeEventListener("touchstart", startAudio); };
+                        document.addEventListener("click", startAudio); document.addEventListener("touchstart", startAudio);
                     });
                 }
             }
 
-            shufflePlaylist();
-            playSong(0);
+            shufflePlaylist(); playSong(0);
 
-            nextBtn.addEventListener("click", () => playSong(currentIndex + 1));
-            prevBtn.addEventListener("click", () => playSong(currentIndex - 1));
+            document.getElementById("nextSongBtn").addEventListener("click", () => playSong(currentIndex + 1));
+            document.getElementById("prevSongBtn").addEventListener("click", () => playSong(currentIndex - 1));
             audio.addEventListener("ended", () => playSong(currentIndex + 1));
         }
 
-        // 6. 全螢幕飄雪特效
+        // ================= 6. 效能優化版飄雪特效 =================
         function initSnow() {
             const snowContainer = document.createElement('div');
             snowContainer.id = 'snow-container';
-            document.body.appendChild(snowContainer);
-
-            const flakeCount = 40; // 調整這裡可以控制雪花密度
+            const fragment = document.createDocumentFragment(); // 使用 Fragment 減少 DOM 操作
+            
+            const flakeCount = 40;
             const symbols = ['❄', '❅', '❆'];
 
             for (let i = 0; i < flakeCount; i++) {
                 const flake = document.createElement('div');
                 flake.classList.add('snowflake');
                 flake.innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                
-                // 隨機產生每一片雪花的屬性 (大小、水平位置、掉落時間與延遲)
                 flake.style.left = `${Math.random() * 100}vw`;
                 flake.style.fontSize = `${Math.random() * 12 + 10}px`;
                 flake.style.animationDuration = `${Math.random() * 6 + 6}s`;
                 flake.style.animationDelay = `${Math.random() * 5}s`;
-                
-                snowContainer.appendChild(flake);
+                fragment.appendChild(flake);
             }
+            snowContainer.appendChild(fragment);
+            document.body.appendChild(snowContainer);
         }
 
-        // 啟動所有功能
-        window.onload = () => { initTabs(); calculate(); initTimers(); initLightbox(); initAudio(); initSnow(); };
+        // 統一把事件綁在 DOMContentLoaded，網頁體驗更滑順
+        document.addEventListener('DOMContentLoaded', () => {
+            window.updateAH = updateAH; // 暴露給 HTML onClick 使用
+            initTabs(); calculate(); initTimers(); initLightbox(); initAudio(); initSnow(); 
+        });
     </script>
 </body>
 </html>

@@ -76,7 +76,7 @@
             transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px 5px rgba(142, 68, 173, 0.4); border-color: #fff;
         }
 
-        /* ====== 👑 招生區圖片神話級特效 (純金黃 + 冰藍) ====== */
+        /* ====== 👑 招生區圖片神話級特效 ====== */
         .recruit-image-container { width: 100%; display: flex; justify-content: center; padding: 40px 10px; }
         @keyframes legendaryDropGlow {
             0% { box-shadow: 0 10px 25px rgba(0,0,0,0.45), 0 0 20px 5px rgba(255, 170, 0, 0.4), 0 0 35px 12px rgba(0, 130, 255, 0.3); transform: translateY(0px); }
@@ -164,12 +164,12 @@
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
-        /* ================= 7. 其他 UI 元件 (含王團 iframe 尺寸調整) ================= */
+        /* ================= 7. 其他 UI 元件 (含調整後的寬 105%、高 651.75px 框框) ================= */
         .embed-container { 
             width: 105%; /* 寬度增加 5% */
             max-width: none; 
             margin-left: -2.5%; /* 置中微調 */
-            height: 592.5px; /* 高度變成原本 750px 的 79% */
+            height: 651.75px; /* 高度變成原本 592.5px 的 110% */
             border: none; border-radius: 12px; background: #fff; 
         }
 
@@ -233,8 +233,8 @@
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
             
-            /* 手機版 iframe 尺寸調整 */
-            .embed-container { width: 100%; margin-left: 0; height: 480px; }
+            /* 手機版 iframe 尺寸微調 */
+            .embed-container { width: 100%; margin-left: 0; height: 528px; }
 
             .nameplate { height: 75px; }
             #countdownDisplay { font-size: 16px; padding: 10px; margin-bottom: 10px;} 

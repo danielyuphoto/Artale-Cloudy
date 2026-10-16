@@ -164,10 +164,19 @@
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
-        /* ================= 7. 其他 UI 元件 (標準寬度 + 完美高度) ================= */
+        /* ================= 7. 其他 UI 元件 (白底與試算表右側同步增加 10% 長度) ================= */
+        
+        /* 👑 試算表外層白底（玻璃面板），右側向外擴展 10% */
+        .roster-card {
+            width: 110%; /* 寬度增加 10% */
+            margin-left: 0; /* 保持靠左對齊，往右側延伸 */
+            padding: 10px;
+        }
+
+        /* 👑 試算表 iframe 本體，與白底同步寬度 */
         .embed-container { 
-            width: 100%; /* 標準寬度，確保版面不走山 */
-            height: 651.75px; /* 完美比例高度 */
+            width: 100%; 
+            height: 651.75px; /* 完美高度保持不變 */
             border: none; border-radius: 12px; background: #fff; 
         }
 
@@ -229,7 +238,11 @@
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+            
+            /* 手機版白底與試算表恢復 100% 寬度，避免跑版 */
+            .roster-card { width: 100%; margin-left: 0; }
             .embed-container { height: 550px; }
+
             .nameplate { height: 75px; }
             #countdownDisplay { font-size: 16px; padding: 10px; margin-bottom: 10px;} 
             #timerText { font-size: 18px; }
@@ -406,7 +419,8 @@
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=1399000704">蝴蝶/炎魔團</button>
                     </div>
-                    <div class="glass-panel" style="padding: 10px;">
+                    <!-- 👑 這裡套用了右側增加 10% 長度的 roster-card 樣式 -->
+                    <div class="glass-panel roster-card">
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
                     </div>
                 </div>

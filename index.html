@@ -164,12 +164,10 @@
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
-        /* ================= 7. 其他 UI 元件 (含調整後的寬 115%、高 651.75px 框框) ================= */
+        /* ================= 7. 其他 UI 元件 (修正寬高比例，恢復完美對齊) ================= */
         .embed-container { 
-            width: 115%; /* 左右寬度再增加 10% (總共 115%) */
-            max-width: none; 
-            margin-left: -7.5%; /* 置中微調 */
-            height: 651.75px; /* 上下高度維持剛剛調整好的 110% */
+            width: 100%; /* 恢復標準 100% 寬度，確保不覆蓋左側選單 */
+            height: 651.75px; /* 保留剛剛調好的完美高度 */
             border: none; border-radius: 12px; background: #fff; 
         }
 
@@ -209,7 +207,7 @@
             100% { transform: translateY(110vh) translateX(30px) rotate(360deg); opacity: 0; }
         }
 
-        /* ================= 9. 手機版 RWD (防遮擋極致優化) ================= */
+        /* ================= 9. 手機版 RWD ================= */
         @media (max-width: 768px) {
             body { padding: 10px 5px 30px; }
             .header-container { flex-wrap: wrap; }
@@ -218,7 +216,6 @@
             .title-cursive { font-size: 40px; } .title-zen { font-size: 30px; }
             .layout-container { flex-direction: column; }
             
-            /* 解除手機版的置頂鎖定，隨頁面捲動 */
             .sidebar { 
                 position: relative; top: 0; 
                 flex-direction: row; width: 100%; overflow-x: auto; padding: 10px 5px; gap: 8px; 
@@ -232,10 +229,7 @@
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            
-            /* 手機版 iframe 尺寸調整 */
-            .embed-container { width: 100%; margin-left: 0; height: 528px; }
-
+            .embed-container { height: 550px; }
             .nameplate { height: 75px; }
             #countdownDisplay { font-size: 16px; padding: 10px; margin-bottom: 10px;} 
             #timerText { font-size: 18px; }

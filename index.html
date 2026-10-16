@@ -164,10 +164,10 @@
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
-        /* ================= 7. 其他 UI 元件 (修正寬高比例，恢復完美對齊) ================= */
+        /* ================= 7. 其他 UI 元件 (標準寬度 + 完美高度) ================= */
         .embed-container { 
-            width: 100%; /* 恢復標準 100% 寬度，確保不覆蓋左側選單 */
-            height: 651.75px; /* 保留剛剛調好的完美高度 */
+            width: 100%; /* 標準寬度，確保版面不走山 */
+            height: 651.75px; /* 完美比例高度 */
             border: none; border-radius: 12px; background: #fff; 
         }
 
@@ -404,6 +404,7 @@
                         <button class="active" data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129">樹王團</button>
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=0">龍王團</button>
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
+                        <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=1399000704">蝴蝶/炎魔團</button>
                     </div>
                     <div class="glass-panel" style="padding: 10px;">
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>

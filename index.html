@@ -66,7 +66,6 @@
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 首頁大合照 */
         .hero-image-container { width: 100%; display: flex; justify-content: center; margin-bottom: 25px; padding: 10px; }
         .hero-image-container img { 
             width: 100%; max-width: 1300px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
@@ -76,34 +75,14 @@
             transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 0 20px 5px rgba(142, 68, 173, 0.4); border-color: #fff;
         }
 
-        /* 👑 招生區圖片：放大至1300px，並加入呼吸特效與懸停強化 */
-        .recruit-image-container { width: 100%; display: flex; justify-content: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; padding: 30px 10px; }
-        
-        @keyframes breathingGlow {
-            0% { box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4), 0 0 15px 5px rgba(243, 156, 18, 0.2); }
-            50% { box-shadow: 0 8px 35px rgba(52, 152, 219, 0.6), 0 0 25px 8px rgba(243, 156, 18, 0.4); }
-            100% { box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4), 0 0 15px 5px rgba(243, 156, 18, 0.2); }
-        }
-        
+        .recruit-image-container { width: 100%; display: flex; justify-content: center; animation: zoomInEffect 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; padding: 20px 0; }
         .recruit-image-container img { 
-            width: 100%; max-width: 1300px; /* 放大到跟合照一樣大 */
-            height: auto; border-radius: 12px; 
-            border: 4px solid rgba(255, 255, 255, 0.95); 
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            cursor: zoom-in; transform-origin: center; 
-            animation: breathingGlow 3s infinite ease-in-out; /* 呼吸光暈 */
+            width: 100%; max-width: 1000px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+            border: 3px solid rgba(255, 255, 255, 0.9); transition: 0.5s; cursor: zoom-in; transform-origin: center; 
         }
-        
-        .recruit-image-container img:hover { 
-            transform: translateY(-10px) scale(1.03); z-index: 999; position: relative;
-            /* 懸停時發出耀眼光芒 */
-            animation: none; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px 10px rgba(52, 152, 219, 0.6), 0 0 15px 5px rgba(243, 156, 18, 0.6);
-            border-color: #fff;
-        }
+        .recruit-image-container img:hover { transform: scale(1.05); z-index: 999; position: relative; }
         @keyframes zoomInEffect { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: scale(1); } }
         
-        /* 專屬首頁文字介紹框 */
         .intro-box { padding: 30px; line-height: 1.8; font-size: 20px; }
         .intro-custom-wave { font-family: '華康大波浪圓體', 'DFPWave-W12', 'Mochiy Pop P One', 'Zen Maru Gothic', sans-serif; color: #2c3e50; letter-spacing: 1px; }
         .intro-custom-wave p { margin-bottom: 12px; }
@@ -171,14 +150,7 @@
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
         /* ================= 7. 其他 UI 元件 ================= */
-        /* 👑 修改 iframe 容器高度，使其自適應且盡量顯示完整表格 */
-        .embed-container { 
-            width: 100%; 
-            height: 85vh; /* 高度隨螢幕高度調整，85% 視窗高度 */
-            min-height: 500px; /* 最低高度防呆 */
-            border: none; border-radius: 12px; background: #fff; 
-        }
-        
+        .embed-container { width: 100%; height: 750px; border: none; border-radius: 12px; background: #fff; }
         .sub-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
         #countdownDisplay { background: rgba(255, 243, 205, 0.8); border: 2px dashed #f39c12; color: #d35400; font-size: 20px; text-align: center; padding: 12px; margin-bottom: 15px; font-family: Tahoma, sans-serif; }
         #timerText { color: #c0392b; font-size: 24px; display: inline-block; min-width: 220px; }
@@ -215,24 +187,54 @@
             100% { transform: translateY(110vh) translateX(30px) rotate(360deg); opacity: 0; }
         }
 
-        /* ================= 9. 手機版 RWD ================= */
+        /* ================= 9. 手機版 RWD (針對手機排版極致優化) ================= */
         @media (max-width: 768px) {
             body { padding: 10px 5px 30px; }
-            .header-container { flex-wrap: wrap; }
+            .header-container { flex-wrap: wrap; margin-bottom: 20px; }
             .badge { height: 65px; } 
             .cloud-title-wrapper { padding: 15px 30px; border-radius: 40px; }
-            .title-cursive { font-size: 40px; } .title-zen { font-size: 30px; }
-            .layout-container { flex-direction: column; }
-            .sidebar { flex-direction: row; width: 100%; overflow-x: auto; padding: 10px; white-space: nowrap; }
-            .sidebar button { padding: 10px 15px; font-size: 16px; }
-            .cute-music-player { margin-top: 0; margin-left: 10px; min-width: 250px; } 
+            .title-cursive { font-size: 32px; } .title-zen { font-size: 24px; }
+            
+            .layout-container { flex-direction: column; gap: 15px; }
+            
+            /* 👑 側邊欄優化：取消固定懸浮 (Sticky)，解決擋住表單的問題 */
+            .sidebar { 
+                position: relative; /* 讓導覽列跟著頁面滾動，不再擋住下方畫面 */
+                top: 0; 
+                flex-direction: row; 
+                width: 100%; 
+                overflow-x: auto; 
+                padding: 10px 5px; /* 減小留白 */
+                gap: 8px; /* 縮小按鈕間距 */
+            }
+            
+            /* 美化滑動捲軸 */
+            .sidebar::-webkit-scrollbar { height: 4px; } 
+            .sidebar::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.5); border-radius: 4px; }
+            
+            /* 👑 按鈕瘦身：縮小字體與內距，看起來更精緻 */
+            .sidebar button, .sub-tabs button { 
+                padding: 8px 12px; 
+                font-size: 15px; 
+                border-radius: 6px;
+            }
+            .sub-tabs { margin-bottom: 10px; }
+            
+            /* 👑 點唱機瘦身 */
+            .cute-music-player { 
+                margin-top: 0; margin-left: 5px; min-width: 230px; padding: 10px; 
+            } 
+            
             .history-grid { grid-template-columns: 1fr; }
             .photo-wrapper img { height: 200px; }
             .controls-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-            /* 手機版的表格高度稍微縮減，避免佔用太多滑動空間 */
-            .embed-container { height: 65vh; min-height: 400px; }
+            
+            /* 調整 iframe 表單在手機上的高度 */
+            .embed-container { height: 600px; }
+            
             .nameplate { height: 75px; }
-            #countdownDisplay { font-size: 16px; } #timerText { font-size: 18px; }
+            #countdownDisplay { font-size: 15px; padding: 10px; margin-bottom: 10px; } 
+            #timerText { font-size: 18px; min-width: auto; }
             .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
             #lightbox-prev { left: 10px; } #lightbox-next { right: 10px; }
             .intro-custom-wave .wave-title { font-size: 22px; }
@@ -489,6 +491,7 @@
 
         // ================= 2. 時間與倒數管理器 =================
         function initTimers() {
+            // 快取 DOM 節點，提升效能
             const els = {
                 formContainer: document.getElementById("formContainer"),
                 formMsg: document.getElementById("closedMessage"),
@@ -503,6 +506,7 @@
                 const today = twDate.getDay(); 
                 const hour = twDate.getHours();
 
+                // 報名表：週一 00:00 ~ 週二 23:59 開放
                 if (today >= 1 && today <= 2) {
                     els.formContainer.style.display = "block";
                     els.formMsg.style.display = "none";
@@ -526,6 +530,7 @@
                     els.formMsg.style.display = "block";
                 }
 
+                // 名單：週二 08:00 ~ 週三 17:59 隱藏
                 const isClosed = (today === 2 && hour >= 8) || (today === 3 && hour < 18);
                 els.rosterWrap.style.display = isClosed ? "none" : "block";
                 els.rosterMsg.style.display = isClosed ? "block" : "none";
@@ -640,7 +645,7 @@
         function initSnow() {
             const snowContainer = document.createElement('div');
             snowContainer.id = 'snow-container';
-            const fragment = document.createDocumentFragment(); 
+            const fragment = document.createDocumentFragment(); // 使用 Fragment 減少 DOM 操作
             
             const flakeCount = 40;
             const symbols = ['❄', '❅', '❆'];
@@ -659,8 +664,9 @@
             document.body.appendChild(snowContainer);
         }
 
+        // 統一把事件綁在 DOMContentLoaded，網頁體驗更滑順
         document.addEventListener('DOMContentLoaded', () => {
-            window.updateAH = updateAH; 
+            window.updateAH = updateAH; // 暴露給 HTML onClick 使用
             initTabs(); calculate(); initTimers(); initLightbox(); initAudio(); initSnow(); 
         });
     </script>

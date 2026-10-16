@@ -164,16 +164,16 @@
         audio { width: 95%; height: 35px; outline: none; border-radius: 20px; }
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
-        /* ================= 7. 其他 UI 元件 (白底與試算表右側同步增加 10% 長度) ================= */
+        /* ================= 7. 其他 UI 元件 (白底與試算表寬度調整為 105%) ================= */
         
-        /* 👑 試算表外層白底（玻璃面板），右側向外擴展 10% */
+        /* 👑 試算表外層白底（玻璃面板），寬度設為 105% (比原本減少 5%) */
         .roster-card {
-            width: 110%; /* 寬度增加 10% */
-            margin-left: 0; /* 保持靠左對齊，往右側延伸 */
+            width: 105%; 
+            margin-left: 0; 
             padding: 10px;
         }
 
-        /* 👑 試算表 iframe 本體，與白底同步寬度 */
+        /* 👑 試算表 iframe 本體 */
         .embed-container { 
             width: 100%; 
             height: 651.75px; /* 完美高度保持不變 */
@@ -419,7 +419,7 @@
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=486591249">困拉團</button>
                         <button data-url="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=1399000704">蝴蝶/炎魔團</button>
                     </div>
-                    <!-- 👑 這裡套用了右側增加 10% 長度的 roster-card 樣式 -->
+                    <!-- 👑 這裡套用了寬度 105% 的 roster-card 樣式 -->
                     <div class="glass-panel roster-card">
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
                     </div>

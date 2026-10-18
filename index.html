@@ -477,7 +477,7 @@
                 "玩具城 玩具工廠 [主工程A].mp3", "玩具城 遺忘的時間之路.mp3", 
                 "玩具城 遺忘的時間之路4.mp3", "玩具城.mp3", "登入畫面.mp3", 
                 "神木村.mp3", "童話村.mp3", "維多利亞港.mp3", 
-                "網頁背景音樂.mp3", "黃金海岸.mp3"
+                "黃金海岸.mp3"
             ],
             calcItems: [
                 { name: "飄雪結晶", wc: 300/11, ah: 40 }, { name: "突襲額外票券", wc: 1200/7, ah: 370 },
@@ -570,7 +570,7 @@
                 html += `<tr>
                     <td>${item.name}</td><td>${item.wc.toFixed(1)}</td><td>${thMeso.toFixed(1)}</td>
                     <td><input type="number" value="${item.ah}" style="width:75px;" onchange="updateAH(${i}, this.value)"></td>
-                    <td>${item.ah < thMeso ? '<span class="buy-ah">✅ 用楓幣拉拍賣</span>' : '<span class="buy-wc">💎 Directly扣 WC 買</span>'}</td>
+                    <td>${item.ah < thMeso ? '<span class="buy-ah">✅ 用楓幣拉拍賣</span>' : '<span class="buy-wc">💎 直接扣 WC 買</span>'}</td>
                     <td>${profit > 0 ? `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>` : `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`}</td>
                 </tr>`;
             });

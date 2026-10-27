@@ -841,10 +841,21 @@
             document.body.appendChild(snowContainer);
         }
 
-        // ================= 10. 原生表單提交 (Cloudflare 中繼) =================
+        // ================= 10. 原生表單提交 (Cloudflare 中繼) + 鍵盤修正 =================
         function initCustomForm() {
             const form = document.getElementById('customRaidForm');
             if(!form) return;
+
+            // 🎯 絕招：針對文字輸入框，防止 Safari 亂切英文鍵盤
+            const textInputs = form.querySelectorAll('input[type="text"], textarea');
+            textInputs.forEach(input => {
+                // 先把原本的 name 偷偷記下來存到 data-name
+                input.dataset.name = input.getAttribute('name');
+                input.removeAttribute('name'); 
+
+                // 等玩家點擊輸入的時候，因為沒有 name 屬性，Safari 就會乖乖保持中文鍵盤
+            });
+
             form.addEventListener('submit', async function(e) {
                 e.preventDefault(); 
                 
@@ -852,6 +863,11 @@
                 const originalText = btn.innerText;
                 btn.innerText = "資料傳送中... 🚀";
                 btn.disabled = true;
+
+                // 🎯 送出前一刻，把 name 屬性裝回去，讓 Google 表單認得是誰
+                textInputs.forEach(input => {
+                    input.setAttribute('name', input.dataset.name);
+                });
 
                 const formData = new FormData(this);
 
@@ -872,14 +888,11 @@
                 } finally {
                     btn.innerText = originalText;
                     btn.disabled = false;
+                    
+                    // 🎯 送出完畢後，再次把 name 拔掉，準備下一次填寫
+                    textInputs.forEach(input => {
+                        input.removeAttribute('name');
+                    });
                 }
             });
         }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            window.updateAH = updateAH; 
-            initTabs(); calculate(); initTimers(); initLightbox(); initAudio(); initSnow(); initCustomForm();
-        });
-    </script>
-</body>
-</html>

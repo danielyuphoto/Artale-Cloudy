@@ -434,15 +434,27 @@
                 </div>
             </div>
 
-            <!-- 頁籤：突襲王團報名 -->
+            <!-- 頁籤：突襲王團報名 (新增合成備註選項) -->
             <div id="signupTab" class="tab-content">
                 <div class="glass-panel" style="padding: 10px; text-align: center;">
                     <div id="countdownDisplay">⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span></div>
                     
                     <div id="formContainer">
                         <form id="customRaidForm" class="cute-form">
-                            <h3 class="form-title">⚔️ 突襲王團專屬報名表</h3>
+                            <h3 class="form-title">⚔️ 突襲王團 固定團/換團申請表</h3>
                             <p class="form-subtitle">資料將由系統加密直達公會後台，填寫不卡頓！</p>
+
+                            <!-- 🔥 新增：填表目的 (自動合成備註魔法) -->
+                            <div class="form-section-title">📌 填表目的 (必選)</div>
+                            <div class="form-grid-3">
+                                <label style="grid-column: 1 / -1;">您這次填寫表單的原因是？ 
+                                    <select id="formPurpose" required style="border: 2px solid #e74c3c; box-shadow: 0 0 5px rgba(231,76,60,0.3);">
+                                        <option value="" disabled selected>請選擇填表目的...</option>
+                                        <option value="新進求組">👋 [新進求組] 我是新來的 / 目前無固定團，請求分配</option>
+                                        <option value="申請換團">🔄 [申請換團] 我已有固定團，下週起想轉換突襲王目標</option>
+                                    </select>
+                                </label>
+                            </div>
 
                             <div class="form-section-title">👤 基本資料</div>
                             <div class="form-grid-3">
@@ -544,7 +556,7 @@
                                         <option value="白天(10:00-18:00)">白天(10:00-18:00)</option><option value="晚上(18:00-02:00)">晚上(18:00-02:00)</option>
                                     </select>
                                 </label>
-                                <label>配合場數 
+                                <label style="grid-column: 1 / -1;">安排突襲次數 <span style="font-size: 13px; color: #7f8c8d; font-weight: normal;">(每周7+突襲券7，打龍王請選14)</span>
                                     <select name="entry.1582749214">
                                         <option value="" disabled selected>請選擇</option>
                                         <option value="7場">7場</option><option value="14場">14場</option>
@@ -552,25 +564,26 @@
                                 </label>
                             </div>
 
-                            <div class="form-section-title">📝 時間詳細說明</div>
+                            <div class="form-section-title">📝 時間詳細說明 & 備註 (必看)</div>
                             <p style="font-size: 15px; color: #7f8c8d; margin: 0 0 10px 0; line-height: 1.5; font-weight: bold;">
-                                根據上題的可配合時間，請盡量明確說明<br>
-                                例如：「週二19:00後、週四20:00後」、「平日晚上20:30後皆可」、「週六13:00開打」等等。
+                                1. 根據上題的可配合時間，請盡量明確說明 (如：「週二19:00後」、「週六13:00開打」)。<br>
+                                2. ⚠️ 報名「樹王」與「蝴蝶王」的夥伴，請務必在此提供<span style="color: #e74c3c;">【雪表】</span>數據唷。
                             </p>
-                            <textarea name="entry.2040299953" rows="3" placeholder="請在此輸入時間詳細說明..." inputmode="text" lang="zh-TW"></textarea>
+                            <textarea name="entry.2040299953" rows="3" placeholder="請在此輸入時間詳細說明與雪表數據..." inputmode="text" lang="zh-TW"></textarea>
 
                             <button type="submit" id="submitBtn" class="form-submit-btn">✨ 送出報名資料 ✨</button>
                         </form>
                     </div>
 
+                    <!-- 表單關閉時顯示的訊息 -->
                     <div id="closedMessage" style="display: none; padding: 120px 20px;">
-                        <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團登記於每週一至週二開放~敬請期待</h3>
-                        <p style="font-size: 22px; color: #7f8c8d;">休息一下，我們下週見！</p>
+                        <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">下週王團固定團/換團 申請於每週六至週日開放~</h3>
+                        <p style="font-size: 22px; color: #7f8c8d;">請於週末期間回來填寫喔！</p>
                     </div>
                 </div>
             </div>
 
-            <!-- 頁籤：每週突襲王團隊伍 -->
+            <!-- 頁籤：每週突襲王團隊伍 (固定團全天候開放) -->
             <div id="rosterTab" class="tab-content">
                 <div id="rosterContainerWrapper">
                     <div class="sub-tabs">
@@ -582,10 +595,6 @@
                     <div class="glass-panel roster-card">
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
                     </div>
-                </div>
-                <div id="rosterClosedMessage" class="glass-panel" style="display: none; padding: 120px 20px; text-align: center; margin-top: 15px;">
-                    <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">公會幹部們努力安排隊伍中，敬請期待>&lt;</h3>
-                    <p style="font-size: 22px; color: #7f8c8d;">每週三 18:00 將公佈最新排定名單！</p>
                 </div>
             </div>
 
@@ -660,15 +669,13 @@
             });
         }
 
-        // ================= 2. 時間與倒數管理器 (效能升級版) =================
+        // ================= 2. 時間與倒數管理器 (限定六日開放版) =================
         function initTimers() {
             const els = {
                 formContainer: document.getElementById("formContainer"),
                 formMsg: document.getElementById("closedMessage"),
                 countDisp: document.getElementById("countdownDisplay"),
-                timerText: document.getElementById("timerText"),
-                rosterWrap: document.getElementById("rosterContainerWrapper"),
-                rosterMsg: document.getElementById("rosterClosedMessage")
+                timerText: document.getElementById("timerText")
             };
 
             function getTaiwanTime() {
@@ -680,15 +687,17 @@
             function update() {
                 const twDate = getTaiwanTime();
                 const today = twDate.getDay(); 
-                const hour = twDate.getHours();
-
-                if (today >= 1 && today <= 2) {
+                
+                // 0 是星期日，6 是星期六。只有這兩天開放表單。
+               if (today === 0 || today === 6) {
                     els.formContainer.style.display = "block";
                     els.formMsg.style.display = "none";
                     els.countDisp.style.display = "block";
                     
                     const target = new Date(twDate);
-                    target.setDate(twDate.getDate() + (2 - today));
+                    if (today === 6) {
+                        target.setDate(twDate.getDate() + 1); // 如果是週六，目標設為明天的週日
+                    }
                     target.setHours(23, 59, 59, 999);
                     
                     const diff = target - twDate;
@@ -704,10 +713,8 @@
                     els.countDisp.style.display = "none";
                     els.formMsg.style.display = "block";
                 }
-
-                const isClosed = (today === 2 && hour >= 8) || (today === 3 && hour < 18);
-                els.rosterWrap.style.display = isClosed ? "none" : "block";
-                els.rosterMsg.style.display = isClosed ? "block" : "none";
+                
+                // 排班表現在是固定團模式，24 小時全天候開放，不再需要隱藏了！
             }
             update(); setInterval(update, 1000);
         }
@@ -840,7 +847,7 @@
             document.body.appendChild(snowContainer);
         }
 
-        // ================= 10. 原生表單提交 (Cloudflare 中繼) + 鍵盤修正 =================
+        // ================= 10. 原生表單提交 (Cloudflare 中繼) + 備註自動合成魔術 =================
         function initCustomForm() {
             const form = document.getElementById('customRaidForm');
             if(!form) return;
@@ -848,7 +855,6 @@
             // 🎯 絕招：針對文字輸入框，防止 Safari 亂切英文鍵盤
             const textInputs = form.querySelectorAll('input[type="text"], textarea');
             textInputs.forEach(input => {
-                // 先把原本的 name 偷偷記下來存到 data-name
                 input.dataset.name = input.getAttribute('name');
                 input.removeAttribute('name'); 
             });
@@ -861,7 +867,15 @@
                 btn.innerText = "資料傳送中... 🚀";
                 btn.disabled = true;
 
-                // 🎯 送出前一刻，把 name 屬性裝回去，讓 Google 表單認得是誰
+                // 🎯 魔法啟動：取得「填表目的」與使用者的「原始備註」
+                const purposeSelect = document.getElementById('formPurpose');
+                const detailsTextarea = form.querySelector('[data-name="entry.2040299953"]'); // 這裡抓原本隱形掉的 textarea
+                const originalDetailsContent = detailsTextarea.value; 
+
+                // 🎯 組合文字：將目的標籤強迫黏在文字最前面
+                detailsTextarea.value = `[${purposeSelect.value}] ${originalDetailsContent}`;
+
+                // 送出前一刻，把 name 屬性裝回去
                 textInputs.forEach(input => {
                     input.setAttribute('name', input.dataset.name);
                 });
@@ -886,7 +900,10 @@
                     btn.innerText = originalText;
                     btn.disabled = false;
                     
-                    // 🎯 送出完畢後，再次把 name 拔掉，準備下一次填寫
+                    // 🎯 送出完畢後，把 textarea 恢復成玩家原本打的字 (避免看到被加工過的標籤)
+                    detailsTextarea.value = originalDetailsContent;
+
+                    // 再次把 name 拔掉，準備下一次填寫
                     textInputs.forEach(input => {
                         input.removeAttribute('name');
                     });

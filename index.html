@@ -584,7 +584,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：每週突襲王團隊伍 (固定團全天候開放) -->
+            <!-- 頁籤：每週突襲王團隊伍 -->
             <div id="rosterTab" class="tab-content">
                 <div id="rosterContainerWrapper">
                     <div class="sub-tabs">
@@ -596,6 +596,11 @@
                     <div class="glass-panel roster-card">
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
                     </div>
+                </div>
+                <!-- 新增：排班維護期間的遮罩畫面 -->
+                <div id="rosterClosedMessage" class="glass-panel" style="display: none; padding: 120px 20px; text-align: center; margin-top: 15px;">
+                    <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">幹部們努力安排隊伍中，敬請期待>&lt;</h3>
+                    <p style="font-size: 22px; color: #7f8c8d;">每週二 18:00 將自動公佈最新排定名單！</p>
                 </div>
             </div>
 
@@ -670,13 +675,15 @@
             });
         }
 
-        // ================= 2. 時間與倒數管理器 (含首發日自動回歸版) =================
+        // ================= 2. 時間與倒數管理器 (含王團名單開關邏輯) =================
         function initTimers() {
             const els = {
                 formContainer: document.getElementById("formContainer"),
                 formMsg: document.getElementById("closedMessage"),
                 countDisp: document.getElementById("countdownDisplay"),
-                timerText: document.getElementById("timerText")
+                timerText: document.getElementById("timerText"),
+                rosterWrap: document.getElementById("rosterContainerWrapper"), // 抓取名單區塊
+                rosterMsg: document.getElementById("rosterClosedMessage")      // 抓取名單維護中訊息
             };
 
             function getTaiwanTime() {
@@ -688,23 +695,18 @@
             function update() {
                 const twDate = getTaiwanTime();
                 const today = twDate.getDay(); 
+                const hour = twDate.getHours();
                 
-                // 💡 加入「期間限定」密碼：設定 2026 年 10 月 30 日（週五）為特別開放日
-                const dateNum = twDate.getFullYear() * 10000 + (twDate.getMonth() + 1) * 100 + twDate.getDate();
-                const isSpecialLaunchDay = (dateNum === 20261030);
-                
-                // 0 是星期日，6 是星期六。或是「特別開放日」皆可開啟
-                if (today === 0 || today === 6 || isSpecialLaunchDay) {
+                // --- 1. 報名表單邏輯 (維持 0星期日, 6星期六 開放) ---
+                if (today === 0 || today === 6) {
                     els.formContainer.style.display = "block";
                     els.formMsg.style.display = "none";
                     els.countDisp.style.display = "block";
                     
                     const target = new Date(twDate);
-                    
-                    // 自動計算距離「本週日深夜 23:59」還有幾天
-                    if (today === 6) target.setDate(twDate.getDate() + 1); // 週六
-                    if (today === 5) target.setDate(twDate.getDate() + 2); // 週五 (首發特例)
-                    
+                    if (today === 6) {
+                        target.setDate(twDate.getDate() + 1); // 如果是週六，目標設為明天的週日
+                    }
                     target.setHours(23, 59, 59, 999);
                     
                     const diff = target - twDate;
@@ -720,7 +722,14 @@
                     els.countDisp.style.display = "none";
                     els.formMsg.style.display = "block";
                 }
+
+                // --- 2. 王團名單開放邏輯 (週二 18:00 開啟，用到週日深夜) ---
+                // 意思是：只要是 星期一(1)，或是 星期二(2)且小於 18 點，就顯示維護中。
+                const isRosterClosed = (today === 1) || (today === 2 && hour < 18);
+                els.rosterWrap.style.display = isRosterClosed ? "none" : "block";
+                els.rosterMsg.style.display = isRosterClosed ? "block" : "none";
             }
+            
             update(); setInterval(update, 1000);
         }
 

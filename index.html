@@ -275,7 +275,7 @@
             box-shadow: 0 0 30px rgba(255, 152, 0, 0.4); outline: none; transition: 0.3s;
         }
         .intro-text-btn:hover { background: rgba(255, 152, 0, 0.2); transform: scale(1.05); }
-        .intro-text-btn:disabled { pointer-events: none; opacity: 0.5; } /* 🚀 優化 2: 點擊後鎖死樣式 */
+        .intro-text-btn:disabled { pointer-events: none; opacity: 0.5; } 
         
         @keyframes spookyPulse { 
             0% { box-shadow: 0 0 20px rgba(255, 152, 0, 0.4); } 
@@ -390,7 +390,7 @@
             .intro-custom-wave .wave-title { font-size: 22px; }
             .cute-form { padding: 15px; }
 
-            .intro-text-btn { font-size: 20px; padding: 15px 20px; } /* 手機版開門按鈕縮小 */
+            .intro-text-btn { font-size: 20px; padding: 15px 20px; } 
         }
     </style>
 </head>
@@ -606,7 +606,7 @@
                                         <option value="" disabled selected>請選擇</option>
                                         <option value="困難殘暴炎魔">困難殘暴炎魔</option><option value="阿卡伊農">阿卡伊農</option>
                                         <option value="克雷塞爾(樹王)">克雷塞爾(樹王)</option><option value="闇黑龍王">闇黑龍王</option>
-                                        <option value="艾畢奈弱(毒)">艾畢奈亞(毒)</option><option value="艾畢奈亞(冰)">艾畢奈亞(冰)</option>
+                                        <option value="艾畢奈亞(毒)">艾畢奈亞(毒)</option><option value="艾畢奈亞(冰)">艾畢奈亞(冰)</option>
                                         <option value="困難拉圖斯">困難拉圖斯</option><option value="殘暴炎魔">殘暴炎魔</option>
                                     </select>
                                 </label>
@@ -736,7 +736,7 @@
                         <label>📈 1 億楓幣 = <input type="number" id="twdRate" value="650" oninput="calculate()"> 台幣</label>
                     </div>
                     <div class="controls-row">
-                        <label><input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 👑 擁有拍 প্রতিরক্ষা(手續費 3%)</label>
+                        <label><input type="checkbox" id="vipCheck" style="width:18px; height:18px; cursor: pointer;" onchange="calculate()"> 👑 擁有拍賣場VIP(手續費 3%)</label>
                         <span id="vipText" class="vip-note"></span>
                     </div>
                 </div>
@@ -880,7 +880,7 @@
                     <td>${item.name}</td><td>${item.wc.toFixed(1)}</td><td>${thMeso.toFixed(1)}</td>
                     <td><input type="number" value="${item.ah}" style="width:75px;" onchange="updateAH(${i}, this.value)"></td>
                     <td>${item.ah < thMeso ? '<span class="buy-ah">✅ 用楓幣拉拍賣</span>' : '<span class="buy-wc">💎 直接扣 WC 買</span>'}</td>
-                    <td>${profit > 0 ? `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>` : `<span class="profit-bad">亏 ${Math.abs(profit).toFixed(1)} 萬</span>`}</td>
+                    <td>${profit > 0 ? `<span class="profit-good">賺 ${profit.toFixed(1)} 萬</span>` : `<span class="profit-bad">虧 ${Math.abs(profit).toFixed(1)} 萬</span>`}</td>
                 </tr>`;
             });
             document.getElementById('tableBody').innerHTML = html;

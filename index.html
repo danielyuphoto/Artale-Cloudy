@@ -36,7 +36,7 @@
         }
         .cloud-title-wrapper::before { width: 110px; height: 110px; top: -45px; left: 15%; }
         .cloud-title-wrapper::after { width: 140px; height: 140px; top: -60px; right: 15%; }
-        .cloud-title-wrapper h2 { margin: 0; text-align: center; z-index: 2; display: flex; align-items: baseline; justify-content: center; gap: 15px;}
+        .cloud-title-wrapper h2 { margin: 0; text-align: center; z-index: 2; display: flex; align-items: baseline; justify-content: center; gap: 15px; }
         
         @keyframes textShimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
         .title-cursive, .title-zen {
@@ -67,7 +67,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* ====== 首頁合照 ====== */
-        .hero-image-container { width: 100%; display: flex; justify-content: center; margin-bottom: 25px; padding: 10px; }
+        .hero-image-container { width: 100%; display: flex; justify-content: center; margin-bottom: 25px; padding: 10px; box-sizing: border-box; }
         .hero-image-container img { 
             width: 100%; max-width: 1300px; height: auto; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
             border: 3px solid rgba(255, 255, 255, 0.9); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
@@ -78,7 +78,7 @@
         }
 
         /* ====== 👑 招生區圖片神話級特效 ====== */
-        .recruit-image-container { width: 100%; display: flex; justify-content: center; padding: 40px 10px; }
+        .recruit-image-container { width: 100%; display: flex; justify-content: center; padding: 40px 10px; box-sizing: border-box; }
         @keyframes legendaryDropGlow {
             0% { box-shadow: 0 10px 25px rgba(0,0,0,0.45), 0 0 20px 5px rgba(255, 170, 0, 0.4), 0 0 35px 12px rgba(0, 130, 255, 0.3); transform: translateY(0px); }
             50% { box-shadow: 0 15px 40px rgba(0,0,0,0.55), 0 0 45px 18px rgba(255, 170, 0, 0.85), 0 0 75px 28px rgba(0, 130, 255, 0.65); transform: translateY(-10px); }
@@ -131,7 +131,7 @@
         /* ================= 5. 全螢幕燈箱 ================= */
         #lightbox { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); z-index: 10000; opacity: 0; pointer-events: none; transition: 0.3s; flex-direction: column; }
         #lightbox.active { opacity: 1; pointer-events: auto; }
-        #lightbox-img { max-width: 90%; max-height: 80vh; border-radius: 8px; border: 3px solid white; }
+        #lightbox-img { max-width: 90%; max-height: 80vh; border-radius: 8px; border: 3px solid white; transition: opacity 0.2s; }
         #lightbox-caption { color: white; font-size: 22px; margin-top: 15px; text-shadow: 1px 1px 3px rgba(0,0,0,0.8); }
         .lightbox-nav, #lightbox-close { position: absolute; color: white; border: none; cursor: pointer; }
         .lightbox-nav { top: 50%; transform: translateY(-50%); font-size: 40px; background: rgba(0,0,0,0.5); border-radius: 50%; width: 60px; height: 60px; transition: 0.3s; }
@@ -170,7 +170,7 @@
         audio::-webkit-media-controls-panel { background-color: rgba(255, 255, 255, 0.8); }
 
         /* ================= 7. 其他 UI 元件 ================= */
-        .roster-card { width: 105%; margin-left: 0; padding: 10px; }
+        .roster-card { width: 100%; box-sizing: border-box; margin-left: 0; padding: 10px; }
         .embed-container { width: 100%; height: 615px; border: none; border-radius: 12px; background: #fff; }
 
         .sub-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
@@ -187,6 +187,16 @@
         th, td { padding: 14px 12px; text-align: center; border-bottom: 1px solid rgba(0,0,0,0.08); font-size: 18px; }
         th { background: rgba(44, 62, 80, 0.95); color: #fff; }
         tr:hover { background: rgba(255, 255, 255, 0.6); }
+
+        /* 點商計算表狀態配色 */
+        .buy-ah { color: #27ae60; font-weight: bold; }
+        .buy-wc { color: #2980b9; font-weight: bold; }
+        .profit-good { color: #27ae60; font-weight: bold; }
+        .profit-bad { color: #e74c3c; font-weight: bold; }
+
+        /* 頁尾公會名牌 */
+        .footer-container { margin-top: 30px; }
+        .nameplate { height: 110px; max-width: 95%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2)); }
 
         /* ================= 10. 原生報名表單專屬樣式 ================= */
         .cute-form {
@@ -246,7 +256,7 @@
 
         /* ================= 9. 手機版 RWD ================= */
         @media (max-width: 768px) {
-            body { padding: 10px 5px 30px; }
+            body { padding: 10px 5px 30px; background-attachment: scroll; }
             .header-container { flex-wrap: wrap; }
             .badge { height: 65px; } 
             .cloud-title-wrapper { padding: 15px 30px; border-radius: 40px; }
@@ -255,7 +265,7 @@
             
             .sidebar { 
                 position: relative; top: 0; 
-                flex-direction: row; width: 100%; overflow-x: auto; padding: 10px 5px; gap: 8px; 
+                flex-direction: row; width: 100%; box-sizing: border-box; overflow-x: auto; padding: 10px 5px; gap: 8px; 
             }
             .sidebar::-webkit-scrollbar { height: 4px; }
             .sidebar::-webkit-scrollbar-thumb { background: rgba(52, 152, 219, 0.5); border-radius: 4px; }
@@ -271,7 +281,7 @@
             .embed-container { height: 550px; }
 
             .nameplate { height: 75px; }
-            #countdownDisplay { font-size: 16px; padding: 10px; margin-bottom: 10px;} 
+            #countdownDisplay { font-size: 16px; padding: 10px; margin-bottom: 10px; } 
             #timerText { font-size: 18px; }
             .lightbox-nav { width: 40px; height: 40px; font-size: 24px; }
             #lightbox-prev { left: 10px; } #lightbox-next { right: 10px; }
@@ -368,8 +378,8 @@
                         <h4 class="history-title">【Cloudy 肝帝爭霸戰：沒有最卷，只有更卷！】</h4>
                         <div class="photo-count">📸 共 2 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_1.jpg" loading="lazy" data-index="0" data-group="g5" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">肝帝爭霸戰即將開肝！</div></div>
-                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_2.jpg" loading="lazy" data-index="1" data-group="g5" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div></div>
+                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_1.jpg" loading="lazy" data-index="0" data-group="g5" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">肝帝爭霸戰即將開肝！</div></div>
+                            <div class="photo-wrapper"><img src="2026.09.07_肝帝爭霸戰_2.jpg" loading="lazy" data-index="1" data-group="g5" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">恭喜各位肝帝～活動圓滿結束！</div></div>
                         </div>
                     </div>
 
@@ -388,9 +398,9 @@
                         <h4 class="history-title">【台中線下副本】</h4>
                         <div class="photo-count">📸 共 3 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_1.jpg" loading="lazy" data-index="0" data-group="g4" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div></div>
-                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_2.jpg" loading="lazy" data-index="1" data-group="g4" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div></div>
-                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="g4" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_1.jpg" loading="lazy" data-index="0" data-group="g4" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">台中美樂地ＫＴＶ活動圓滿成功～</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_2.jpg" loading="lazy" data-index="1" data-group="g4" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">台中烤狀猿燒肉圓滿結束～</div></div>
+                            <div class="photo-wrapper"><img src="2026.03.09_台中線下副本_3.jpg" loading="lazy" data-index="2" data-group="g4" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">感謝天心為每個夥伴準備的小卡片及手工堅果塔</div></div>
                         </div>
                     </div>
 
@@ -399,10 +409,10 @@
                         <h4 class="history-title">【Cloudy 新春財源廣進活動】</h4>
                         <div class="photo-count">📸 共 4 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="g3" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動公告</div></div>
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_2.jpg" loading="lazy" data-index="1" data-group="g3" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動成果</div></div>
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_3.jpg" loading="lazy" data-index="2" data-group="g3" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
-                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_4.jpg" loading="lazy" data-index="3" data-group="g3" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_1.jpg" loading="lazy" data-index="0" data-group="g3" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動公告</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_2.jpg" loading="lazy" data-index="1" data-group="g3" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動成果</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_3.jpg" loading="lazy" data-index="2" data-group="g3" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
+                            <div class="photo-wrapper"><img src="2026.02.16_新春財源廣進_4.jpg" loading="lazy" data-index="3" data-group="g3" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">新春財源廣進活動大合照～</div></div>
                         </div>
                     </div>
 
@@ -411,11 +421,11 @@
                         <h4 class="history-title">【第一次線下聚會「銀櫃KTV大亂鬥」跟「消滅和牛燒肉」】</h4>
                         <div class="photo-count">📸 共 5 張照片 (滑動/放大)</div>
                         <div class="gallery-container">
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_1.jpg" loading="lazy" data-index="0" data-group="g2" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_2.jpg" loading="lazy" data-index="1" data-group="g2" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">「消滅和牛燒肉」活動海報</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="g2" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">這是給有出席活動的夥伴的一點心意</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="g2" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div></div>
-                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="g2" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'"><div class="photo-caption">「消滅和牛燒肉」活動成功！</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_1.jpg" loading="lazy" data-index="0" data-group="g2" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">「銀櫃KTV大亂鬥」活動海報</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_2.jpg" loading="lazy" data-index="1" data-group="g2" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">「消滅和牛燒肉」活動海報</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_3.jpg" loading="lazy" data-index="2" data-group="g2" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">這是給有出席活動的夥伴的一點心意</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_4.jpg" loading="lazy" data-index="3" data-group="g2" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">「銀櫃KTV大亂鬥」活動成功！</div></div>
+                            <div class="photo-wrapper"><img src="2025.12.27_第一次線下聚會_5.jpg" loading="lazy" data-index="4" data-group="g2" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'"><div class="photo-caption">「消滅和牛燒肉」活動成功！</div></div>
                         </div>
                     </div>
 
@@ -425,7 +435,7 @@
                         <div class="photo-count">📸 共 1 張照片 (點擊放大)</div>
                         <div class="gallery-container" style="overflow-x: hidden;">
                             <div class="photo-wrapper">
-                                <img src="2025.11.17_第一張合照_1.jpg" loading="lazy" data-index="0" data-group="g1" class="lightbox-trigger" onerror="this.src='https://via.placeholder.com/400x250/ecf0f1/bdc3c7?text=圖片載入中'">
+                                <img src="2025.11.17_第一張合照_1.jpg" loading="lazy" data-index="0" data-group="g1" class="lightbox-trigger" onerror="this.onerror=null;this.src='https://placehold.co/400x250/ecf0f1/7f8c8d?text=圖片載入中'">
                                 <div class="photo-caption">這是Cloudy公會的第一張合照！</div>
                             </div>
                         </div>
@@ -434,7 +444,7 @@
                 </div>
             </div>
 
-            <!-- 頁籤：突襲王團報名 (新增合成備註選項) -->
+            <!-- 頁籤：突襲王團報名 -->
             <div id="signupTab" class="tab-content">
                 <div class="glass-panel" style="padding: 10px; text-align: center;">
                     <div id="countdownDisplay">⏳ 距離本週報名截止還剩： <span id="timerText">計算中...</span></div>
@@ -444,7 +454,7 @@
                             <h3 class="form-title">⚔️ 突襲王團 固定團/換團申請表</h3>
                             <p class="form-subtitle">資料將由系統加密直達公會後台，填寫不卡頓！</p>
 
-                            <!-- 🔥 新增：填表目的 (自動合成備註魔法) -->
+                            <!-- 📌 填表目的 -->
                             <div class="form-section-title">📌 填表目的 (必選)</div>
                             <div class="form-grid-3">
                                 <label style="grid-column: 1 / -1;">您這次填寫表單的原因是？ 
@@ -597,7 +607,7 @@
                         <iframe id="rosterIframe" src="https://docs.google.com/spreadsheets/d/18ScfVsNY4OSDRs3fy71uTyHmD27eYFbvffn0XQ8YrYE/htmlembed?widget=false&chrome=false&gid=245864129" class="embed-container" title="每週突襲王團隊伍" loading="lazy"></iframe>
                     </div>
                 </div>
-                <!-- 新增：排班維護期間的遮罩畫面 -->
+                <!-- 排班維護期間的遮罩畫面 -->
                 <div id="rosterClosedMessage" class="glass-panel" style="display: none; padding: 120px 20px; text-align: center; margin-top: 15px;">
                     <h3 style="color: #e67e22; font-size: 32px; font-weight: bold; margin-bottom: 20px;">幹部們努力安排隊伍中，敬請期待>&lt;</h3>
                     <p style="font-size: 22px; color: #7f8c8d;">每週二 18:00 將自動公佈最新排定名單！</p>
@@ -659,6 +669,7 @@
         function initTabs() {
             document.querySelectorAll(".sidebar button[data-tab]").forEach(btn => {
                 btn.addEventListener("click", function() {
+                    if (this.classList.contains("active")) return;
                     document.querySelectorAll(".sidebar button[data-tab], .tab-content").forEach(el => el.classList.remove("active"));
                     this.classList.add("active");
                     document.getElementById(this.dataset.tab).classList.add("active");
@@ -668,6 +679,7 @@
             const iframe = document.getElementById("rosterIframe");
             document.querySelectorAll(".sub-tabs button").forEach(btn => {
                 btn.addEventListener("click", function() {
+                    if (this.classList.contains("active")) return;
                     document.querySelectorAll(".sub-tabs button").forEach(b => b.classList.remove("active"));
                     this.classList.add("active");
                     iframe.src = this.dataset.url;
@@ -682,8 +694,8 @@
                 formMsg: document.getElementById("closedMessage"),
                 countDisp: document.getElementById("countdownDisplay"),
                 timerText: document.getElementById("timerText"),
-                rosterWrap: document.getElementById("rosterContainerWrapper"), // 抓取名單區塊
-                rosterMsg: document.getElementById("rosterClosedMessage")      // 抓取名單維護中訊息
+                rosterWrap: document.getElementById("rosterContainerWrapper"),
+                rosterMsg: document.getElementById("rosterClosedMessage")
             };
 
             function getTaiwanTime() {
@@ -697,16 +709,16 @@
                 const today = twDate.getDay(); 
                 const hour = twDate.getHours();
                 
-                // --- 1. 報名表單邏輯 (維持 0星期日, 6星期六 開放) ---
+                // --- 1. 報名表單邏輯 (0星期日, 6星期六 開放) ---
                 if (today === 0 || today === 6) {
-                    els.formContainer.style.display = "block";
-                    els.formMsg.style.display = "none";
-                    els.countDisp.style.display = "block";
+                    if (els.formContainer.style.display !== "block") {
+                        els.formContainer.style.display = "block";
+                        els.formMsg.style.display = "none";
+                        els.countDisp.style.display = "block";
+                    }
                     
                     const target = new Date(twDate);
-                    if (today === 6) {
-                        target.setDate(twDate.getDate() + 1); // 如果是週六，目標設為明天的週日
-                    }
+                    if (today === 6) target.setDate(twDate.getDate() + 1);
                     target.setHours(23, 59, 59, 999);
                     
                     const diff = target - twDate;
@@ -718,16 +730,22 @@
                         els.timerText.textContent = `${d} 天 ${h} 小時 ${m} 分 ${s} 秒`;
                     }
                 } else {
-                    els.formContainer.style.display = "none";
-                    els.countDisp.style.display = "none";
-                    els.formMsg.style.display = "block";
+                    if (els.formContainer.style.display !== "none") {
+                        els.formContainer.style.display = "none";
+                        els.countDisp.style.display = "none";
+                        els.formMsg.style.display = "block";
+                    }
                 }
 
                 // --- 2. 王團名單開放邏輯 (週二 18:00 開啟，用到週日深夜) ---
-                // 意思是：只要是 星期一(1)，或是 星期二(2)且小於 18 點，就顯示維護中。
                 const isRosterClosed = (today === 1) || (today === 2 && hour < 18);
-                els.rosterWrap.style.display = isRosterClosed ? "none" : "block";
-                els.rosterMsg.style.display = isRosterClosed ? "block" : "none";
+                const currentWrapDisplay = isRosterClosed ? "none" : "block";
+                const currentMsgDisplay = isRosterClosed ? "block" : "none";
+
+                if (els.rosterWrap.style.display !== currentWrapDisplay) {
+                    els.rosterWrap.style.display = currentWrapDisplay;
+                    els.rosterMsg.style.display = currentMsgDisplay;
+                }
             }
             
             update(); setInterval(update, 1000);
@@ -758,7 +776,7 @@
         }
         function updateAH(i, val) { CONFIG.calcItems[i].ah = parseFloat(val) || 0; calculate(); }
 
-        // ================= 4. 燈箱相簿 =================
+        // ================= 4. 燈箱相簿 (預載 + 平滑淡入優化版) =================
         function initLightbox() {
             const box = document.getElementById("lightbox"), imgEl = document.getElementById("lightbox-img");
             const cap = document.getElementById("lightbox-caption"), prev = document.getElementById("lightbox-prev"), next = document.getElementById("lightbox-next");
@@ -773,29 +791,48 @@
             });
 
             function updateBox() {
-                imgEl.src = group[idx].src; 
+                const targetSrc = group[idx].src;
                 cap.textContent = group[idx].nextElementSibling.textContent;
                 const showNav = group.length > 1 ? "flex" : "none";
                 prev.style.display = showNav; next.style.display = showNav;
+
+                if (imgEl.src === targetSrc && imgEl.complete) {
+                    imgEl.style.opacity = 1;
+                } else {
+                    imgEl.style.opacity = 0;
+                    setTimeout(() => {
+                        imgEl.onload = () => { imgEl.style.opacity = 1; };
+                        imgEl.src = targetSrc;
+                        if (imgEl.complete) imgEl.style.opacity = 1;
+                    }, 150);
+                }
+
+                // 背景預載前後一張圖片
+                if (group.length > 1) {
+                    new Image().src = group[(idx + 1) % group.length].src;
+                    new Image().src = group[(idx - 1 + group.length) % group.length].src;
+                }
             }
 
             function move(step, e) {
-                if(e) e.stopPropagation();
-                if(group.length > 1) { idx = (idx + step + group.length) % group.length; updateBox(); }
+                if (e) e.stopPropagation();
+                if (group.length > 1) { idx = (idx + step + group.length) % group.length; updateBox(); }
             }
 
             next.onclick = (e) => move(1, e);
             prev.onclick = (e) => move(-1, e);
             document.getElementById("lightbox-close").onclick = () => box.classList.remove("active");
-            box.onclick = (e) => { if(![imgEl, prev, next].includes(e.target)) box.classList.remove("active"); };
+            box.onclick = (e) => { if (![imgEl, prev, next].includes(e.target)) box.classList.remove("active"); };
             document.addEventListener("keydown", e => {
-                if(box.classList.contains("active")) {
-                    if(e.key==="ArrowRight") move(1); if(e.key==="ArrowLeft") move(-1); if(e.key==="Escape") box.classList.remove("active");
+                if (box.classList.contains("active")) {
+                    if (e.key === "ArrowRight") move(1);
+                    if (e.key === "ArrowLeft") move(-1);
+                    if (e.key === "Escape") box.classList.remove("active");
                 }
             });
         }
 
-        // ================= 5. 洗牌音樂播放器 (修復記憶體外洩版) =================
+        // ================= 5. 洗牌音樂播放器 =================
         function initAudio() {
             const audio = document.getElementById("bgMusic");
             const songNameDisplay = document.getElementById("currentSongName");
@@ -818,10 +855,10 @@
                 currentIndex = (index + CONFIG.playlist.length) % CONFIG.playlist.length;
                 const songFile = CONFIG.playlist[shuffledIndices[currentIndex]];
                 songNameDisplay.innerText = songFile.replace('.mp3', '');
-                audio.src = songFile + "?v=" + new Date().getTime();
+                audio.src = songFile;
                 
                 if (shouldPlay) {
-                    audio.play().catch(error => {
+                    audio.play().catch(() => {
                         console.log("自動播放被阻擋，等待使用者互動。");
                         const forcePlay = () => audio.play();
                         document.addEventListener("click", forcePlay, { once: true });
@@ -861,12 +898,12 @@
             document.body.appendChild(snowContainer);
         }
 
-        // ================= 10. 原生表單提交 (Cloudflare 中繼) + 備註自動合成魔術 =================
+        // ================= 10. 原生表單提交 (Cloudflare 中繼) =================
         function initCustomForm() {
             const form = document.getElementById('customRaidForm');
-            if(!form) return;
+            if (!form) return;
 
-            // 🎯 絕招：針對文字輸入框，防止 Safari 亂切英文鍵盤
+            // 針對文字輸入框，防止 Safari 亂切英文鍵盤
             const textInputs = form.querySelectorAll('input[type="text"], textarea');
             textInputs.forEach(input => {
                 input.dataset.name = input.getAttribute('name');
@@ -881,20 +918,16 @@
                 btn.innerText = "資料傳送中... 🚀";
                 btn.disabled = true;
 
-                // 🎯 魔法啟動：取得「填表目的」與使用者的「原始備註」
                 const purposeSelect = document.getElementById('formPurpose');
-                const detailsTextarea = form.querySelector('[data-name="entry.2040299953"]'); // 這裡抓原本隱形掉的 textarea
+                const detailsTextarea = form.querySelector('[data-name="entry.2040299953"]');
                 const originalDetailsContent = detailsTextarea.value; 
 
-                // 🎯 組合文字：將目的標籤強迫黏在文字最前面
-                detailsTextarea.value = `[${purposeSelect.value}] ${originalDetailsContent}`;
-
-                // 送出前一刻，把 name 屬性裝回去
                 textInputs.forEach(input => {
                     input.setAttribute('name', input.dataset.name);
                 });
 
                 const formData = new FormData(this);
+                formData.set('entry.2040299953', `[${purposeSelect.value}] ${originalDetailsContent}`);
 
                 try {
                     const res = await fetch("https://cloudy-form.danielyuphoto.workers.dev/", {
@@ -913,11 +946,7 @@
                 } finally {
                     btn.innerText = originalText;
                     btn.disabled = false;
-                    
-                    // 🎯 送出完畢後，把 textarea 恢復成玩家原本打的字 (避免看到被加工過的標籤)
-                    detailsTextarea.value = originalDetailsContent;
 
-                    // 再次把 name 拔掉，準備下一次填寫
                     textInputs.forEach(input => {
                         input.removeAttribute('name');
                     });
